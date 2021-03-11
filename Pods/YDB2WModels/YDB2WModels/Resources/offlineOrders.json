@@ -1,0 +1,107 @@
+[
+  {
+    "cupom": 19,
+    "chaveNfe": "NFe33210133014556004930653210000775291264916190",
+    "data": "2021-01-04T00:00:00",
+    "valorTotal": 26.36,
+    "codigoLoja": 46,
+    "nomeLoja": "LARANJEIRAS",
+    "logradouro": "RUA DAS LARANJEIRAS 49",
+    "cep": "22240-000",
+    "cidade": "RIO DE JANEIRO",
+    "uf": "RJ",
+    "itens": [
+      {
+        "codigoItem": 2,
+        "ean": "7896065880069",
+        "item": "0",
+        "qtde": 2,
+        "valorTotalItem": 4.38
+      },
+      {
+        "codigoItem": 3,
+        "ean": "7899975801711",
+        "item": "0",
+        "qtde": 1,
+        "valorTotalItem": 3.99
+      },
+      {
+        "codigoItem": 4,
+        "ean": "7891000248768",
+        "item": "0",
+        "qtde": 5,
+        "valorTotalItem": 10
+      },
+      {
+        "codigoItem": 1,
+        "ean": "7892840816261",
+        "item": "0",
+        "qtde": 1,
+        "valorTotalItem": 7.99
+      }
+    ]
+  },
+  {
+    "cupom": 110,
+    "chaveNfe": "NFe33210133014556131886653020002122421160525508",
+    "data": "2021-01-02T00:00:00",
+    "valorTotal": 11.99,
+    "codigoLoja": 970,
+    "nomeLoja": "LOCAL RIO BRANCO 26",
+    "logradouro": "AVN RIO BRANCO 26 LOJA B",
+    "cep": "20090-001",
+    "cidade": "RIO DE JANEIRO",
+    "uf": "RJ",
+    "itens": [
+      {
+        "codigoItem": 1,
+        "ean": "7892840259549",
+        "item": "0",
+        "qtde": 1,
+        "valorTotalItem": 11.99
+      }
+    ]
+  },
+  {
+    "cupom": 57,
+    "chaveNfe": "NFe33201233014556004930653210000760281629474014",
+    "data": "2020-12-19T00:00:00",
+    "valorTotal": 62.96,
+    "codigoLoja": 46,
+    "nomeLoja": "LARANJEIRAS",
+    "logradouro": "RUA DAS LARANJEIRAS 49",
+    "cep": "22240-000",
+    "cidade": "RIO DE JANEIRO",
+    "uf": "RJ",
+    "itens": [
+      {
+        "codigoItem": 3,
+        "ean": "7622300747442",
+        "item": "0",
+        "qtde": 3,
+        "valorTotalItem": 9.99
+      },
+      {
+        "codigoItem": 2,
+        "ean": "7891000265871",
+        "item": "0",
+        "qtde": 12,
+        "valorTotalItem": 20
+      },
+      {
+        "codigoItem": 4,
+        "ean": "7622300807399",
+        "item": "0",
+        "qtde": 3,
+        "valorTotalItem": 12.99
+      },
+      {
+        "codigoItem": 1,
+        "ean": "7896004006482",
+        "item": "0",
+        "qtde": 2,
+        "valorTotalItem": 19.98
+      }
+    ]
+  }
+]

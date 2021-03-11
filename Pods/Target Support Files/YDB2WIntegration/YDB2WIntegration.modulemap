@@ -1,0 +1,6 @@
+framework module YDB2WIntegration {
+  umbrella header "YDB2WIntegration-umbrella.h"
+
+  export *
+  module * { export * }
+}

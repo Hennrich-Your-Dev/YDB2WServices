@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		C171466A25FA219C002AA296 /* YDB2WServices.h in Headers */ = {isa = PBXBuildFile; fileRef = C171466825FA219C002AA296 /* YDB2WServices.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C171467825FA23D3002AA296 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171467725FA23D3002AA296 /* Connectivity.swift */; };
+		C171468025FA245B002AA296 /* ServiceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171467D25FA245B002AA296 /* ServiceClient.swift */; };
+		C171468125FA245B002AA296 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171467E25FA245B002AA296 /* ServiceError.swift */; };
+		C171468225FA245B002AA296 /* QueryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171467F25FA245B002AA296 /* QueryString.swift */; };
+		C171468A25FA24F1002AA296 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171468925FA24F1002AA296 /* Logger.swift */; };
+		C171468E25FA261D002AA296 /* YDB2WService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171468D25FA261D002AA296 /* YDB2WService.swift */; };
+		C171469C25FA2908002AA296 /* YDB2WServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171469B25FA2908002AA296 /* YDB2WServiceDelegate.swift */; };
 		C8ADE61CD1F7E6195CF4F60C /* Pods_YDB2WServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD22DFA406B59D69388399B7 /* Pods_YDB2WServices.framework */; };
 /* End PBXBuildFile section */
 
@@ -18,6 +25,13 @@
 		C171466525FA219C002AA296 /* YDB2WServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YDB2WServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C171466825FA219C002AA296 /* YDB2WServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YDB2WServices.h; sourceTree = "<group>"; };
 		C171466925FA219C002AA296 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C171467725FA23D3002AA296 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		C171467D25FA245B002AA296 /* ServiceClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceClient.swift; sourceTree = "<group>"; };
+		C171467E25FA245B002AA296 /* ServiceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		C171467F25FA245B002AA296 /* QueryString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryString.swift; sourceTree = "<group>"; };
+		C171468925FA24F1002AA296 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		C171468D25FA261D002AA296 /* YDB2WService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YDB2WService.swift; sourceTree = "<group>"; };
+		C171469B25FA2908002AA296 /* YDB2WServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YDB2WServiceDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,10 +75,49 @@
 		C171466725FA219C002AA296 /* YDB2WServices */ = {
 			isa = PBXGroup;
 			children = (
+				C171468825FA24E9002AA296 /* Log */,
+				C171467325FA235E002AA296 /* Service */,
 				C171466825FA219C002AA296 /* YDB2WServices.h */,
 				C171466925FA219C002AA296 /* Info.plist */,
 			);
 			path = YDB2WServices;
+			sourceTree = "<group>";
+		};
+		C171467325FA235E002AA296 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				C171469A25FA28FD002AA296 /* Delegate */,
+				C171469F25FA2922002AA296 /* Util */,
+				C171468D25FA261D002AA296 /* YDB2WService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		C171468825FA24E9002AA296 /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				C171468925FA24F1002AA296 /* Logger.swift */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
+		C171469A25FA28FD002AA296 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				C171469B25FA2908002AA296 /* YDB2WServiceDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		C171469F25FA2922002AA296 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				C171467725FA23D3002AA296 /* Connectivity.swift */,
+				C171467F25FA245B002AA296 /* QueryString.swift */,
+				C171467D25FA245B002AA296 /* ServiceClient.swift */,
+				C171467E25FA245B002AA296 /* ServiceError.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		CC30428BAFAD52F8538B6C7B /* Pods */ = {
@@ -73,7 +126,6 @@
 				60746BE56E6035F149DB9959 /* Pods-YDB2WServices.debug.xcconfig */,
 				BA2C8321BDCBA8FEB1846D08 /* Pods-YDB2WServices.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -120,6 +172,7 @@
 				TargetAttributes = {
 					C171466425FA219C002AA296 = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 					};
 				};
 			};
@@ -181,6 +234,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C171469C25FA2908002AA296 /* YDB2WServiceDelegate.swift in Sources */,
+				C171468A25FA24F1002AA296 /* Logger.swift in Sources */,
+				C171468125FA245B002AA296 /* ServiceError.swift in Sources */,
+				C171468225FA245B002AA296 /* QueryString.swift in Sources */,
+				C171467825FA23D3002AA296 /* Connectivity.swift in Sources */,
+				C171468E25FA261D002AA296 /* YDB2WService.swift in Sources */,
+				C171468025FA245B002AA296 /* ServiceClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +373,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 60746BE56E6035F149DB9959 /* Pods-YDB2WServices.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -328,6 +389,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.yourdev.b2w.YDB2WServices;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -337,6 +399,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BA2C8321BDCBA8FEB1846D08 /* Pods-YDB2WServices.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

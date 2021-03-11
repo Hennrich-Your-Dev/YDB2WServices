@@ -1,0 +1,6 @@
+framework module YDUtilities {
+  umbrella header "YDUtilities-umbrella.h"
+
+  export *
+  module * { export * }
+}

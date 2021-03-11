@@ -1,0 +1,6 @@
+framework module YDB2WModels {
+  umbrella header "YDB2WModels-umbrella.h"
+
+  export *
+  module * { export * }
+}
