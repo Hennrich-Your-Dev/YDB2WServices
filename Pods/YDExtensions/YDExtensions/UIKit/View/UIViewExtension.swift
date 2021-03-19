@@ -117,3 +117,36 @@ public extension UIView {
     trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: trailing).isActive = true
   }
 }
+
+// MARK: Shimmer
+public extension UIView {
+  func startShimmer(
+    colorOne: UIColor = UIColor.Zeplin.graySurface,
+    colorTwo: UIColor = UIColor.Zeplin.grayOpaque,
+    speed: Double = 1,
+    delay: Double = 0
+  ) {
+    let gradientLayer = CAGradientLayer()
+    gradientLayer.frame = self.bounds
+    gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+    gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+    gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor, colorOne.cgColor]
+    gradientLayer.locations = [0.0, 0.5, 1.0]
+    gradientLayer.name = "shimmerAnimation"
+
+    let animation = CABasicAnimation(keyPath: "locations")
+    animation.fromValue = [-1.0, -0.5, 0.0]
+    animation.toValue = [1.0, 1.5, 2.0]
+    animation.repeatCount = .infinity
+    animation.duration = speed
+    animation.beginTime = CFTimeInterval() + delay
+
+    gradientLayer.add(animation, forKey: "shimmerAnimation")
+    layer.addSublayer(gradientLayer)
+  }
+
+  func stopShimmer() {
+    layer.removeAnimation(forKey: "shimmerAnimation")
+    layer.sublayers?.first(where: { $0.name == "shimmerAnimation" })?.removeFromSuperlayer()
+  }
+}

@@ -13,18 +13,21 @@ public struct YDCurrentCustomer: Codable {
   public let firstName: String?
   public let fullName: String?
   public let accessToken: String
+  public let clientLasaToken: String?
 
   public init(
     id: String,
     email: String? = nil,
     firstName: String? = nil,
     fullName: String? = nil,
-    accessToken: String
+    accessToken: String,
+    clientLasaToken: String? = nil
   ) {
     self.id = id
     self.email = email
     self.firstName = firstName
     self.fullName = fullName
     self.accessToken = accessToken
+    self.clientLasaToken = clientLasaToken
   }
 }

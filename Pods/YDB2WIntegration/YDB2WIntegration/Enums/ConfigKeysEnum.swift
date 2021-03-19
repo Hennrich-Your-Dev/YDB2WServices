@@ -18,7 +18,8 @@ public enum YDConfigKeys: String {
   case storeService = "store_service"
   case spaceyService = "spacey_service"
   case addressService = "zip_code_service"
-  case lasaClientService = "lasa_client_service"
+  case lasaClientService = "lasaCustomerPortal"
+  case googleService = "youtubeStatisticsApi"
 }
 
 public enum YDConfigProperty: String {
@@ -36,7 +37,6 @@ public enum YDConfigProperty: String {
 
   case liveCarrouselProductsBatches = "lazyLoadingItems"
 
-  case liveYouTubeKey = "iOSYotubeKey"
   case liveYouTubePlayerAutoStart
   case liveYouTubePlayerResetVideoWhenPaused
   case liveYouTubePlayerEnableFullScreenButton
@@ -48,4 +48,10 @@ public enum YDConfigProperty: String {
   case liveChatLimit
   case liveChatSendDelay
   case liveChatModerators = "chatModerators"
+
+  case liveYouTubeCounter = "liveAmountPeopleWatching"
+  case liveAmountPeopleWatchingPolling
+
+  // Google Services
+  case youtubeKey
 }

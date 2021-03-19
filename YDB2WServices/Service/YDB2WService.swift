@@ -59,8 +59,8 @@ public class YDB2WService {
 extension YDB2WService: YDB2WServiceDelegate {
   public func offlineOrdersGetOrders(
     userToken token: String,
-    page: Int = 1,
-    limit: Int = 20,
+    page: Int,
+    limit: Int,
     onCompletion completion: @escaping (Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) -> Void
   ) {
     let url = "\(lasaClient)/portalcliente/cliente/cupons/lista"
@@ -68,14 +68,20 @@ extension YDB2WService: YDB2WServiceDelegate {
       "Authorization": "Bearer \(token)",
       "Ocp-Apim-Subscription-Key": "953582bd88f84bdb9b3ad66d04eaf728"
     ]
+    let parameters = [
+      "page_number": page,
+      "limite_page": limit
+    ]
 
-    service.request(
-      withUrl: url,
-      withMethod: .get,
-      withHeaders: headers,
-      andParameters: nil
-    ) { (response: Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) in
-      completion(response)
+    DispatchQueue.global().async { [weak self] in
+      self?.service.request(
+        withUrl: url,
+        withMethod: .get,
+        withHeaders: headers,
+        andParameters: parameters
+      ) { (response: Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) in
+        completion(response)
+      }
     }
   }
 
@@ -100,12 +106,14 @@ extension YDB2WService: YDB2WServiceDelegate {
 
     let url = "\(store)/store"
 
-    service.request(
-      withUrl: url,
-      withMethod: .get,
-      andParameters: parameters
-    ) { (response: Swift.Result<YDStores, YDServiceError>) in
-      completion(response)
+    DispatchQueue.global().async { [weak self] in
+      self?.service.request(
+        withUrl: url,
+        withMethod: .get,
+        andParameters: parameters
+      ) { (response: Swift.Result<YDStores, YDServiceError>) in
+        completion(response)
+      }
     }
   }
 
@@ -119,12 +127,16 @@ extension YDB2WService: YDB2WServiceDelegate {
       "longitude": location.longitude
     ]
 
-    service.request(
-      withUrl: zipcode,
-      withMethod: .get,
-      andParameters: parameters
-    ) { (response: Swift.Result<[YDAddress], YDServiceError>) in
-      completion(response)
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+
+      self.service.request(
+        withUrl: self.zipcode,
+        withMethod: .get,
+        andParameters: parameters
+      ) { (response: Swift.Result<[YDAddress], YDServiceError>) in
+        completion(response)
+      }
     }
   }
 }

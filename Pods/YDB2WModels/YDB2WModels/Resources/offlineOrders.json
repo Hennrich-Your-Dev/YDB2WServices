@@ -1,106 +1,232 @@
 [
   {
-    "cupom": 19,
-    "chaveNfe": "NFe33210133014556004930653210000775291264916190",
-    "data": "2021-01-04T00:00:00",
-    "valorTotal": 26.36,
-    "codigoLoja": 46,
-    "nomeLoja": "LARANJEIRAS",
-    "logradouro": "RUA DAS LARANJEIRAS 49",
-    "cep": "22240-000",
-    "cidade": "RIO DE JANEIRO",
-    "uf": "RJ",
+    "cupom": 243,
+    "chaveNfe": "NFe26210133014556077571653010000596611166804275",
+    "data": "2021-01-25T00:00:00",
+    "valorTotal": 68.1,
+    "codigoLoja": 141,
+    "nomeLoja": "SHC RIOMAR",
+    "logradouro": "AVENIDA REPUBLICA DO LIBANO 25",
+    "cep": "51110-900",
+    "cidade": "RECIFE",
+    "uf": "PE",
     "itens": [
       {
-        "codigoItem": 2,
-        "ean": "7896065880069",
-        "item": "0",
-        "qtde": 2,
-        "valorTotalItem": 4.38
+        "codigoItem": 6,
+        "ean": "7898591450686",
+        "item": "MINI GELATINA BANANAS 15G FINI",
+        "qtde": 1,
+        "valorTotalItem": 0.99
       },
       {
-        "codigoItem": 3,
-        "ean": "7899975801711",
-        "item": "0",
-        "qtde": 1,
-        "valorTotalItem": 3.99
+        "codigoItem": 2,
+        "ean": "7891010247409",
+        "item": "SAB J&J AMENDOAS 80G",
+        "qtde": 3,
+        "valorTotalItem": 5.07
       },
       {
         "codigoItem": 4,
-        "ean": "7891000248768",
-        "item": "0",
-        "qtde": 5,
-        "valorTotalItem": 10
+        "ean": "7891010249403",
+        "item": "HID J&J LAV/CAM 400ML C/2 C/40% DESC",
+        "qtde": 1,
+        "valorTotalItem": 33.99
+      },
+      {
+        "codigoItem": 5,
+        "ean": "7891008169201",
+        "item": "TABLETE OPERETA 90G GAROTO",
+        "qtde": 3,
+        "valorTotalItem": 10.99
+      },
+      {
+        "codigoItem": 3,
+        "ean": "7891010247386",
+        "item": "SAB J&J LAVANDA 80G",
+        "qtde": 3,
+        "valorTotalItem": 5.07
       },
       {
         "codigoItem": 1,
-        "ean": "7892840816261",
-        "item": "0",
-        "qtde": 1,
-        "valorTotalItem": 7.99
-      }
-    ]
-  },
-  {
-    "cupom": 110,
-    "chaveNfe": "NFe33210133014556131886653020002122421160525508",
-    "data": "2021-01-02T00:00:00",
-    "valorTotal": 11.99,
-    "codigoLoja": 970,
-    "nomeLoja": "LOCAL RIO BRANCO 26",
-    "logradouro": "AVN RIO BRANCO 26 LOJA B",
-    "cep": "20090-001",
-    "cidade": "RIO DE JANEIRO",
-    "uf": "RJ",
-    "itens": [
-      {
-        "codigoItem": 1,
-        "ean": "7892840259549",
-        "item": "0",
+        "ean": "7891350034851",
+        "item": "GEL FIXADOR BOZZANO PROTECAO SOLAR 300G",
         "qtde": 1,
         "valorTotalItem": 11.99
       }
     ]
   },
   {
-    "cupom": 57,
-    "chaveNfe": "NFe33201233014556004930653210000760281629474014",
-    "data": "2020-12-19T00:00:00",
-    "valorTotal": 62.96,
-    "codigoLoja": 46,
-    "nomeLoja": "LARANJEIRAS",
-    "logradouro": "RUA DAS LARANJEIRAS 49",
-    "cep": "22240-000",
-    "cidade": "RIO DE JANEIRO",
-    "uf": "RJ",
+    "cupom": 120,
+    "chaveNfe": "NFe33210133014556001087653120000102981322326890",
+    "data": "2021-01-25T00:00:00",
+    "valorTotal": 149.94,
+    "codigoLoja": 77,
+    "nomeLoja": "SHC RIOMAR",
+    "logradouro": "AVENIDA REPUBLICA DO LIBANO 25",
+    "cep": "51110-900",
+    "cidade": "RECIFE",
+    "uf": "PE",
     "itens": [
       {
-        "codigoItem": 3,
-        "ean": "7622300747442",
-        "item": "0",
-        "qtde": 3,
-        "valorTotalItem": 9.99
-      },
-      {
-        "codigoItem": 2,
-        "ean": "7891000265871",
-        "item": "0",
-        "qtde": 12,
-        "valorTotalItem": 20
+        "codigoItem": 1,
+        "ean": "7896058596571",
+        "item": "OVINHOS DE AMENDOIM 70G DORI",
+        "qtde": 2,
+        "valorTotalItem": 4.98
       },
       {
         "codigoItem": 4,
-        "ean": "7622300807399",
-        "item": "0",
-        "qtde": 3,
-        "valorTotalItem": 12.99
+        "ean": "7891027291075",
+        "item": "AGENDA ESP D+ MASC M4 TILIBRA",
+        "qtde": 1,
+        "valorTotalItem": 9.99
+      },
+      {
+        "codigoItem": 3,
+        "ean": "7896027531688",
+        "item": "JOGO BANCO IMOBILIARIO GDE",
+        "qtde": 1,
+        "valorTotalItem": 129.99
+      },
+      {
+        "codigoItem": 2,
+        "ean": "7896058597721",
+        "item": "AMENDOIM JAPONES 120G DORI",
+        "qtde": 2,
+        "valorTotalItem": 4.98
+      }
+    ]
+  },
+  {
+    "cupom": 167,
+    "chaveNfe": "NFe50210133014556008170653090000125851175181874",
+    "data": "2021-01-25T00:00:00",
+    "valorTotal": 9.26,
+    "codigoLoja": 176,
+    "nomeLoja": "SHC RIOMAR",
+    "logradouro": "AVENIDA REPUBLICA DO LIBANO 25",
+    "cep": "51110-900",
+    "cidade": "RECIFE",
+    "uf": "PE",
+    "itens": [
+      {
+        "codigoItem": 2,
+        "ean": "7898925201748",
+        "item": "AGUA MINERAL LEVEN S/GAS 310ML",
+        "qtde": 1,
+        "valorTotalItem": 1.79
       },
       {
         "codigoItem": 1,
-        "ean": "7896004006482",
+        "ean": "7896058503784",
+        "item": "AMENDOIM CROCANTE NATURAL 90G DORI",
+        "qtde": 3,
+        "valorTotalItem": 7.47
+      }
+    ]
+  },
+  {
+    "cupom": 6,
+    "chaveNfe": "NFe27210133014556128907653030001623121642747009",
+    "data": "2021-01-05T00:00:00",
+    "valorTotal": 69.96,
+    "codigoLoja": 1287,
+    "nomeLoja": "RUA DO COMÉRCIO",
+    "logradouro": "R DO COMERCIO 173, TERREOPRIM",
+    "cep": "57020-000",
+    "cidade": "MACEIO",
+    "uf": "AL",
+    "itens": [
+      {
+        "codigoItem": 6,
+        "ean": "7897807454098",
+        "item": "PORTA DETERGENTE/BUCHA DOUBLE 5409 ARTHI",
+        "qtde": 1,
+        "valorTotalItem": 14.99
+      },
+      {
+        "codigoItem": 8,
+        "ean": "6920388659321",
+        "item": "JOAO TEIMOSO ANIMAIS JILONG BRINK",
+        "qtde": 1,
+        "valorTotalItem": 19.99
+      },
+      {
+        "codigoItem": 6,
+        "ean": "7897807454098",
+        "item": "PORTA DETERGENTE/BUCHA DOUBLE 5409 ARTHI",
+        "qtde": 1,
+        "valorTotalItem": 14.99
+      },
+      {
+        "codigoItem": 8,
+        "ean": "6920388659321",
+        "item": "JOAO TEIMOSO ANIMAIS JILONG BRINK",
+        "qtde": 1,
+        "valorTotalItem": 19.99
+      }
+    ]
+  },
+  {
+    "cupom": 1,
+    "chaveNfe": "NFe21201233014556116658653060000071951662105676",
+    "data": "2020-12-10T00:00:00",
+    "valorTotal": 2093,
+    "codigoLoja": 1230,
+    "nomeLoja": "PINHEIRO",
+    "logradouro": "PRACA JOSE SARNEY S N",
+    "cep": "65200-000",
+    "cidade": "PINHEIRO",
+    "uf": "MA",
+    "itens": [
+      {
+        "codigoItem": 1,
+        "ean": "7891356075599",
         "item": "0",
-        "qtde": 2,
-        "valorTotalItem": 19.98
+        "qtde": 1,
+        "valorTotalItem": 299
+      },
+      {
+        "codigoItem": 1,
+        "ean": "7891356075599",
+        "item": "9999",
+        "qtde": 1,
+        "valorTotalItem": 299
+      },
+      {
+        "codigoItem": 1,
+        "ean": "7891356075599",
+        "item": "0",
+        "qtde": 1,
+        "valorTotalItem": 299
+      },
+      {
+        "codigoItem": 1,
+        "ean": "7891356075599",
+        "item": "9999",
+        "qtde": 1,
+        "valorTotalItem": 299
+      },
+      {
+        "codigoItem": 1,
+        "ean": "7891356075599",
+        "item": "0",
+        "qtde": 1,
+        "valorTotalItem": 299
+      },
+      {
+        "codigoItem": 1,
+        "ean": "7891356075599",
+        "item": "0",
+        "qtde": 1,
+        "valorTotalItem": 299
+      },
+      {
+        "codigoItem": 1,
+        "ean": "7891356075599",
+        "item": "9999",
+        "qtde": 1,
+        "valorTotalItem": 299
       }
     ]
   }
