@@ -15,7 +15,7 @@ PODS:
   - libwebp/mux (1.2.0):
     - libwebp/demux
   - libwebp/webp (1.2.0)
-  - YDB2WIntegration (1.0.19):
+  - YDB2WIntegration (1.1.0):
     - YDB2WModels
     - YDExtensions
   - YDB2WModels (1.0.16):
@@ -29,8 +29,8 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
-  - YDB2WIntegration
-  - YDB2WModels
+  - YDB2WIntegration (~> 1.1.0)
+  - YDB2WModels (~> 1.0.16)
 
 SPEC REPOS:
   "git@github.com:Hennrich-Your-Dev/YourDev-Pods.git":
@@ -49,11 +49,11 @@ SPEC CHECKSUMS:
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   KingfisherWebP: b1ed1dbc5e52547c5bf5f583dd5c46346f97320f
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
-  YDB2WIntegration: a61acca0255791fab6a6d681008e788225972312
+  YDB2WIntegration: 84c6839f4c4edaffbecb9f529256e742bd134166
   YDB2WModels: 21034c82fd20c1222a5e5514fd9a4fdabb0fa25d
   YDExtensions: 9d923da399a4fbdbf251f58345271103101cd34a
   YDUtilities: 7e56ee0f48101c8bf487ad03135730dbefac70bf
 
-PODFILE CHECKSUM: ddf433652c6e4d2fd1f55a3da87dc921b909de1d
+PODFILE CHECKSUM: bbd431e59d6fa8edfa1f0ae0c0725e25485a9aff
 
 COCOAPODS: 1.10.1
