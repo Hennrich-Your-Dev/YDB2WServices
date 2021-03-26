@@ -28,6 +28,9 @@ public class YDOfflineOrdersOrder: Decodable {
   // products
   public var products: [YDOfflineOrdersProduct]?
 
+  // IndexPath
+  public var indexPath: IndexPath?
+
   // computed variables
   public var formatedAddress: String? {
     guard var address = addressStreet else { return nil }

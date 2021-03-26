@@ -4,7 +4,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "YDB2WServices"
-  spec.version      = "1.1.0"
+  spec.version      = "1.1.1"
   spec.summary      = "A short description of YDB2WServices."
   spec.homepage     = "http://yourdev//YDB2WServices"
   spec.license      = "MIT"
@@ -20,6 +20,6 @@ Pod::Spec.new do |spec|
   spec.dependency "Alamofire", "~> 4.0"
 
   spec.dependency "YDB2WIntegration", "~> 1.1.0"
-  spec.dependency "YDB2WModels", "~> 1.0.16"
+  spec.dependency "YDB2WModels", "~> 1.1.0"
 
 end

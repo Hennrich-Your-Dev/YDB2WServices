@@ -54,4 +54,7 @@ public enum YDConfigProperty: String {
 
   // Google Services
   case youtubeKey
+
+  // Lasa Client
+  case lazyLoadingOrders
 }
