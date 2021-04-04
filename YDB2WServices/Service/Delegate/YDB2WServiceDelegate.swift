@@ -27,4 +27,10 @@ public protocol YDB2WServiceDelegate: AnyObject {
     _ location: CLLocationCoordinate2D,
     onCompletion completion: @escaping (Swift.Result<[YDAddress], YDServiceError>) -> Void
   )
+
+  func getProductsFromRESQL(
+    eans: [String],
+    storeId: String?,
+    onCompletion completion: @escaping (Swift.Result<YDProductsRESQL, YDServiceError>) -> Void
+  )
 }

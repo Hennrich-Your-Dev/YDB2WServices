@@ -82,4 +82,8 @@ public extension Date {
 
     return dateFormatter.string(from: self).appending("Z")
   }
+
+  func isBetween(_ date: Date, and date2: Date) -> Bool {
+    return self >= date && self <= date2
+  }
 }

@@ -78,6 +78,11 @@ public class YDOfflineOrdersOrder: Decodable {
     return formatter.string(from: NSNumber(value: total))
   }
 
+  public var strippedNFe: String? {
+    guard let nfe = self.nfe else { return nil }
+    return String(nfe.dropFirst(3))
+  }
+
   // MARK: Coding Keys
   enum CodingKeys: String, CodingKey {
     case cupom

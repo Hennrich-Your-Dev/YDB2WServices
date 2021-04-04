@@ -139,4 +139,32 @@ extension YDB2WService: YDB2WServiceDelegate {
       }
     }
   }
+
+  public func getProductsFromRESQL(
+    eans: [String],
+    storeId: String?,
+    onCompletion completion: @escaping (Swift.Result<YDProductsRESQL, YDServiceError>) -> Void
+  ) {
+    var parameters: [String: String] = [:]
+
+    if let storeId = storeId {
+      parameters["store"] = storeId
+    }
+
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+
+      var url = "\(self.restQL)/run-query/app/lasa-and-b2w-product-by-ean/10?"
+
+      eans.forEach { url += "ean=\($0)&" }
+
+      self.service.request(
+        withUrl: String(url.dropLast()),
+        withMethod: .get,
+        andParameters: parameters
+      ) { (response: Swift.Result<YDProductsRESQL, YDServiceError>) in
+        completion(response)
+      }
+    }
+  }
 }

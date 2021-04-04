@@ -143,6 +143,7 @@ public extension UIView {
 
     gradientLayer.add(animation, forKey: "shimmerAnimation")
     layer.addSublayer(gradientLayer)
+    layer.masksToBounds = true
   }
 
   func stopShimmer() {
