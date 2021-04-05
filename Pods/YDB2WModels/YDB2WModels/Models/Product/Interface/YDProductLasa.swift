@@ -24,20 +24,7 @@ public class YDProductLasa: Codable {
 
     results = []
 
-    if let throwablesOneProduct = try? container.decode(
-        [Throwable<YDProductLasaResult>].self,
-        forKey: .results
-    ) {
-      throwablesOneProduct.forEach {
-        switch $0.result {
-          case .success(let result):
-            results.append(result)
-
-          case .failure:
-            results.append(YDProductLasaResult.empty())
-        }
-      }
-    } else if let throwablesMoreProducts = try? container.decode(
+    if let throwablesMoreProducts = try? container.decode(
       [[Throwable<YDProductLasaResult>]].self,
       forKey: .results
     ) {
@@ -50,6 +37,19 @@ public class YDProductLasa: Codable {
             results.append(YDProductLasaResult.empty())
           case .none:
             break
+        }
+      }
+    } else if let throwablesOneProduct = try? container.decode(
+      [Throwable<YDProductLasaResult>].self,
+      forKey: .results
+    ) {
+      throwablesOneProduct.forEach {
+        switch $0.result {
+          case .success(let result):
+            results.append(result)
+
+          case .failure:
+            results.append(YDProductLasaResult.empty())
         }
       }
     }

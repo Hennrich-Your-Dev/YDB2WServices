@@ -24,20 +24,7 @@ public class YDProductB2W: Codable {
 
     results = []
 
-    if let throwablesOneProduct = try? container.decode(
-      [Throwable<YDProductB2WResult>].self,
-      forKey: .results
-    ) {
-      throwablesOneProduct.forEach {
-        switch $0.result {
-          case .success(let result):
-            results.append(result)
-
-          case .failure:
-            results.append(YDProductB2WResult.empty())
-        }
-      }
-    } else if let throwablesMoreProducts = try? container.decode(
+    if let throwablesMoreProducts = try? container.decode(
       [[Throwable<YDProductB2WResult>]].self,
       forKey: .results
     ) {
@@ -50,6 +37,19 @@ public class YDProductB2W: Codable {
             results.append(YDProductB2WResult.empty())
           case .none:
             break
+        }
+      }
+    } else if let throwablesOneProduct = try? container.decode(
+      [Throwable<YDProductB2WResult>].self,
+      forKey: .results
+    ) {
+      throwablesOneProduct.forEach {
+        switch $0.result {
+          case .success(let result):
+            results.append(result)
+
+          case .failure:
+            results.append(YDProductB2WResult.empty())
         }
       }
     }
@@ -108,9 +108,7 @@ public class YDProductB2WResult: YDProduct {
 
   public required init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
-
     offer = try container.decode(YDProductB2WOffers.self, forKey: .offer)
-
     try super.init(from: decoder)
   }
 

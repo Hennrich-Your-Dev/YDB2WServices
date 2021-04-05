@@ -18,6 +18,7 @@ public class YDB2WService {
   let service: YDServiceClientDelegate
 
   let restQL: String
+  let restQLVersion: Int
   let userChat: String
   let catalog: String
   let store: String
@@ -29,6 +30,10 @@ public class YDB2WService {
   public init() {
     guard let restQLApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.restQL.rawValue)?.endpoint,
+          let restQLVersion = YDIntegrationHelper.shared
+            .getFeature(
+              featureName: YDConfigKeys.store.rawValue)?
+            .extras?[YDConfigProperty.productsQueryVersion.rawValue] as? Int,
           let userChatApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.chatService.rawValue)?.endpoint,
           let storeApi = YDIntegrationHelper.shared
@@ -47,6 +52,7 @@ public class YDB2WService {
 
     self.service = YDServiceClient()
     self.restQL = restQLApi
+    self.restQLVersion = restQLVersion
     self.userChat = userChatApi
     self.catalog = catalogApi
     self.store = storeApi
@@ -154,7 +160,7 @@ extension YDB2WService: YDB2WServiceDelegate {
     DispatchQueue.global().async { [weak self] in
       guard let self = self else { return }
 
-      var url = "\(self.restQL)/run-query/app/lasa-and-b2w-product-by-ean/10?"
+      var url = "\(self.restQL)/run-query/app/lasa-and-b2w-product-by-ean/\(self.restQLVersion)?"
 
       eans.forEach { url += "ean=\($0)&" }
 

@@ -31,6 +31,7 @@ public enum YDConfigProperty: String {
   case npsEnabled
   case npsFeedbackMessage
   case productsQueryVersion = "lasaB2WProductsQueryVersion"
+  case offlineAccountEnabled
 
   // Live
   case liveSpaceyOrder = "spaceyPositionIndex"
