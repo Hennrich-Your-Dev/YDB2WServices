@@ -86,9 +86,9 @@
 		C171467325FA235E002AA296 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				C171468D25FA261D002AA296 /* YDB2WService.swift */,
 				C171469A25FA28FD002AA296 /* Delegate */,
 				C171469F25FA2922002AA296 /* Util */,
-				C171468D25FA261D002AA296 /* YDB2WService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";

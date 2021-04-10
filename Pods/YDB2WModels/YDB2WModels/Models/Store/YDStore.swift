@@ -14,18 +14,17 @@ public class YDStores: Decodable {
 }
 
 public class YDStore: Decodable {
-
   // MARK: Properties
-  public let id: String
-  public let name: String
-  public let sellerID: String
-  public let sellerStoreID: String
-  public let open: Bool
-  public let schedules: YDStoreOperatingDays?
+  public var id: String?
+  public var name: String?
+  public var sellerID: String?
+  public var sellerStoreID: String?
+  public var open: Bool?
+  public var schedules: YDStoreOperatingDays?
 
-  public let distance: Double
-  public let address: YDAddress?
-  public let geolocation: YDStoreGeolocation?
+  public var distance: Double?
+  public var address: YDAddress?
+  public var geolocation: YDStoreGeolocation?
 
   // MARK: Computed variables
   public var formatAddress: String {
@@ -36,6 +35,7 @@ public class YDStore: Decodable {
   }
 
   public var formatDistance: String {
+    guard let distance = distance else { return "" }
     let kilometers = Measurement(value: distance, unit: UnitLength.kilometers)
     let meters = kilometers.converted(to: .meters)
     let formated = meters.value >= 1000 ?
@@ -72,10 +72,9 @@ public class YDStore: Decodable {
 
   public func addressAndStoreName() -> String {
     guard let unwarpAddress = self.address,
-          var address = unwarpAddress.address
+          var address = unwarpAddress.address,
+          let name = self.name
     else { return "" }
-
-    let name = self.name
 
     if let number = unwarpAddress.number,
        !number.isEmpty {
@@ -86,6 +85,7 @@ public class YDStore: Decodable {
   }
 
   public func isLasa(metersCondition: Double) -> Bool {
+    guard let distance = distance else { return false }
     // Convert KM to Meters
     let currentDistance = Measurement(value: distance, unit: UnitLength.kilometers)
     let meters = currentDistance.converted(to: .meters)
@@ -103,6 +103,29 @@ public class YDStore: Decodable {
     case distance
     case address
     case geolocation
+  }
+
+  // MARK: Init
+  public init(
+    id: String? = nil,
+    name: String? = nil,
+    sellerID: String? = nil,
+    sellerStoreID: String? = nil,
+    open: Bool? = nil,
+    schedules: YDStoreOperatingDays? = nil,
+    distance: Double? = nil,
+    address: YDAddress? = nil,
+    geolocation: YDStoreGeolocation? = nil
+  ) {
+    self.id = id
+    self.name = name
+    self.sellerID = sellerID
+    self.sellerStoreID = sellerStoreID
+    self.open = open
+    self.schedules = schedules
+    self.distance = distance
+    self.address = address
+    self.geolocation = geolocation
   }
 }
 

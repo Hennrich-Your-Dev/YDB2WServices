@@ -21,7 +21,6 @@ public class YDProductB2W: Codable {
   //
   required public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
-
     results = []
 
     if let throwablesMoreProducts = try? container.decode(
@@ -33,7 +32,8 @@ public class YDProductB2W: Codable {
           case .success(let result):
             results.append(result)
 
-          case .failure:
+          case .failure(let error as NSError):
+            debugPrint(#function, error.debugDescription)
             results.append(YDProductB2WResult.empty())
           case .none:
             break
@@ -48,7 +48,8 @@ public class YDProductB2W: Codable {
           case .success(let result):
             results.append(result)
 
-          case .failure:
+          case .failure(let error as NSError):
+            debugPrint(#function, #line, "\n", error.debugDescription)
             results.append(YDProductB2WResult.empty())
         }
       }

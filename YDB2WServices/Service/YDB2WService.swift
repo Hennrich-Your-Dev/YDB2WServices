@@ -164,12 +164,52 @@ extension YDB2WService: YDB2WServiceDelegate {
 
       eans.forEach { url += "ean=\($0)&" }
 
-      self.service.request(
+//      self.service.request(
+//        withUrl: String(url.dropLast()),
+//        withMethod: .get,
+//        andParameters: parameters
+//      ) { (response: Swift.Result<YDProductsRESQL, YDServiceError>) in
+//        completion(response)
+//      }
+
+      self.service.requestWithFullResponse(
         withUrl: String(url.dropLast()),
         withMethod: .get,
+        withHeaders: nil,
         andParameters: parameters
-      ) { (response: Swift.Result<YDProductsRESQL, YDServiceError>) in
-        completion(response)
+      ) { (response: DataResponse<Data>?) in
+        guard let data = response?.data else {
+          completion(
+            .failure(
+              YDServiceError.init(withMessage: "Nenhum dado retornado")
+            )
+          )
+          return
+        }
+
+        do {
+          guard let json = try JSONSerialization.jsonObject(
+            with: data,
+            options: .allowFragments
+          ) as? [String: Any] else {
+            completion(
+              .failure(
+                YDServiceError.init(withMessage: "Nenhum dado retornado")
+              )
+            )
+            return
+          }
+
+          let restQL = YDProductsRESQL(withJson: json)
+          completion(.success(restQL))
+
+        } catch {
+          completion(
+            .failure(
+              YDServiceError.init(error: error)
+            )
+          )
+        }
       }
     }
   }

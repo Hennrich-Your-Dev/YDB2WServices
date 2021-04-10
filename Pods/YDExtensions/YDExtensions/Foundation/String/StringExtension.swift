@@ -5,10 +5,9 @@
 //  Created by Douglas Hennrich on 02/11/20.
 //
 
-import Foundation
+import UIKit
 
 public extension String {
-
   static func loremIpsum(ofLength length: Int = 445) -> String {
     guard length > 0 else { return "" }
 
@@ -46,11 +45,17 @@ public extension String {
     }
     return pureNumber
   }
+
+  var formattedNumberAsDouble: Double? {
+    let formatter = NumberFormatter()
+    formatter.usesGroupingSeparator = true
+    formatter.locale = Locale(identifier: "pt_BR")
+    return formatter.number(from: self)?.doubleValue
+  }
 }
 
 // MARK: Regex
 public extension String {
-
   var phoneRegexPattern: String {
     return "/^(?:(?:\\+|00)?(55)\\s?)?(?:\\(?([1-9][0-9])\\)?\\s?)?(?:((?:9\\d|[2-9])\\d{3})\\-?(\\d{4}))$/"
   }
@@ -71,7 +76,11 @@ public extension String {
 
   var isAlphanumeric: Bool {
     let notAlphanumeric = NSCharacterSet.decimalDigits.union(NSCharacterSet.letters).inverted
-    return rangeOfCharacter(from: notAlphanumeric, options: String.CompareOptions.literal, range: nil) == nil
+    return rangeOfCharacter(
+      from: notAlphanumeric,
+      options: String.CompareOptions.literal,
+      range: nil
+    ) == nil
   }
 
   func matches(_ expression: String) -> Bool {
@@ -82,4 +91,106 @@ public extension String {
     }
   }
   
+}
+
+// MARK: HTML
+public extension String {
+  var htmlToAttributed: NSAttributedString? {
+    do {
+      guard let data = data(using: String.Encoding.utf8) else {
+        return nil
+      }
+      return try NSAttributedString(
+        data: data,
+        options: [
+          .documentType: NSAttributedString.DocumentType.html,
+          .characterEncoding: String.Encoding.utf8.rawValue
+        ],
+        documentAttributes: nil
+      )
+    } catch {
+      print("error: ", error)
+      return nil
+    }
+  }
+
+  var htmlAttributed: (NSAttributedString?, NSDictionary?) {
+    do {
+      guard let data = data(using: String.Encoding.utf8) else {
+        return (nil, nil)
+      }
+
+      var dict: NSDictionary?
+      dict = NSMutableDictionary()
+
+      return try (NSAttributedString(
+        data: data,
+        options: [
+          .documentType: NSAttributedString.DocumentType.html,
+          .characterEncoding: String.Encoding.utf8.rawValue
+        ],
+        documentAttributes: &dict
+      ),
+      dict
+      )
+    } catch {
+      print("error: ", error)
+      return (nil, nil)
+    }
+  }
+
+  func htmlAttributed(using font: UIFont) -> NSAttributedString? {
+    do {
+      let htmlCSSString = "<style>" +
+        "html *" +
+        "{" +
+        "font-size: \(font.pointSize)pt !important;" +
+        "font-family: \(font.familyName), Helvetica !important;" +
+        "}</style> \(self)"
+
+      guard let data = htmlCSSString.data(using: String.Encoding.utf8) else {
+        return nil
+      }
+
+      return try NSAttributedString(
+        data: data,
+        options: [
+          .documentType: NSAttributedString.DocumentType.html,
+          .characterEncoding: String.Encoding.utf8.rawValue
+        ],
+        documentAttributes: nil
+      )
+    } catch {
+      print("error: ", error)
+      return nil
+    }
+  }
+
+  func htmlAttributed(family: String?, size: CGFloat) -> NSAttributedString? {
+    do {
+      let htmlCSSString = "<style>" +
+        "html *" +
+        "{" +
+        "font-size: \(size)pt !important;" +
+        "font-family: \(family ?? "Helvetica"), Helvetica !important;" +
+        "}</style> \(self)"
+
+      guard let data = htmlCSSString.data(using: String.Encoding.utf8) else {
+        return nil
+      }
+
+      return try NSAttributedString(
+        data: data,
+        options: [
+          .documentType: NSAttributedString.DocumentType.html,
+          .characterEncoding: String.Encoding.utf8.rawValue
+        ],
+        documentAttributes: nil
+      )
+    } catch {
+      print("error: ", error)
+      return nil
+    }
+  }
+
 }

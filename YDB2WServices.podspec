@@ -4,7 +4,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "YDB2WServices"
-  spec.version      = "1.1.3"
+  spec.version      = "1.1.4"
   spec.summary      = "A short description of YDB2WServices."
   spec.homepage     = "http://yourdev//YDB2WServices"
   spec.license      = "MIT"

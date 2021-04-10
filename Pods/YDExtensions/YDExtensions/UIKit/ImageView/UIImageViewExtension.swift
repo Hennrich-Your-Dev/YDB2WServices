@@ -10,15 +10,17 @@ import Kingfisher
 import KingfisherWebP
 
 public extension UIImageView {
-  func setImage(_ imageStringOpt: String?) {
+  func setImage(_ imageStringOpt: String?, placeholder: UIImage? = nil) {
     guard let imageString = imageStringOpt,
           let escapedString = imageString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
     else {
+      image = placeholder
       return
     }
 
     kf.setImage(
       with: URL(string: escapedString),
+      placeholder: placeholder,
       options: [
         .progressiveJPEG(ImageProgressive(isBlur: false, isFastestScan: false, scanInterval: 0.1)),
         .processor(WebPProcessor.default)
@@ -38,8 +40,8 @@ public extension UIImageView {
             self.frame.size = CGSize(width: newWidth, height: self.frame.height)
           }
         }
+        //
       }
     )
-
   }
 }

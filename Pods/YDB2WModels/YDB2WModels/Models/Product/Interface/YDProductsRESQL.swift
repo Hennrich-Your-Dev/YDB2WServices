@@ -21,7 +21,23 @@ public class YDProductsRESQL: Codable {
     })
 
     for (index, productLasa) in results.offersLasa.enumerated() {
-      products[index].offline = productLasa
+      if products.at(index) != nil {
+        products[index].offline = productLasa
+      }
+    }
+  }
+
+  public init(withJson json: [String: Any]) {
+    let results = YDProductResponse(withJson: json)
+
+    products = results.offersB2W.map({ curr -> YDProductOnlineOffline in
+      return YDProductOnlineOffline(online: curr, offline: nil)
+    })
+
+    for (index, productLasa) in results.offersLasa.enumerated() {
+      if products.at(index) != nil {
+        products[index].offline = productLasa
+      }
     }
   }
 }

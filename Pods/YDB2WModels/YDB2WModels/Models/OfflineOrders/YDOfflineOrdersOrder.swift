@@ -54,7 +54,7 @@ public class YDOfflineOrdersOrder: Decodable {
   }
 
   public var formatedDate: String? {
-    return date?.date(withFormat: "yyyy-MM-dd'T'HH:mm:ss")?.toFormat("dd/MM/YYYY 'às' HH:mm'h'")
+    return date?.date(withFormat: "yyyy-MM-dd'T'HH:mm:ss")?.toFormat("dd/MM/YYYY")
   }
 
   public var formatedDateSection: String? {

@@ -10,6 +10,9 @@ import Foundation
 public class YDProductOnlineOffline: Codable {
   public var online: YDProduct?
   public var offline: YDProduct?
+  public var ean: String? {
+    return online?.ean ?? offline?.ean
+  }
 
   public init(online: YDProduct?, offline: YDProduct?) {
     self.online = online
