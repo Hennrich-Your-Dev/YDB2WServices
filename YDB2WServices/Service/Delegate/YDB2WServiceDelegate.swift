@@ -33,4 +33,9 @@ public protocol YDB2WServiceDelegate: AnyObject {
     storeId: String?,
     onCompletion completion: @escaping (Swift.Result<YDProductsRESQL, YDServiceError>) -> Void
   )
+
+  func getSpacey(
+    spaceyId: String,
+    onCompletion completion: @escaping (Swift.Result<YDSpacey, YDServiceError>) -> Void
+  )
 }
