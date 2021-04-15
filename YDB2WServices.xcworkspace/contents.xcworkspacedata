@@ -8,6 +8,9 @@
       location = "group:YDB2WServices.podspec">
    </FileRef>
    <FileRef
+      location = "group:Podfile">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum LoggerLevel: Int {
+enum LoggerLevel: Int {
   case debug = 0
   case info
   case warning
@@ -16,7 +16,7 @@ public enum LoggerLevel: Int {
   case none
 }
 
-public class Logger {
+class Logger {
 
   private let className: String
   private static var destinations: [LoggerDestination] = [LoggerConsoleDestination()]
@@ -34,12 +34,12 @@ public class Logger {
     formatter = "[\(dateParam)] - [\(classParam):\(methodParam)] [\(lineParam):\(columnParam)] \(messageParam)"
   }
 
-  public static func forClass(_ clazz: Any.Type) -> Logger {
+  static func forClass(_ clazz: Any.Type) -> Logger {
     let logger = Logger(className: String(describing: clazz.self))
     return logger
   }
 
-  public static func addDestination(destination: LoggerDestination) {
+  static func addDestination(destination: LoggerDestination) {
     Logger.destinations.append(destination)
   }
 
@@ -60,7 +60,7 @@ public class Logger {
       .replacingOccurrences(of: dateParam, with: dateformatter.string(from: Date()) )
   }
 
-  public func info(
+  func info(
     _ args: CVarArg?,
     function: String = #function,
     line: Int = #line,
@@ -74,7 +74,7 @@ public class Logger {
     }
   }
 
-  public func error(
+  func error(
     _ args: CVarArg?,
     function: String = #function,
     line: Int = #line,
@@ -88,7 +88,7 @@ public class Logger {
     }
   }
 
-  public func warning(
+  func warning(
     _ args: CVarArg?,
     function: String = #function,
     line: Int = #line,
@@ -102,7 +102,7 @@ public class Logger {
     }
   }
 
-  public func debug(
+  func debug(
     _ args: CVarArg?,
     function: String = #function,
     line: Int = #line,
@@ -117,12 +117,12 @@ public class Logger {
   }
 }
 
-public protocol LoggerDestination {
+protocol LoggerDestination {
   func send(message: String, level: LoggerLevel)
 }
 
-public class LoggerConsoleDestination: LoggerDestination {
-  public func send(message: String, level: LoggerLevel) {
+class LoggerConsoleDestination: LoggerDestination {
+  func send(message: String, level: LoggerLevel) {
     print(message)
   }
 }
