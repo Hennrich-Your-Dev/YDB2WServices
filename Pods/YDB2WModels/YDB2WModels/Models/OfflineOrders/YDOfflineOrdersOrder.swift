@@ -17,13 +17,13 @@ public class YDOfflineOrdersOrder: Decodable {
   public var date: String?
   public var totalPrice: Double?
   public var storeId: Int?
-  public var storeName: String?
 
   // address
   public var addressStreet: String?
   public var addressCity: String?
   public var addressZipcode: String?
   public var addressState: String?
+  public var storeName: String?
 
   // products
   public var products: [YDOfflineOrdersProduct]?
@@ -32,7 +32,11 @@ public class YDOfflineOrdersOrder: Decodable {
   public var indexPath: IndexPath?
 
   // computed variables
-  public var formatedAddress: String? {
+  public var formattedStoreName: String? {
+    return storeName?.capitalized
+  }
+
+  public var formattedAddress: String? {
     guard var address = addressStreet else { return nil }
 
     if let city = addressCity,
@@ -50,15 +54,18 @@ public class YDOfflineOrdersOrder: Decodable {
       address += ", \(state)"
     }
 
-    return address
+    return address.capitalized
   }
 
-  public var formatedDate: String? {
+  public var formattedDate: String? {
     return date?.date(withFormat: "yyyy-MM-dd'T'HH:mm:ss")?.toFormat("dd/MM/YYYY")
   }
 
-  public var formatedDateSection: String? {
-    return date?.date(withFormat: "yyyy-MM-dd'T'HH:mm:ss")?.toFormat("MMM 'de' YYYY")
+  public var formattedDateSection: String? {
+    return date?.date(withFormat: "yyyy-MM-dd'T'HH:mm:ss")?
+      .toFormat("MMMM 'de' YYYY").lowercased(
+        with: Locale(identifier: "pt_BR")
+      )
   }
 
   public var dateWithDateType: Date? {
@@ -69,7 +76,7 @@ public class YDOfflineOrdersOrder: Decodable {
     return formatter.date(from: date)
   }
 
-  public var formatedPrice: String? {
+  public var formattedPrice: String? {
     guard let total = totalPrice else { return nil }
     let formatter = NumberFormatter()
     formatter.numberStyle = .currency

@@ -50,7 +50,7 @@ public class YDAddress: Decodable {
       address += " - \(state)"
     }
 
-    return address
+    return address.capitalized
   }
 
   public var coords: CLLocationCoordinate2D? {

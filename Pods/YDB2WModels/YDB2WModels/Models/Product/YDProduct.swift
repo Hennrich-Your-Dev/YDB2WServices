@@ -109,52 +109,30 @@ public class YDProduct: Codable {
 // MARK: Extensions
 extension YDProduct {
   public func getHtmlDescription() -> NSMutableAttributedString? {
-    guard var description = description else { return nil }
+    guard let description = description,
+          let attributed = description.htmlAttributed(
+            family: "-apple-system",
+            size: 12
+          )
 
-    description = "<style>" +
-      "html *" +
-      "{" +
-      "font-size: 12pt !important;" +
-      "font-family: \(UIFont.systemFont(ofSize: 12).fontName), Helvetica !important;" +
-      "}</style> \(description)"
+    else { return nil }
 
-    guard let data = description.data(using: .utf8) else { return nil }
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 3
 
-    do {
-      let attributedString = try NSMutableAttributedString(
-        data: data,
-        options: [
-          .documentType: NSAttributedString.DocumentType.html,
-          .characterEncoding: String.Encoding.utf8.rawValue
-        ],
-        documentAttributes: nil
-      )
+    attributed.addAttribute(
+      NSAttributedString.Key.paragraphStyle,
+      value: paragraphStyle,
+      range: NSRange(location: 0, length: attributed.length)
+    )
 
-      let paragraphStyle = NSMutableParagraphStyle()
-      paragraphStyle.lineSpacing = 3
+    attributed.addAttribute(
+      NSAttributedString.Key.foregroundColor,
+      value: UIColor.Zeplin.grayLight,
+      range: NSRange(location: 0, length: attributed.length)
+    )
 
-      attributedString.addAttribute(
-        NSAttributedString.Key.paragraphStyle,
-        value: paragraphStyle,
-        range: NSRange(location: 0, length: attributedString.length)
-      )
-
-//      attributedString.addAttribute(
-//        NSAttributedString.Key.font,
-//        value: UIFont.systemFont(ofSize: 14),
-//        range: NSRange(location: 0, length: attributedString.length)
-//      )
-
-      attributedString.addAttribute(
-        NSAttributedString.Key.foregroundColor,
-        value: UIColor.Zeplin.grayLight,
-        range: NSRange(location: 0, length: attributedString.length)
-      )
-
-      return attributedString
-    } catch {
-      return NSMutableAttributedString()
-    }
+    return attributed
   }
 
   public func getTechnicalInformation() -> [YDProductAttributes] {

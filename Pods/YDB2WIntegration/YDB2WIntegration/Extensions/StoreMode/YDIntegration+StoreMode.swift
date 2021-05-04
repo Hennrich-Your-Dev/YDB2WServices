@@ -23,40 +23,97 @@ public extension YDIntegrationHelper {
 
 // MARK: Get NPS config list
 public extension YDIntegrationHelper {
+  private func createNPSList() -> [YDMNPSListConfig] {
+    var list: [YDMNPSListConfig] = []
+
+    let starComponent = YDMNPSListConfig(
+      uniqueId: "stars",
+      title: "Como foi o seu atendimento no caixa?",
+      items: nil
+    )
+    list.append(starComponent)
+
+//    let queueQuestion = YDMNPSListConfig(
+//      uniqueId: "largeHorizontal1",
+//      title: "Você pegou fila?",
+//      items: [
+//        YDMNPSListConfigItems(value: "Não, estava livre"),
+//        YDMNPSListConfigItems(value: "Sim, tinha fila")
+//      ]
+//    )
+//    list.append(queueQuestion)
+
+    //
+    let indicateLevel = YDMNPSListConfig(
+      uniqueId: "smallHorizontal1",
+      title: "O quanto você indicaria a loja que visitou?",
+      items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map { YDMNPSListConfigItems(value: "\($0)") }
+    )
+    list.append(indicateLevel)
+
+    //
+    let ratioList = YDMNPSListConfig(
+      uniqueId: "ratioList1",
+      title: "Conta pra gente o motivo da sua nota?",
+      items: [
+        YDMNPSListConfigItems(value: "Atendimento no geral"),
+        YDMNPSListConfigItems(value: "Ambiente ou organização"),
+        YDMNPSListConfigItems(value: "Preços e promoções"),
+        YDMNPSListConfigItems(value: "Tempo na fila"),
+        YDMNPSListConfigItems(value: "Variedade de produtos"),
+        YDMNPSListConfigItems(value: "Pagamento com Ame"),
+        YDMNPSListConfigItems(value: "Ações de prevenção contra o Coronavírus")
+      ]
+    )
+    list.append(ratioList)
+
+    //
+    let textView = YDMNPSListConfig(
+      uniqueId: "textView1",
+      title: "",
+      items: nil
+    )
+    list.append(textView)
+
+    return list
+  }
+
   func getNPSList(completion: (([YDMNPSListConfig]) -> Void)?) {
     if let currentStoreNPS = self.currentStoreNPS {
       completion?(currentStoreNPS)
+
+      //
     } else {
-      actionDelegate?.getNPSList { [weak self] list in
-        var transformedList: [YDMNPSListConfig] = []
+      let list = createNPSList()
 
-        for (index, curr) in list.enumerated() {
-          switch index {
-          case 0:
-            curr.type = .stars
+      var transformedList: [YDMNPSListConfig] = []
 
-          case 1:
-            curr.type = .largeHorizontal
+      for (index, curr) in list.enumerated() {
+        switch index {
+        case 0:
+          curr.type = .stars
 
-          case 2:
-            curr.type = .smallHorizontal
+        case 1:
+          curr.type = .largeHorizontal
 
-          case 3:
-            curr.type = .ratioList
+        case 2:
+          curr.type = .smallHorizontal
 
-          case 4:
-            curr.type = .textField
+        case 3:
+          curr.type = .ratioList
 
-          default:
-            break
-          }
+        case 4:
+          curr.type = .textField
 
-          transformedList.append(curr)
+        default:
+          break
         }
 
-        completion?(transformedList)
-        self?.currentStoreNPS = transformedList
+        transformedList.append(curr)
       }
+
+      completion?(transformedList)
+      currentStoreNPS = transformedList
     }
   }
 }

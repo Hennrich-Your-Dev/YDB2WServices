@@ -46,7 +46,7 @@ extension YDIntegrationHelper {
     trackingDelegate?.trackAdobeAction(actionName: actionName, parameters: parameters)
   }
 
-  func trackFacebookEvent(eventName: String, parameters: [String: Any]?) {
+  public func trackFacebookEvent(eventName: String, parameters: [String: Any]?) {
     trackingDelegate?.trackFacebookEvent(eventName: eventName, parameters: parameters)
   }
 

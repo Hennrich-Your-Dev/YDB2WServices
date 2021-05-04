@@ -90,17 +90,17 @@ public extension String {
       return false
     }
   }
-  
+
 }
 
 // MARK: HTML
 public extension String {
-  var htmlToAttributed: NSAttributedString? {
+  var htmlToAttributed: NSMutableAttributedString? {
     do {
       guard let data = data(using: String.Encoding.utf8) else {
         return nil
       }
-      return try NSAttributedString(
+      return try NSMutableAttributedString(
         data: data,
         options: [
           .documentType: NSAttributedString.DocumentType.html,
@@ -114,7 +114,7 @@ public extension String {
     }
   }
 
-  var htmlAttributed: (NSAttributedString?, NSDictionary?) {
+  var htmlAttributed: (NSMutableAttributedString?, NSDictionary?) {
     do {
       guard let data = data(using: String.Encoding.utf8) else {
         return (nil, nil)
@@ -123,7 +123,7 @@ public extension String {
       var dict: NSDictionary?
       dict = NSMutableDictionary()
 
-      return try (NSAttributedString(
+      return try (NSMutableAttributedString(
         data: data,
         options: [
           .documentType: NSAttributedString.DocumentType.html,
@@ -139,7 +139,7 @@ public extension String {
     }
   }
 
-  func htmlAttributed(using font: UIFont) -> NSAttributedString? {
+  func htmlAttributed(using font: UIFont) -> NSMutableAttributedString? {
     do {
       let htmlCSSString = "<style>" +
         "html *" +
@@ -152,7 +152,7 @@ public extension String {
         return nil
       }
 
-      return try NSAttributedString(
+      return try NSMutableAttributedString(
         data: data,
         options: [
           .documentType: NSAttributedString.DocumentType.html,
@@ -166,7 +166,7 @@ public extension String {
     }
   }
 
-  func htmlAttributed(family: String?, size: CGFloat) -> NSAttributedString? {
+  func htmlAttributed(family: String?, size: CGFloat) -> NSMutableAttributedString? {
     do {
       let htmlCSSString = "<style>" +
         "html *" +
@@ -179,7 +179,7 @@ public extension String {
         return nil
       }
 
-      return try NSAttributedString(
+      return try NSMutableAttributedString(
         data: data,
         options: [
           .documentType: NSAttributedString.DocumentType.html,

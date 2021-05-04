@@ -11,6 +11,7 @@ public enum YDSpaceyComponentsTypes: Decodable {
   case player(YDSpaceyComponentPlayer)
   case product(YDSpaceyComponentProduct)
   case banner(YDSpaceyComponentBanner)
+  case nextLive(YDSpaceyComponentNextLive)
 
   enum CodingKeys: String, CodingKey {
     case type
@@ -21,6 +22,7 @@ public enum YDSpaceyComponentsTypes: Decodable {
     case player = "zion-video"
     case product = "zion-product"
     case banner = "zion-image"
+    case nextLive = "live-schedule-item"
   }
 
   // MARK: Init
@@ -29,17 +31,21 @@ public enum YDSpaceyComponentsTypes: Decodable {
     let type = try container.decode(Types.self, forKey: .type)
 
     switch type {
-    case .player:
-      let playerContainer = try decoder.singleValueContainer()
-      self = .player(try playerContainer.decode(YDSpaceyComponentPlayer.self))
+      case .player:
+        let playerContainer = try decoder.singleValueContainer()
+        self = .player(try playerContainer.decode(YDSpaceyComponentPlayer.self))
 
-    case .product:
-      let productContainer = try decoder.singleValueContainer()
-      self = .product(try productContainer.decode(YDSpaceyComponentProduct.self))
+      case .product:
+        let productContainer = try decoder.singleValueContainer()
+        self = .product(try productContainer.decode(YDSpaceyComponentProduct.self))
 
-    case .banner:
-      let bannerContainer = try decoder.singleValueContainer()
-      self = .banner(try bannerContainer.decode(YDSpaceyComponentBanner.self))
+      case .banner:
+        let bannerContainer = try decoder.singleValueContainer()
+        self = .banner(try bannerContainer.decode(YDSpaceyComponentBanner.self))
+
+      case .nextLive:
+        let nextLiveContainer = try decoder.singleValueContainer()
+        self = .nextLive(try nextLiveContainer.decode(YDSpaceyComponentNextLive.self))
     }
   }
 
@@ -55,18 +61,24 @@ public enum YDSpaceyComponentsTypes: Decodable {
     self = .banner(banner)
   }
 
+  public init(nextLive: YDSpaceyComponentNextLive) {
+    self = .nextLive(nextLive)
+  }
+
   // MARK: Actions
   public func get() -> Any {
     switch self {
-    case .player(let player):
-      return player
+      case .player(let player):
+        return player
 
-      //
-    case .product(let product):
-      return product
+      case .product(let product):
+        return product
 
-    case .banner(let banner):
-      return banner
+      case .banner(let banner):
+        return banner
+
+      case .nextLive(let nextLive):
+        return nextLive
     }
   }
 }

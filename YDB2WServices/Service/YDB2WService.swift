@@ -216,8 +216,8 @@ extension YDB2WService: YDB2WServiceDelegate {
 
   public func getSpacey(
     spaceyId: String,
-    onCompletion completion: @escaping (Swift.Result<YDSpacey, YDServiceError>
-    ) -> Void) {
+    onCompletion completion: @escaping (Swift.Result<YDSpacey, YDServiceError>) -> Void
+  ) {
     let url = "\(spacey)/spacey-api/publications/app/americanas/hotsite/\(spaceyId)"
 
     DispatchQueue.global().async { [weak self] in

@@ -27,116 +27,131 @@ public enum TrackEvents: String {
   case liveOpenChat = "ACOM-live-chataovivo"
 
   // Store Mode
-  case storePageView = "ACOM:O2O-Home"
-  case storeOpenBasket = "O2O-Home-VerProdutos"
-  case storeOpenBooklet = "O2O-Home-EncarteDasLojas"
-  case storeOnScan = "O2O-Home-Scan"
+  case storePageView = "ACOM:MODOLOJA-Home"
+  case storeOpenBasket = "ModoLoja-Home-VerProdutos"
+  case storeOpenBooklet = "O2O-ModoLoja-EncarteDasLojas"
+  case storeOnScan = "O2O-ModoLoja-Scan"
   case storeOpenMap = "O2O-Home-Mapa"
+  case sendNPS = "trackStuartEvent"
 
   // Find a Store
   case findStoreView = "ACOM:StoreFinder:Mapa"
   case findStoreViewDenied = "ACOM:StoreFinder:SemPermissao"
 
   // Offline Account
-  case offlineAccountPerfil = "ACOM:OfflineAccount:Perfil"
-  case offlineAccountUsersInfo = "ACOM:OfflineAccount:Cadastro"
+  case offlineAccountPerfil = "ACOM:MODOLOJA-MeuPerfil"
+  case offlineAccountUsersInfo = "ACOM:MODOLOJA-DadosAtualizados"
   case offlineAccountModalNonexistent = "ACOM:OfflineAccount:ModalCadastroInexistente"
   case offlineAccountModalIncomplete = "ACOM:OfflineAccount:ModalCadastroIncompleto"
   case offlineAccountModalError = "ACOM:OfflineAccount:ModalErro"
-  case offlineAccountHistoric = "ACOM:OfflineAccount:Historico"
-  case offlineAccountTerms = "ACOM:OfflineAccount:Politica"
+  case offlineAccountHistoric = "ACOM:MODOLOJA-Historico"
+  case offlineAccountTerms = "ACOM:MODOLOJA-TermoseCondicoes"
+
+  // Offline Orders
+  case offlineOrders = "ACOM:MODOLOJA-MinhasCompras"
 
   // Default Parameters
   public var defaultParameters: [String: Any] {
     switch self {
-    // Scan
-    case .scan, .scanProduct, .productDetails:
-      return ["tipoPagina": "LASA-Scan"]
+      // Scan
+      case .scan, .scanProduct, .productDetails:
+        return ["tipoPagina": "LASA-Scan"]
 
-    // Live
-    case .pageView, .playVideo, .addToCart, .productSelected, .liveOpenChat:
-      return [:]
+      // Live
+      case .pageView, .playVideo, .addToCart, .productSelected, .liveOpenChat:
+        return [:]
 
-    // Store
-    case .storePageView, .storeOpenBasket, .storeOpenBooklet, .storeOnScan, .storeOpenMap:
-      return ["tipoPagina": "O2O-Home"]
+      // Store
+      case .storePageView, .storeOpenBasket, .storeOpenBooklet, .storeOnScan, .storeOpenMap:
+        return ["tipoPagina": "O2O-modoloja"]
 
-    // Find a Store
-    case .findStoreView, .findStoreViewDenied:
-    return [:]
+      case .sendNPS:
+        return [:]
 
-    // Offline Account
-    case .offlineAccountPerfil, .offlineAccountUsersInfo,
-         .offlineAccountModalNonexistent, .offlineAccountModalIncomplete,
-         .offlineAccountModalError, .offlineAccountHistoric, .offlineAccountTerms:
-    return [:]
+      // Find a Store
+      case .findStoreView, .findStoreViewDenied:
+        return [:]
+
+      // Offline Account
+      case .offlineAccountPerfil, .offlineAccountUsersInfo,
+           .offlineAccountModalNonexistent, .offlineAccountModalIncomplete,
+           .offlineAccountModalError, .offlineAccountHistoric, .offlineAccountTerms:
+        return [:]
+
+      // Offline Orders
+      case .offlineOrders:
+        return [:]
     }
   }
 
   public func parameters(body: [String: Any]) -> [String: Any] {
     switch self {
-    // Scan
-    case .scan, .scanProduct, .productDetails:
-      return [:]
+      // Scan
+      case .scan, .scanProduct, .productDetails:
+        return [:]
 
-    // Live
-    case .pageView:
-      let videoId = body["videoId"] as? String ?? ""
+      // Live
+      case .pageView:
+        let videoId = body["videoId"] as? String ?? ""
 
-      return [
-        "tipoPagina": "Hotsite",
-        "&&pageName": "ACOM:Hotsite:youtube-live",
-        "deepLinkUrl": "acom://navigation/hotsite/youtube-live?videoId=\(videoId)&autoplay=true",
-        "slugPath": "/hotsite/youtube-live?videoId=\(videoId)&autoplay=true"
-      ]
+        return [
+          "tipoPagina": "Hotsite",
+          "&&pageName": "ACOM:Hotsite:youtube-live",
+          "deepLinkUrl": "acom://navigation/hotsite/youtube-live?videoId=\(videoId)&autoplay=true",
+          "slugPath": "/hotsite/youtube-live?videoId=\(videoId)&autoplay=true"
+        ]
 
-    case .playVideo:
-      let videoId = body["videoId"] as? String ?? ""
+      case .playVideo:
+        let videoId = body["videoId"] as? String ?? ""
 
-      return ["videoId": videoId]
+        return ["videoId": videoId]
 
-    case .addToCart:
-      let productId = body["productId"] as? String ?? ""
-      let sku = body["productEan"] as? String ?? ""
-      let sellerId = body["sellerId"] as? String ?? ""
+      case .addToCart:
+        let productId = body["productId"] as? String ?? ""
+        let sku = body["productEan"] as? String ?? ""
+        let sellerId = body["sellerId"] as? String ?? ""
 
-      return [
-        "productId": productId,
-        "sku": sku,
-        "sellerId": sellerId
-      ]
+        return [
+          "productId": productId,
+          "sku": sku,
+          "sellerId": sellerId
+        ]
 
-    case .productSelected:
-      let productId = body["productId"] as? String ?? ""
-      let sku = body["productEan"] as? String ?? ""
-      let sellerId = body["sellerId"] as? String ?? ""
+      case .productSelected:
+        let productId = body["productId"] as? String ?? ""
+        let sku = body["productEan"] as? String ?? ""
+        let sellerId = body["sellerId"] as? String ?? ""
 
-      return [
-        "productId": productId,
-        "sku": sku,
-        "sellerId": sellerId
-      ]
+        return [
+          "productId": productId,
+          "sku": sku,
+          "sellerId": sellerId
+        ]
 
-    case .liveOpenChat:
-      return [:]
+      case .liveOpenChat:
+        return [:]
 
-    // Store
-    case .storePageView:
-      let locationEnable = body["locationEnable"] as? Bool ?? false
-      return ["locationEnable": locationEnable]
+      // Store
+      case .storePageView:
+        let locationEnable = body["locationEnable"] as? Bool ?? false
+        return ["locationEnable": locationEnable]
 
-    case .storeOpenBasket, .storeOpenBooklet, .storeOnScan, .storeOpenMap:
-      return [:]
+      case .storeOpenBasket, .storeOpenBooklet, .storeOnScan, .storeOpenMap, .sendNPS:
+        return [:]
 
-    // Find a Store
-    case .findStoreView, .findStoreViewDenied:
-      return [:]
+      // Find a Store
+      case .findStoreView, .findStoreViewDenied:
+        return [:]
 
-    // Offline Account
-    case .offlineAccountPerfil, .offlineAccountUsersInfo,
-         .offlineAccountModalNonexistent, .offlineAccountModalIncomplete,
-         .offlineAccountModalError, .offlineAccountHistoric, .offlineAccountTerms:
-    return [:]
+      // Offline Account
+      case .offlineAccountPerfil, .offlineAccountUsersInfo,
+           .offlineAccountModalNonexistent, .offlineAccountModalIncomplete,
+           .offlineAccountModalError, .offlineAccountHistoric, .offlineAccountTerms:
+        return [:]
+
+      // Offline Orders
+      case .offlineOrders:
+        return [:]
     }
   }
 }

@@ -20,22 +20,31 @@ public class YDSpaceyComponentBanner: Decodable {
 
   // Computed variables
   public var bannerImage: String? {
+    var image: String? = nil
+
     switch defaultSize {
     case .small:
-      return small
+      image = small
 
     case .medium:
-      return medium
+      image = medium
 
     case .big:
-      return big
+      image = big
 
     case .large:
-      return large
+      image = large
 
     case .extralarge:
-      return extralarge
+      image = extralarge
     }
+
+    if image?.isEmpty ?? true {
+      let images = [extralarge, large, big, medium, small].compactMap { $0 }
+      return images.first(where: { !$0.isEmpty })
+    }
+
+    return image
   }
 
   // Coding Keys

@@ -50,7 +50,7 @@ public class YDStore: Decodable {
     }
 
     var calendar = Calendar.init(identifier: .gregorian)
-    calendar.locale = Locale(identifier: "en-US")
+    calendar.locale = Locale(identifier: "en-US") // Need to be English since we compare with english day week name
 
     let weekDays = calendar.weekdaySymbols
     guard let todayWeekDay = weekDays.at(calendar.component(.weekday, from: Date()) - 1),

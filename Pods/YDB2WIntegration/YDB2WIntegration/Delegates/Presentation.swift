@@ -16,10 +16,3 @@ public protocol YDIntegrationHelperPresentationDelegate {
   func presentLive(navigationController: UINavigationController)
   func presentSelectAddress(completion: ((YDAddress?) -> Void)?)
 }
-
-public extension YDIntegrationHelperPresentationDelegate {
-  func presentScanner() {}
-  func presentStoreMode() {}
-  func presentLive(navigationController: UINavigationController) {}
-  func presentSelectAddress(completion: ((YDAddress?) -> Void)?) {}
-}
