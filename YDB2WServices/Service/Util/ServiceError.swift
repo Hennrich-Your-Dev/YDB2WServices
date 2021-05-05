@@ -8,6 +8,7 @@
 import Foundation
 
 public enum YDServiceError: Error {
+  case permanentRedirect      // Status code 308
   case badRequest             // Status code 400
   case unauthorized           // Status code 401
   case notFound               // Status code 404
@@ -19,58 +20,67 @@ public enum YDServiceError: Error {
 
   public var message: String {
     switch self {
-    case .badRequest:
-      return "API inválida"
+      case .permanentRedirect:
+        return "API mudou de URL"
+
+      case .badRequest:
+        return "API inválida"
 
       case .unauthorized:
         return "Usuário não autorizado"
 
-    case .notFound:
-      return "API não encontrada"
+      case .notFound:
+        return "API não encontrada"
 
-    case .internalServerError:
-      return "Erro na API"
+      case .internalServerError:
+        return "Erro na API"
 
-    case .cantCreateUrl:
-      return "Erro ao montar a API"
+      case .cantCreateUrl:
+        return "Erro ao montar a API"
 
-    case .noService:
-      return "Sem serviço"
+      case .noService:
+        return "Sem serviço"
 
-    case .unknow(let params):
-      let (message, _) = params
-      return message ?? "Erro inesperado"
+      case .unknow(let params):
+        let (message, _) = params
+        return message ?? "Erro inesperado"
     }
   }
 
   //
   public var type: YDServiceError {
     switch self {
-    case .badRequest:
-      return .badRequest
+      case .permanentRedirect:
+        return .permanentRedirect
+
+      case .badRequest:
+        return .badRequest
 
       case .unauthorized:
         return .unauthorized
 
-    case .notFound:
-      return .notFound
+      case .notFound:
+        return .notFound
 
-    case .internalServerError:
-      return .internalServerError
+      case .internalServerError:
+        return .internalServerError
 
-    case .cantCreateUrl:
-      return .cantCreateUrl
+      case .cantCreateUrl:
+        return .cantCreateUrl
 
-    case .noService:
-      return .noService
+      case .noService:
+        return .noService
 
-    case .unknow(let tuple):
-      return .unknow(tuple)
+      case .unknow(let tuple):
+        return .unknow(tuple)
     }
   }
 
   public var statusCode: Int? {
     switch self {
+      case .permanentRedirect:
+        return 308
+
       case .badRequest:
         return 400
 
@@ -106,6 +116,9 @@ public enum YDServiceError: Error {
     }
 
     switch statusCode {
+      case 308:
+        self = .permanentRedirect
+
       case 400:
         self = .badRequest
 
