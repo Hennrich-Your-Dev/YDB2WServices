@@ -7,6 +7,8 @@
 
 import Foundation
 
+import YDB2WModels
+
 // MARK: Get Customer
 public extension YDIntegrationHelper {
   func getCustomer(completion: ((YDCurrentCustomer?) -> Void)?) {

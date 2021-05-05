@@ -1,8 +1,8 @@
 //
-//  Customer.swift
-//  YDIntegration
+//  YDCurrent.swift
+//  YDB2WModels
 //
-//  Created by Douglas Hennrich on 27/10/20.
+//  Created by Douglas Hennrich on 05/05/21.
 //
 
 import Foundation

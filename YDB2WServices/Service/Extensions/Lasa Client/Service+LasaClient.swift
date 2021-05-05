@@ -7,7 +7,6 @@
 
 import Foundation
 
-import YDB2WIntegration
 import YDB2WModels
 
 public extension YDB2WService {

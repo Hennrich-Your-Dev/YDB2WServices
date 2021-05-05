@@ -8,17 +8,9 @@
 import Foundation
 import CoreLocation
 
-import YDB2WIntegration
 import YDB2WModels
 
 public protocol YDB2WServiceDelegate: AnyObject {
-  func offlineOrdersGetOrders(
-    userToken token: String,
-    page: Int,
-    limit: Int,
-    onCompletion completion: @escaping (Result<YDOfflineOrdersOrdersList, YDServiceError>) -> Void
-  )
-
   func getNearstLasa(
     with location: CLLocationCoordinate2D,
     onCompletion completion: @escaping (Result<YDStores, YDServiceError>) -> Void
@@ -35,6 +27,21 @@ public protocol YDB2WServiceDelegate: AnyObject {
     onCompletion completion: @escaping (Result<YDProductsRESQL, YDServiceError>) -> Void
   )
 
+  // Live
+  func getYouTubeDetails(
+    withVideoId videoId: String,
+    onCompletion: @escaping (Result<YDYouTubeDetails, YDServiceError>) -> Void
+  )
+
+  // Offline Orders
+  func offlineOrdersGetOrders(
+    userToken token: String,
+    page: Int,
+    limit: Int,
+    onCompletion completion: @escaping (Result<YDOfflineOrdersOrdersList, YDServiceError>) -> Void
+  )
+
+  // Spacey
   func getSpacey(
     spaceyId: String,
     onCompletion completion: @escaping (Result<YDSpacey, YDServiceError>) -> Void

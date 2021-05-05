@@ -8,6 +8,8 @@
 
 import Foundation
 
+import YDB2WModels
+
 public protocol YDIntegrationHelperActionDelegate {
   func activateDiscount(offerId: String, completion: ((Bool) -> Void)?)
   func addProductToCart(parameters: [String: Any]?)

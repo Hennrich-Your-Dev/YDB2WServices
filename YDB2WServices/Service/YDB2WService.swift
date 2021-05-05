@@ -25,6 +25,9 @@ public class YDB2WService {
   let zipcode: String
   let spacey: String
   let lasaClient: String
+  let youTubeAPI: String
+
+  var youTubeKey = ""
 
   // MARK: Init
   public init() {
@@ -45,7 +48,11 @@ public class YDB2WService {
           let spaceyApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.spaceyService.rawValue)?.endpoint,
           let lasaApi = YDIntegrationHelper.shared
-            .getFeature(featureName: YDConfigKeys.lasaClientService.rawValue)?.endpoint
+            .getFeature(featureName: YDConfigKeys.lasaClientService.rawValue)?.endpoint,
+
+          let googleServiceConfig = YDIntegrationHelper.shared
+            .getFeature(featureName: YDConfigKeys.googleService.rawValue),
+          let googleServiceApi = googleServiceConfig.endpoint
     else {
       fatalError("Não foi possível resgatar todas APIs")
     }
@@ -59,6 +66,12 @@ public class YDB2WService {
     self.zipcode = zipcodeApi
     self.spacey = spaceyApi
     self.lasaClient = lasaApi
+    self.youTubeAPI = "\(googleServiceApi)/youtube/v3/videos?part=statistics,liveStreamingDetails"
+
+    if let youTubeKey = googleServiceConfig
+    .extras?[YDConfigProperty.youtubeKey.rawValue] as? String {
+      self.youTubeKey = youTubeKey
+    }
   }
 }
 
