@@ -11,4 +11,14 @@ public struct YDProductRating: Codable {
   public let average: Double
   public let recommendations: Int
   public let reviews: Int
+
+  public init(
+    average: Double,
+    recommendations: Int,
+    reviews: Int
+  ) {
+    self.average = average
+    self.recommendations = recommendations
+    self.reviews = reviews
+  }
 }

@@ -10,7 +10,7 @@ import Foundation
 import YDExtensions
 
 public class YDStores: Decodable {
-  public let stores: [YDStore]
+  public var stores: [YDStore]
 }
 
 public class YDStore: Decodable {
