@@ -193,4 +193,32 @@ public extension String {
     }
   }
 
+  func htmlAttributed(size: CGFloat = 14) -> NSAttributedString? {
+    let htmlFontSize = size*0.75
+
+    do {
+      let htmlCSSString = "<style>" +
+        "html *" +
+        "{" +
+        "font-size: \(htmlFontSize)pt !important;" +
+        "font-family: \("-apple-system"), Helvetica !important;" +
+        "}</style> \(self)"
+
+      guard let data = htmlCSSString.data(using: String.Encoding.utf8) else {
+        return nil
+      }
+
+      let attributedString = try NSMutableAttributedString(
+        data: data,
+        options: [.documentType: NSAttributedString.DocumentType.html,
+                  .characterEncoding: String.Encoding.utf8.rawValue],
+        documentAttributes: nil
+      )
+
+      return attributedString
+    } catch {
+      print("htmlAttributed error: ", error)
+      return nil
+    }
+  }
 }

@@ -16,6 +16,7 @@ public class YDSpaceyComponentNextLive: Decodable {
   public let name: String?
   public let description: String?
   public var alreadyScheduled = false
+  public let componentType: YDSpaceyComponentsTypes.Types = .nextLive
 
   // MARK: Computed variables
   public var finalDateAsDate: Date? {

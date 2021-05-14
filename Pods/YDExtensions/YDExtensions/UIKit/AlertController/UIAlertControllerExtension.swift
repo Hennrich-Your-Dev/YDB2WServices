@@ -13,9 +13,11 @@ public extension UIAlertController {
     alertWindow.rootViewController = UIViewController()
     alertWindow.windowLevel = UIWindow.Level.alert + 1
     alertWindow.makeKeyAndVisible()
-    alertWindow.rootViewController?.present(self,
-                                            animated: animated,
-                                            completion: completion)
+    alertWindow.rootViewController?
+      .present(self,
+               animated: animated,
+               completion: completion
+      )
   }
 
   class func showAlert(
@@ -25,16 +27,19 @@ public extension UIAlertController {
 
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-    alertController.addAction(UIAlertAction(title: "OK",
-                                            style: UIAlertAction.Style.cancel,
-                                            handler: nil))
+    alertController.addAction(
+      UIAlertAction(
+        title: "OK",
+        style: UIAlertAction.Style.cancel,
+        handler: nil
+      )
+    )
 
     alertController.presentInOwnWindow(animated: true, completion: nil)
   }
 }
 
 public extension UIAlertController {
-
   //Set background color of UIAlertController
   func setBackgroundColor(color: UIColor) {
     if let bgView = self.view.subviews.first, let groupView = bgView.subviews.first, let contentView = groupView.subviews.first {
@@ -45,17 +50,21 @@ public extension UIAlertController {
   //Set title font and title color
   func setTitle(font: UIFont?, color: UIColor?) {
     guard let title = self.title else { return }
-    let attributeString = NSMutableAttributedString(string: title)//1
+    let attributeString = NSMutableAttributedString(string: title)
     if let titleFont = font {
-      attributeString.addAttributes([NSAttributedString.Key.font : titleFont],//2
-                                    range: NSMakeRange(0, title.utf8.count))
+      attributeString.addAttributes(
+        [NSAttributedString.Key.font : titleFont],
+        range: NSRange(location: 0, length: title.utf16.count)
+      )
     }
 
     if let titleColor = color {
-      attributeString.addAttributes([NSAttributedString.Key.foregroundColor : titleColor],//3
-                                    range: NSMakeRange(0, title.utf8.count))
+      attributeString.addAttributes(
+        [NSAttributedString.Key.foregroundColor : titleColor],
+        range: NSRange(location: 0, length: title.utf16.count)
+      )
     }
-    self.setValue(attributeString, forKey: "attributedTitle")//4
+    self.setValue(attributeString, forKey: "attributedTitle")
   }
 
   //Set message font and message color
@@ -63,13 +72,17 @@ public extension UIAlertController {
     guard let message = self.message else { return }
     let attributeString = NSMutableAttributedString(string: message)
     if let messageFont = font {
-      attributeString.addAttributes([NSAttributedString.Key.font : messageFont],
-                                    range: NSMakeRange(0, message.utf8.count))
+      attributeString.addAttributes(
+        [NSAttributedString.Key.font : messageFont],
+        range: NSRange(location: 0, length: message.utf16.count)
+      )
     }
 
     if let messageColorColor = color {
-      attributeString.addAttributes([NSAttributedString.Key.foregroundColor : messageColorColor],
-                                    range: NSMakeRange(0, message.utf8.count))
+      attributeString.addAttributes(
+        [NSAttributedString.Key.foregroundColor : messageColorColor],
+        range: NSRange(location: 0, length: message.utf16.count)
+      )
     }
     self.setValue(attributeString, forKey: "attributedMessage")
   }

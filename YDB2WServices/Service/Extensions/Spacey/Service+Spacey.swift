@@ -54,7 +54,7 @@ public extension YDB2WService {
 
         do {
           let spaceyStruct = try JSONDecoder().decode(YDSpaceyCommonStruct.self, from: data)
-          guard let children = spaceyStruct.component.children else {
+          guard let children = spaceyStruct.component?.children else {
             completion(.failure(YDServiceError.badRequest))
             return
           }

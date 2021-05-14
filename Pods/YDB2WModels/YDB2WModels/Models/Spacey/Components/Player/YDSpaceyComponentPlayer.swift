@@ -10,6 +10,7 @@ import Foundation
 public class YDSpaceyComponentPlayer: Codable {
   public let id: String
   public let url: String
+  public let componentType: YDSpaceyComponentsTypes.Types = .player
 
   // Computed variables
   public var videoId: String? {

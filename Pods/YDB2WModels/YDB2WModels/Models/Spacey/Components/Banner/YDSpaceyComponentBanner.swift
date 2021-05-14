@@ -17,6 +17,7 @@ public class YDSpaceyComponentBanner: Decodable {
   public let extralarge: String?
   public let defaultSize: YDSpaceyComponentBannerDefaultImage
   public let deepLink: String?
+  public let componentType: YDSpaceyComponentsTypes.Types = .banner
 
   // Computed variables
   public var bannerImage: String? {

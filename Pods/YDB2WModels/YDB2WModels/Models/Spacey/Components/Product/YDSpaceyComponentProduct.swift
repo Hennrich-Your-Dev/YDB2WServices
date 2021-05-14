@@ -10,6 +10,7 @@ import Foundation
 public class YDSpaceyComponentProduct: Decodable {
   public let id: String
   public let productId: String
+  public let componentType: YDSpaceyComponentsTypes.Types = .product
 
   enum CodingKeys: String, CodingKey {
     case id = "_id"

@@ -11,6 +11,7 @@ public enum UIStateEnum {
   case normal
   case loading
   case error
+  case empty
 }
 
 public protocol UIStateDelegate {
