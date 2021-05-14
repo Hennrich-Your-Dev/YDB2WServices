@@ -50,7 +50,7 @@ public protocol YDB2WServiceDelegate: AnyObject {
 
   func getNextLives(
     spaceyId: String,
-    onCompletion completion: @escaping (DataResponse<Data>?) -> Void
+    onCompletion completion: @escaping (Swift.Result<[YDSpaceyComponentNextLive], YDServiceError>) -> Void
   )
   
   // Lasa Client

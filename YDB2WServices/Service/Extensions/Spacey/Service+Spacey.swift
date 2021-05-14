@@ -32,7 +32,7 @@ public extension YDB2WService {
 
   func getNextLives(
     spaceyId: String,
-    onCompletion completion: @escaping (DataResponse<Data>?) -> Void
+    onCompletion completion: @escaping (Swift.Result<[YDSpaceyComponentNextLive], YDServiceError>) -> Void
   ) {
     let url = "\(spacey)/spacey-api/publications/app/live-schedule/americanas/hotsite/\(spaceyId)"
 
@@ -45,7 +45,33 @@ public extension YDB2WService {
         withHeaders: nil,
         andParameters: nil
       ) { response in
-        completion(response)
+        guard let response = response,
+              let data = response.data
+        else {
+          completion(.failure(YDServiceError.badRequest))
+          return
+        }
+
+        do {
+          let spaceyStruct = try JSONDecoder().decode(YDSpaceyCommonStruct.self, from: data)
+          guard let children = spaceyStruct.component.children else {
+            completion(.failure(YDServiceError.badRequest))
+            return
+          }
+
+          var list: [YDSpaceyComponentNextLive] = []
+
+          for curr in children {
+            if case .nextLive(let nextLive) = curr {
+              list.append(nextLive)
+            }
+          }
+
+          completion(.success(list))
+
+        } catch {
+          completion(.failure(YDServiceError(error: error)))
+        }
       }
     }
   }
