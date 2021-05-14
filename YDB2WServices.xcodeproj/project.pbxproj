@@ -17,6 +17,7 @@
 		C171468E25FA261D002AA296 /* YDB2WService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171468D25FA261D002AA296 /* YDB2WService.swift */; };
 		C171469C25FA2908002AA296 /* YDB2WServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171469B25FA2908002AA296 /* YDB2WServiceDelegate.swift */; };
 		C1B9B2582641C62200FF55C3 /* Service+LasaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B9B2572641C62200FF55C3 /* Service+LasaClient.swift */; };
+		C1C38952264ECAA5002A12C0 /* Service+Spacey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C38951264ECAA5002A12C0 /* Service+Spacey.swift */; };
 		C8ADE61CD1F7E6195CF4F60C /* Pods_YDB2WServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD22DFA406B59D69388399B7 /* Pods_YDB2WServices.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		C171468D25FA261D002AA296 /* YDB2WService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YDB2WService.swift; sourceTree = "<group>"; };
 		C171469B25FA2908002AA296 /* YDB2WServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YDB2WServiceDelegate.swift; sourceTree = "<group>"; };
 		C1B9B2572641C62200FF55C3 /* Service+LasaClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+LasaClient.swift"; sourceTree = "<group>"; };
+		C1C38951264ECAA5002A12C0 /* Service+Spacey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Spacey.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +98,9 @@
 			isa = PBXGroup;
 			children = (
 				C171468825FA24E9002AA296 /* Log */,
+				C171469A25FA28FD002AA296 /* Delegate */,
 				C171467325FA235E002AA296 /* Service */,
+				C171469F25FA2922002AA296 /* Util */,
 				C171466825FA219C002AA296 /* YDB2WServices.h */,
 				C171466925FA219C002AA296 /* Info.plist */,
 			);
@@ -107,9 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				C171468D25FA261D002AA296 /* YDB2WService.swift */,
-				C171469A25FA28FD002AA296 /* Delegate */,
 				C1B9B2562641C5F300FF55C3 /* Extensions */,
-				C171469F25FA2922002AA296 /* Util */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -146,8 +148,17 @@
 			children = (
 				C121D9B82642DE93004C9836 /* Chat */,
 				C121D9B62642DE8D004C9836 /* Lasa Client */,
+				C1C38950264ECA91002A12C0 /* Spacey */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C1C38950264ECA91002A12C0 /* Spacey */ = {
+			isa = PBXGroup;
+			children = (
+				C1C38951264ECAA5002A12C0 /* Service+Spacey.swift */,
+			);
+			path = Spacey;
 			sourceTree = "<group>";
 		};
 		CC30428BAFAD52F8538B6C7B /* Pods */ = {
@@ -272,6 +283,7 @@
 				C171467825FA23D3002AA296 /* Connectivity.swift in Sources */,
 				C171468E25FA261D002AA296 /* YDB2WService.swift in Sources */,
 				C171468025FA245B002AA296 /* ServiceClient.swift in Sources */,
+				C1C38952264ECAA5002A12C0 /* Service+Spacey.swift in Sources */,
 				C1B9B2582641C62200FF55C3 /* Service+LasaClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

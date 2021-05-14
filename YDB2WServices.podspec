@@ -4,14 +4,14 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "YDB2WServices"
-  spec.version      = "1.1.10"
+  spec.version      = "1.1.11"
   spec.summary      = "A short description of YDB2WServices."
   spec.homepage     = "http://yourdev//YDB2WServices"
   spec.license      = "MIT"
   spec.author       = { "Douglas Hennrich" => "douglashennrich@yourdev.com.br" }
 
   spec.swift_version    = "5.0"
-  spec.platform         = :ios, "11.0"
+  spec.platform         =  :ios, "11.0"
 
   spec.source = {
     :git => "git@github.com:Hennrich-Your-Dev/YDB2WServices.git",

@@ -8,29 +8,30 @@
 import Foundation
 import CoreLocation
 
+import Alamofire
 import YDB2WModels
 
 public protocol YDB2WServiceDelegate: AnyObject {
   func getNearstLasa(
     with location: CLLocationCoordinate2D,
-    onCompletion completion: @escaping (Result<YDStores, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<YDStores, YDServiceError>) -> Void
   )
 
   func getAddressFromLocation(
     _ location: CLLocationCoordinate2D,
-    onCompletion completion: @escaping (Result<[YDAddress], YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<[YDAddress], YDServiceError>) -> Void
   )
 
   func getProductsFromRESQL(
     eans: [String],
     storeId: String?,
-    onCompletion completion: @escaping (Result<YDProductsRESQL, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<YDProductsRESQL, YDServiceError>) -> Void
   )
 
   // Live
   func getYouTubeDetails(
     withVideoId videoId: String,
-    onCompletion: @escaping (Result<YDYouTubeDetails, YDServiceError>) -> Void
+    onCompletion: @escaping (Swift.Result<YDYouTubeDetails, YDServiceError>) -> Void
   )
 
   // Offline Orders
@@ -38,19 +39,24 @@ public protocol YDB2WServiceDelegate: AnyObject {
     userToken token: String,
     page: Int,
     limit: Int,
-    onCompletion completion: @escaping (Result<YDOfflineOrdersOrdersList, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) -> Void
   )
 
   // Spacey
   func getSpacey(
     spaceyId: String,
-    onCompletion completion: @escaping (Result<YDSpacey, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<YDSpacey, YDServiceError>) -> Void
+  )
+
+  func getNextLives(
+    spaceyId: String,
+    onCompletion completion: @escaping (DataResponse<Data>?) -> Void
   )
   
   // Lasa Client
   func getLasaClientLogin(
     user: YDCurrentCustomer,
-    onCompletion completion: @escaping (Result<YDLasaClientLogin, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<YDLasaClientLogin, YDServiceError>) -> Void
   )
 
   func getLasaClientInfo(
@@ -61,11 +67,11 @@ public protocol YDB2WServiceDelegate: AnyObject {
   func updateLasaClientInfo(
     user: YDLasaClientLogin,
     parameters: [String: Any],
-    onCompletion completion: @escaping (Result<Void, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
   )
 
   func getLasaClientHistoric(
     with user: YDLasaClientLogin,
-    onCompletion completion: @escaping (Result<[YDLasaClientHistoricData], YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<[YDLasaClientHistoricData], YDServiceError>) -> Void
   )
 }
