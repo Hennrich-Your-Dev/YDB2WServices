@@ -34,7 +34,7 @@ public extension YDB2WService {
     spaceyId: String,
     onCompletion completion: @escaping (DataResponse<Data>?) -> Void
   ) {
-    let url = "\(spacey)/spacey-api/publications/app/americanas/hotsite/\(spaceyId)"
+    let url = "\(spacey)/spacey-api/publications/app/live-schedule/americanas/hotsite/\(spaceyId)"
 
     DispatchQueue.global().async { [weak self] in
       guard let self = self else { return }
