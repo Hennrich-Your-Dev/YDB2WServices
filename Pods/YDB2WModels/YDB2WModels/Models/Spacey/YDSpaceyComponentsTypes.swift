@@ -17,8 +17,11 @@ public enum YDSpaceyComponentsTypes: Decodable {
   case product(YDSpaceyComponentProduct)
   case productCarrousel(YDSpaceyComponentCarrouselProduct)
   case title(YDSpaceyComponentTitle)
+  case nps(YDSpaceyComponentNPS)
+  case npsQuestion(YDSpaceyComponentNPSQuestion)
+  case npsEditText(YDSpaceyComponentEditText)
 
-  case custom(YDSpaceyComponentCustomDelegate)
+  case custom(YDSpaceyCustomComponentDelegate)
 
   enum CodingKeys: String, CodingKey {
     case type
@@ -53,6 +56,15 @@ public enum YDSpaceyComponentsTypes: Decodable {
       case .title:
         return .title
 
+      case .nps:
+        return .nps
+
+      case .npsQuestion:
+        return .npsQuestion
+
+      case .npsEditText:
+        return .npsEditText
+
       case .custom:
         return .custom
     }
@@ -69,6 +81,9 @@ public enum YDSpaceyComponentsTypes: Decodable {
     case product = "zion-product"
     case productCarrousel = "live-carousel"
     case title = "zion-title"
+    case nps = "nps-card"
+    case npsQuestion = "question"
+    case npsEditText = "edit-text"
     case custom = "custom-component"
   }
 
@@ -112,6 +127,15 @@ public enum YDSpaceyComponentsTypes: Decodable {
       case .title:
         self = .title(try singleValueContainer.decode(YDSpaceyComponentTitle.self))
 
+      case .nps:
+        self = .nps(try singleValueContainer.decode(YDSpaceyComponentNPS.self))
+
+      case .npsQuestion:
+        self = .npsQuestion(try singleValueContainer.decode(YDSpaceyComponentNPSQuestion.self))
+
+      case .npsEditText:
+        self = .npsEditText(try singleValueContainer.decode(YDSpaceyComponentEditText.self))
+
       case .custom:
         throw NSError(domain: "", code: 1, userInfo: nil)
     }
@@ -146,6 +170,15 @@ public enum YDSpaceyComponentsTypes: Decodable {
 
       case .title(let title):
         return title
+
+      case .nps(let nps):
+        return nps
+
+      case .npsQuestion(let npsQuestion):
+        return npsQuestion
+
+      case .npsEditText(let npsEditText):
+        return npsEditText
 
       case .custom(let custom):
         return custom
@@ -198,6 +231,21 @@ extension YDSpaceyComponentsTypes: Equatable {
 
     if case .title = lhs,
        case .title = rhs {
+      return true
+    }
+
+    if case .nps = lhs,
+       case .nps = rhs {
+      return true
+    }
+
+    if case .npsQuestion = lhs,
+       case .npsQuestion = rhs {
+      return true
+    }
+
+    if case .npsEditText = lhs,
+       case .npsEditText = rhs {
       return true
     }
 

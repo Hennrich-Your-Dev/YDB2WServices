@@ -11,6 +11,7 @@ public enum YDServiceError: Error {
   case permanentRedirect      // Status code 308
   case badRequest             // Status code 400
   case unauthorized           // Status code 401
+  case blockedUser            // Status code 403
   case notFound               // Status code 404
   case internalServerError    // Status code 500
 
@@ -28,6 +29,9 @@ public enum YDServiceError: Error {
 
       case .unauthorized:
         return "Usuário não autorizado"
+
+      case .blockedUser:
+        return "Usuário bloqueado"
 
       case .notFound:
         return "API não encontrada"
@@ -59,6 +63,9 @@ public enum YDServiceError: Error {
       case .unauthorized:
         return .unauthorized
 
+      case .blockedUser:
+        return .blockedUser
+
       case .notFound:
         return .notFound
 
@@ -86,6 +93,9 @@ public enum YDServiceError: Error {
 
       case .unauthorized:
         return 401
+
+      case .blockedUser:
+        return 403
 
       case .notFound:
         return 404
@@ -124,6 +134,9 @@ public enum YDServiceError: Error {
 
       case 401:
         self = .unauthorized
+
+      case 403:
+        self = .blockedUser
 
       case 404:
         self = .notFound

@@ -9,7 +9,67 @@ import Foundation
 
 import YDB2WModels
 
+// MARK: Delegate
+public protocol YDB2WServiceLasaClientDelegate {
+  func offlineOrdersGetOrders(
+    userToken token: String,
+    page: Int,
+    limit: Int,
+    onCompletion completion: @escaping (Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) -> Void
+  )
+
+  func getLasaClientLogin(
+    user: YDCurrentCustomer,
+    onCompletion completion: @escaping (Swift.Result<YDLasaClientLogin, YDServiceError>) -> Void
+  )
+
+  func getLasaClientInfo(
+    with user: YDLasaClientLogin,
+    onCompletion completion: @escaping (Swift.Result<YDLasaClientInfo, YDServiceError>) -> Void
+  )
+
+  func updateLasaClientInfo(
+    user: YDLasaClientLogin,
+    parameters: [String: Any],
+    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
+  )
+
+  func getLasaClientHistoric(
+    with user: YDLasaClientLogin,
+    onCompletion completion: @escaping (Swift.Result<[YDLasaClientHistoricData], YDServiceError>) -> Void
+  )
+}
+
+// MARK: Conform
 public extension YDB2WService {
+  func offlineOrdersGetOrders(
+    userToken token: String,
+    page: Int,
+    limit: Int,
+    onCompletion completion: @escaping (Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) -> Void
+  ) {
+    let url = "\(lasaClient)/portalcliente/cliente/cupons/lista"
+    let headers = [
+      "Authorization": "Bearer \(token)",
+      "Ocp-Apim-Subscription-Key": "953582bd88f84bdb9b3ad66d04eaf728"
+    ]
+    let parameters = [
+      "page_number": page,
+      "limite_page": limit
+    ]
+
+    DispatchQueue.global().async { [weak self] in
+      self?.service.request(
+        withUrl: url,
+        withMethod: .get,
+        withHeaders: headers,
+        andParameters: parameters
+      ) { (response: Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) in
+        completion(response)
+      }
+    }
+  }
+
   func getLasaClientLogin(
     user: YDCurrentCustomer,
     onCompletion completion: @escaping (Result<YDLasaClientLogin, YDServiceError>) -> Void

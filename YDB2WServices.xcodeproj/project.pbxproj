@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C121D9BB2642DE9F004C9836 /* Service+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C121D9BA2642DE9F004C9836 /* Service+Chat.swift */; };
+		C13006912659B51100867C0A /* Service+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13006902659B51100867C0A /* Service+Live.swift */; };
 		C171466A25FA219C002AA296 /* YDB2WServices.h in Headers */ = {isa = PBXBuildFile; fileRef = C171466825FA219C002AA296 /* YDB2WServices.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C171467825FA23D3002AA296 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171467725FA23D3002AA296 /* Connectivity.swift */; };
 		C171468025FA245B002AA296 /* ServiceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171467D25FA245B002AA296 /* ServiceClient.swift */; };
@@ -26,6 +27,7 @@
 		BA2C8321BDCBA8FEB1846D08 /* Pods-YDB2WServices.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YDB2WServices.release.xcconfig"; path = "Target Support Files/Pods-YDB2WServices/Pods-YDB2WServices.release.xcconfig"; sourceTree = "<group>"; };
 		BD22DFA406B59D69388399B7 /* Pods_YDB2WServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YDB2WServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C121D9BA2642DE9F004C9836 /* Service+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Chat.swift"; sourceTree = "<group>"; };
+		C13006902659B51100867C0A /* Service+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Live.swift"; sourceTree = "<group>"; };
 		C171466525FA219C002AA296 /* YDB2WServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YDB2WServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C171466825FA219C002AA296 /* YDB2WServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YDB2WServices.h; sourceTree = "<group>"; };
 		C171466925FA219C002AA296 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +76,14 @@
 				C121D9BA2642DE9F004C9836 /* Service+Chat.swift */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		C130068F2659B4FE00867C0A /* Live */ = {
+			isa = PBXGroup;
+			children = (
+				C13006902659B51100867C0A /* Service+Live.swift */,
+			);
+			path = Live;
 			sourceTree = "<group>";
 		};
 		C171465B25FA219C002AA296 = {
@@ -146,6 +156,7 @@
 		C1B9B2562641C5F300FF55C3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C130068F2659B4FE00867C0A /* Live */,
 				C121D9B82642DE93004C9836 /* Chat */,
 				C121D9B62642DE8D004C9836 /* Lasa Client */,
 				C1C38950264ECA91002A12C0 /* Spacey */,
@@ -277,6 +288,7 @@
 			files = (
 				C171469C25FA2908002AA296 /* YDB2WServiceDelegate.swift in Sources */,
 				C171468A25FA24F1002AA296 /* Logger.swift in Sources */,
+				C13006912659B51100867C0A /* Service+Live.swift in Sources */,
 				C171468125FA245B002AA296 /* ServiceError.swift in Sources */,
 				C121D9BB2642DE9F004C9836 /* Service+Chat.swift in Sources */,
 				C171468225FA245B002AA296 /* QueryString.swift in Sources */,

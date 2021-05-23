@@ -49,6 +49,13 @@ public class YDSpaceyCommonStruct: Decodable {
       return
     }
 
+    // NPS
+    if let nps = try? container.decode(YDSpaceyComponentNPS.self, forKey: .component),
+       nps.type == .nps {
+      component = nps
+      return
+    }
+
     if let common = try? container.decode(YDSpaceyCommonComponent.self, forKey: .component) {
       component = common
     } else {

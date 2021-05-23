@@ -1,13 +1,13 @@
 //
-//  YDSpaceyProductInterface.swift
+//  YDProductFromIdInterface.swift
 //  YDB2WModels
 //
-//  Created by Douglas Hennrich on 14/04/21.
+//  Created by Douglas Hennrich on 23/05/21.
 //
 
-import UIKit
+import Foundation
 
-public class YDSpaceyProductInterface: Decodable {
+public class YDProductFromIdInterface: Decodable {
   public let partnerId: String?
   public let productId: String
   public let name: String

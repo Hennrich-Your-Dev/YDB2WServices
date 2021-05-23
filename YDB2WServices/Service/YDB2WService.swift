@@ -12,6 +12,7 @@ import Alamofire
 
 import YDB2WIntegration
 import YDB2WModels
+import YDUtilities
 
 public class YDB2WService {
   // MARK: Properties
@@ -20,12 +21,13 @@ public class YDB2WService {
   let restQL: String
   let restQLVersion: Int
   let userChat: String
-  let catalog: String
+  let products: String
   let store: String
   let zipcode: String
   let spacey: String
   let lasaClient: String
   let youTubeAPI: String
+  let chatService: String
 
   var youTubeKey = ""
 
@@ -33,26 +35,35 @@ public class YDB2WService {
   public init() {
     guard let restQLApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.restQL.rawValue)?.endpoint,
+
           let restQLVersion = YDIntegrationHelper.shared
-            .getFeature(
-              featureName: YDConfigKeys.store.rawValue)?
+            .getFeature(featureName: YDConfigKeys.store.rawValue)?
             .extras?[YDConfigProperty.productsQueryVersion.rawValue] as? Int,
+
           let userChatApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.chatService.rawValue)?.endpoint,
+
           let storeApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.storeService.rawValue)?.endpoint,
-          let catalogApi = YDIntegrationHelper.shared
+
+          let productsApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.productService.rawValue)?.endpoint,
+
           let zipcodeApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.addressService.rawValue)?.endpoint,
+
           let spaceyApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.spaceyService.rawValue)?.endpoint,
+
           let lasaApi = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.lasaClientService.rawValue)?.endpoint,
 
           let googleServiceConfig = YDIntegrationHelper.shared
             .getFeature(featureName: YDConfigKeys.googleService.rawValue),
-          let googleServiceApi = googleServiceConfig.endpoint
+          let googleServiceApi = googleServiceConfig.endpoint,
+
+          let chatService = YDIntegrationHelper.shared
+            .getFeature(featureName: YDConfigKeys.chatService.rawValue)?.endpoint
     else {
       fatalError("Não foi possível resgatar todas APIs")
     }
@@ -61,7 +72,7 @@ public class YDB2WService {
     self.restQL = restQLApi
     self.restQLVersion = restQLVersion
     self.userChat = userChatApi
-    self.catalog = catalogApi
+    self.products = productsApi
     self.store = storeApi
     self.zipcode = zipcodeApi
     self.spacey = spaceyApi
@@ -72,38 +83,12 @@ public class YDB2WService {
     .extras?[YDConfigProperty.youtubeKey.rawValue] as? String {
       self.youTubeKey = youTubeKey
     }
+
+    self.chatService = chatService
   }
 }
 
 extension YDB2WService: YDB2WServiceDelegate {
-  public func offlineOrdersGetOrders(
-    userToken token: String,
-    page: Int,
-    limit: Int,
-    onCompletion completion: @escaping (Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) -> Void
-  ) {
-    let url = "\(lasaClient)/portalcliente/cliente/cupons/lista"
-    let headers = [
-      "Authorization": "Bearer \(token)",
-      "Ocp-Apim-Subscription-Key": "953582bd88f84bdb9b3ad66d04eaf728"
-    ]
-    let parameters = [
-      "page_number": page,
-      "limite_page": limit
-    ]
-
-    DispatchQueue.global().async { [weak self] in
-      self?.service.request(
-        withUrl: url,
-        withMethod: .get,
-        withHeaders: headers,
-        andParameters: parameters
-      ) { (response: Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) in
-        completion(response)
-      }
-    }
-  }
-
   public func getNearstLasa(
     with location: CLLocationCoordinate2D,
     onCompletion completion: @escaping (Swift.Result<YDStores, YDServiceError>) -> Void
@@ -221,6 +206,34 @@ extension YDB2WService: YDB2WServiceDelegate {
               YDServiceError.init(error: error)
             )
           )
+        }
+      }
+    }
+  }
+
+  public func getProducts(
+    ofIds ids: [String],
+    onCompletion completion: @escaping (Swift.Result<[YDProductFromIdInterface], YDServiceError>) -> Void
+  ) {
+    let parameters = [
+      "productIds": ids.joined(separator: ",")
+    ]
+
+    let url = "\(products)/product_cells_by_ids"
+
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+      self.service.requestWithoutCache(
+        withUrl: url,
+        withMethod: .get,
+        andParameters: parameters
+      ) { (result: Swift.Result<[Throwable<YDProductFromIdInterface>], YDServiceError>) in
+        switch result {
+        case .success(let products):
+          completion(.success(products.compactMap { try? $0.result.get() }))
+
+        case .failure(let error):
+          completion(.failure(error))
         }
       }
     }

@@ -11,7 +11,12 @@ import CoreLocation
 import Alamofire
 import YDB2WModels
 
-public protocol YDB2WServiceDelegate: AnyObject {
+public protocol YDB2WServiceDelegate:
+  YDB2WServiceLiveDelegate,
+  YDB2WServiceChatDelegate,
+  YDB2WServiceLasaClientDelegate,
+  YDB2WServiceSpaceyDelegate {
+  //
   func getNearstLasa(
     with location: CLLocationCoordinate2D,
     onCompletion completion: @escaping (Swift.Result<YDStores, YDServiceError>) -> Void
@@ -28,50 +33,8 @@ public protocol YDB2WServiceDelegate: AnyObject {
     onCompletion completion: @escaping (Swift.Result<YDProductsRESQL, YDServiceError>) -> Void
   )
 
-  // Live
-  func getYouTubeDetails(
-    withVideoId videoId: String,
-    onCompletion: @escaping (Swift.Result<YDYouTubeDetails, YDServiceError>) -> Void
-  )
-
-  // Offline Orders
-  func offlineOrdersGetOrders(
-    userToken token: String,
-    page: Int,
-    limit: Int,
-    onCompletion completion: @escaping (Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) -> Void
-  )
-
-  // Spacey
-  func getSpacey(
-    spaceyId: String,
-    onCompletion completion: @escaping (Swift.Result<YDSpacey, YDServiceError>) -> Void
-  )
-
-  func getNextLives(
-    spaceyId: String,
-    onCompletion completion: @escaping (Swift.Result<[YDSpaceyComponentNextLive], YDServiceError>) -> Void
-  )
-  
-  // Lasa Client
-  func getLasaClientLogin(
-    user: YDCurrentCustomer,
-    onCompletion completion: @escaping (Swift.Result<YDLasaClientLogin, YDServiceError>) -> Void
-  )
-
-  func getLasaClientInfo(
-    with user: YDLasaClientLogin,
-    onCompletion completion: @escaping (Swift.Result<YDLasaClientInfo, YDServiceError>) -> Void
-  )
-
-  func updateLasaClientInfo(
-    user: YDLasaClientLogin,
-    parameters: [String: Any],
-    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
-  )
-
-  func getLasaClientHistoric(
-    with user: YDLasaClientLogin,
-    onCompletion completion: @escaping (Swift.Result<[YDLasaClientHistoricData], YDServiceError>) -> Void
+  func getProducts(
+    ofIds ids: [String],
+    onCompletion completion: @escaping (Swift.Result<[YDProductFromIdInterface], YDServiceError>) -> Void
   )
 }

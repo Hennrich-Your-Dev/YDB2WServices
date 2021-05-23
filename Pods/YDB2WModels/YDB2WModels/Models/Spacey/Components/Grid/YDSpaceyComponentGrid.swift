@@ -14,14 +14,36 @@ public class YDSpaceyComponentGrid: YDSpaceyComponentDelegate {
   public var id: String?
   public var type: YDSpaceyComponentsTypes.Types
   public var children: [YDSpaceyComponentsTypes]
-  public let layout: YDSpaceyComponentGridLayout
+  private var xs: String?
+  private var size: YDSpaceyComponentGridSize?
+
+  // MARK: Computed variables
+  // usar as opções “xs” e “size” para definir a quantidade de colunas: se a opção
+  // “xs” for iqual a um numero inteiro, a quantidade de colunas vai ser igual
+  // a esse número, se for “padrão” ou diferente de um número, devemos
+  // colocar a quantidade de elementos da coluna de acordo com a opção “size”
+  // (“Pequeno” = 4; “Médio” = 3; “Grande” = 2; “Gigante”
+  // ou qualquer outro dado = 1).
+  public var numberOfColumns: Int? {
+    var columns: Int? = 1
+
+    if let xs = self.xs,
+       xs != "Padrão" {
+      columns = Int(xs)
+    } else if let size = size {
+      columns = Int(size.rawValue)
+    }
+
+    return columns
+  }
 
   // MARK: CodingKeys
   enum CodingKeys: String, CodingKey {
     case id = "_id"
     case type
     case children
-    case layout = "xs"
+    case xs
+    case size
   }
 
   // MARK: Init
@@ -38,16 +60,16 @@ public class YDSpaceyComponentGrid: YDSpaceyComponentDelegate {
     )
     children = throwables?.compactMap { try? $0.result.get() } ?? []
 
-    if let typeDecoded = try? container.decode(YDSpaceyComponentGridLayout.self, forKey: .layout) {
-      layout = typeDecoded
-    } else {
-      layout = .vertical
-    }
+    xs = try? container.decode(String.self, forKey: .xs)
+    size = try? container.decode(YDSpaceyComponentGridSize.self, forKey: .size)
+    size = size ?? .giant
   }
 }
 
-// MARK: Grid layout
-public enum YDSpaceyComponentGridLayout: String, Decodable {
-  case vertical = "1"
-  case horizontal = "2"
+// MARK: Grid Size
+enum YDSpaceyComponentGridSize: String, Decodable {
+  case giant = "1"
+  case great = "2"
+  case medium = "3"
+  case small = "4"
 }

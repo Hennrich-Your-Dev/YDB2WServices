@@ -53,4 +53,12 @@ extension YDIntegrationHelper {
   func trackFirebaseEvent(eventName: String, parameters: [String: Any]?) {
     trackingDelegate?.trackFirebaseEvent(eventName: eventName, parameters: parameters)
   }
+
+  func trackNewRelicEvent(eventName: String, parameters: [String: Any]?) {
+    trackingDelegate?.trackNewRelicEvent(eventName: eventName, parameters: parameters)
+  }
+
+  func trackStuartEvent(eventName: String, parameters: [String: Any]?) {
+    trackingDelegate?.trackStuartEvent(eventName: eventName, parameters: parameters)
+  }
 }

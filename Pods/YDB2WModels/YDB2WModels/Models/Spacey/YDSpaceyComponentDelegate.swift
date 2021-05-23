@@ -15,6 +15,6 @@ public protocol YDSpaceyComponentDelegate: Decodable {
 }
 
 // MARK: Custom component
-public protocol YDSpaceyComponentCustomDelegate: YDSpaceyComponentDelegate {
+public protocol YDSpaceyCustomComponentDelegate: YDSpaceyComponentDelegate {
   func getCell() -> UICollectionViewCell
 }

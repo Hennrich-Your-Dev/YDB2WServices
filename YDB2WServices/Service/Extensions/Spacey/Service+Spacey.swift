@@ -10,6 +10,19 @@ import Foundation
 import Alamofire
 import YDB2WModels
 
+// Delegate
+public protocol YDB2WServiceSpaceyDelegate {
+  func getSpacey(
+    spaceyId: String,
+    onCompletion completion: @escaping (Swift.Result<YDSpacey, YDServiceError>) -> Void
+  )
+
+  func getNextLives(
+    spaceyId: String,
+    onCompletion completion: @escaping (Swift.Result<[YDSpaceyComponentNextLive], YDServiceError>) -> Void
+  )
+}
+
 public extension YDB2WService {
   func getSpacey(
     spaceyId: String,

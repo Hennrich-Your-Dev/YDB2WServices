@@ -13,4 +13,6 @@ public protocol YDIntegrationHelperTrackingDelegate {
   func trackAdobeAction(actionName: String, parameters: [String: Any]?)
   func trackFacebookEvent(eventName: String, parameters: [String: Any]?)
   func trackFirebaseEvent(eventName: String, parameters: [String: Any]?)
+  func trackNewRelicEvent(eventName: String, parameters: [String: Any]?)
+  func trackStuartEvent(eventName: String, parameters: [String: Any]?)
 }
