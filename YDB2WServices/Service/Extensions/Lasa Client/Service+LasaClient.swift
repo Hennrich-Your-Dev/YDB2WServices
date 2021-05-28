@@ -7,6 +7,7 @@
 
 import Foundation
 
+import Alamofire
 import YDB2WModels
 
 // MARK: Delegate
@@ -59,20 +60,44 @@ public extension YDB2WService {
     ]
 
     DispatchQueue.global().async { [weak self] in
-      self?.service.request(
+      guard let self = self else { return }
+
+      self.service.requestWithFullResponse(
         withUrl: url,
         withMethod: .get,
         withHeaders: headers,
         andParameters: parameters
-      ) { (response: Swift.Result<YDOfflineOrdersOrdersList, YDServiceError>) in
-        completion(response)
+      ) { (response: DataResponse<Data>?) in
+        guard let response = response,
+              let data = response.data
+        else {
+          completion(.failure(YDServiceError.badRequest))
+          return
+        }
+
+        if data.isEmpty {
+          completion(.success([]))
+          return
+        }
+
+        do {
+          let orders = try JSONDecoder().decode(
+            YDOfflineOrdersOrdersList.self,
+            from: data
+          )
+
+          completion(.success(orders))
+
+        } catch let error as NSError {
+          completion(.failure(YDServiceError(error: error)))
+        }
       }
     }
   }
 
   func getLasaClientLogin(
     user: YDCurrentCustomer,
-    onCompletion completion: @escaping (Result<YDLasaClientLogin, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<YDLasaClientLogin, YDServiceError>) -> Void
   ) {
     let headers: [String: String] = [
       "Content-Type": "application/json",
@@ -94,7 +119,7 @@ public extension YDB2WService {
         withMethod: .post,
         withHeaders: headers,
         andParameters: parameters
-      ) { (response: Result<YDLasaClientLogin, YDServiceError>) in
+      ) { (response: Swift.Result<YDLasaClientLogin, YDServiceError>) in
         switch response {
           case .success(let userLogin):
             completion(.success(userLogin))
@@ -108,7 +133,7 @@ public extension YDB2WService {
 
   func getLasaClientInfo(
     with user: YDLasaClientLogin,
-    onCompletion completion: @escaping (Result<YDLasaClientInfo, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<YDLasaClientInfo, YDServiceError>) -> Void
   ) {
     guard let idLasa = user.idLasa,
           let token = user.token
@@ -153,7 +178,7 @@ public extension YDB2WService {
   func updateLasaClientInfo(
     user: YDLasaClientLogin,
     parameters: [String: Any],
-    onCompletion completion: @escaping (Result<Void, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
   ) {
     guard let idLasa = user.idLasa,
           let token = user.token
@@ -182,7 +207,7 @@ public extension YDB2WService {
         withMethod: .post,
         withHeaders: headers,
         andParameters: parameters
-      ) { (response: Result<[String: String], YDServiceError>) in
+      ) { (response: Swift.Result<[String: String], YDServiceError>) in
         switch response {
           case .success:
             completion(.success(()))
@@ -196,7 +221,7 @@ public extension YDB2WService {
 
   func getLasaClientHistoric(
     with user: YDLasaClientLogin,
-    onCompletion completion: @escaping (Result<[YDLasaClientHistoricData], YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<[YDLasaClientHistoricData], YDServiceError>) -> Void
   ) {
     guard let token = user.token
     else {
@@ -224,7 +249,7 @@ public extension YDB2WService {
         withMethod: .get,
         withHeaders: headers,
         andParameters: nil
-      ) { (response: Result<[YDLasaClientHistoricData], YDServiceError>) in
+      ) { (response: Swift.Result<[YDLasaClientHistoricData], YDServiceError>) in
         switch response {
           case .success(let historic):
             let sorted = historic.sorted { (lhs, rhs) -> Bool in
@@ -233,7 +258,7 @@ public extension YDB2WService {
 
               return dateLhs.compare(dateRhs) == .orderedDescending
             }
-            
+
             completion(.success(sorted))
 
           case .failure(let error):
