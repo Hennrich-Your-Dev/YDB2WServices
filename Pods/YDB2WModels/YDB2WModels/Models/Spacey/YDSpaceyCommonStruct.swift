@@ -8,8 +8,8 @@
 import Foundation
 
 public class YDSpaceyCommonStruct: Decodable {
-  public let id: String?
-  public let component: YDSpaceyComponentDelegate?
+  public var id: String?
+  public var component: YDSpaceyComponentDelegate?
 
   enum CodingKeys: String, CodingKey {
     case id = "_id"

@@ -14,6 +14,7 @@ import YDB2WModels
 public protocol YDB2WServiceSpaceyDelegate {
   func getSpacey(
     spaceyId: String,
+    customApi: String?,
     onCompletion completion: @escaping (Swift.Result<YDSpacey, YDServiceError>) -> Void
   )
 
@@ -26,13 +27,14 @@ public protocol YDB2WServiceSpaceyDelegate {
 public extension YDB2WService {
   func getSpacey(
     spaceyId: String,
+    customApi: String? = nil,
     onCompletion completion: @escaping (Swift.Result<YDSpacey, YDServiceError>) -> Void
   ) {
-    let url = "\(spacey)/spacey-api/publications/app/americanas/hotsite/\(spaceyId)"
+    var url = "\(spacey)/spacey-api/publications/app/americanas/hotsite/\(spaceyId)"
 
-//    if let customApi = customApi {
-//      url = "\(customApi)/\(spaceyId)"
-//    }
+    if let customApi = customApi {
+      url = "\(customApi)/\(spaceyId)"
+    }
 
     DispatchQueue.global().async { [weak self] in
       guard let self = self else { return }

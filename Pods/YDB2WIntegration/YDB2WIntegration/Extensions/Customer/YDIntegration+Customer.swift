@@ -12,13 +12,21 @@ import YDB2WModels
 // MARK: Get Customer
 public extension YDIntegrationHelper {
   func getCustomer(completion: ((YDCurrentCustomer?) -> Void)?) {
-    accountDelegate?.getCustomer(completion: completion)
+    accountDelegate?.getCustomer { [weak self] user in
+      guard let self = self else { return }
+      self.currentUser = user
+      completion?(user)
+    }
   }
 }
 
 // MARK: Make login
 public extension YDIntegrationHelper {
   func makeLogin(completion: ((YDCurrentCustomer?) -> Void)?) {
-    actionDelegate?.makeLogin(completion: completion)
+    actionDelegate?.makeLogin { [weak self] user in
+      guard let self = self else { return }
+      self.currentUser = user
+      completion?(user)
+    }
   }
 }

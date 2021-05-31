@@ -12,7 +12,7 @@ import YDB2WModels
 
 public protocol YDIntegrationHelperPresentationDelegate {
   func presentScanner()
-  func presentStoreMode()
+  func presentStoreMode(deeplink: String?)
   func presentLive(navigationController: UINavigationController)
   func presentSelectAddress(completion: ((YDAddress?) -> Void)?)
 }

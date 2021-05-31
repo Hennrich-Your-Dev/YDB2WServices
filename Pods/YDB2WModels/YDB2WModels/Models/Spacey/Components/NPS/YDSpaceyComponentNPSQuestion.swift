@@ -74,5 +74,13 @@ public class YDSpaceyComponentNPSQuestion: YDSpaceyComponentDelegate {
     title = try? container.decode(String.self, forKey: .title)
     hint = try? container.decode(String.self, forKey: .hint)
     maxCharacter = try? container.decode(Int.self, forKey: .maxCharacter)
+
+    if answerType == .grade {
+      for index in 1...(maxScore ?? 0) {
+        childrenAnswers.append(
+          YDSpaceyComponentNPSQuestionAnswer(id: "\(index)", answerText: "\(index)")
+        )
+      }
+    }
   }
 }

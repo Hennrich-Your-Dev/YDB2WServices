@@ -37,7 +37,7 @@ public extension YDIntegrationHelper {
   }
 }
 
-extension YDIntegrationHelper {
+public extension YDIntegrationHelper {
   func trackAdobeState(stateName: String, parameters: [String: Any]?) {
     trackingDelegate?.trackAdobeState(stateName: stateName, parameters: parameters)
   }
@@ -46,7 +46,7 @@ extension YDIntegrationHelper {
     trackingDelegate?.trackAdobeAction(actionName: actionName, parameters: parameters)
   }
 
-  public func trackFacebookEvent(eventName: String, parameters: [String: Any]?) {
+  func trackFacebookEvent(eventName: String, parameters: [String: Any]?) {
     trackingDelegate?.trackFacebookEvent(eventName: eventName, parameters: parameters)
   }
 

@@ -9,8 +9,8 @@ import Foundation
 
 // MARK: Open store module
 public extension YDIntegrationHelper {
-  func openStoreMode() {
-    presentationDelegate?.presentStoreMode()
+  func openStoreMode(deeplink: String?) {
+    presentationDelegate?.presentStoreMode(deeplink: deeplink)
   }
 }
 

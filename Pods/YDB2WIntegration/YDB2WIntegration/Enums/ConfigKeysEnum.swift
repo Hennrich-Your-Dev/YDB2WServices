@@ -49,13 +49,17 @@ public enum YDConfigProperty: String {
   case liveHotsiteId = "liveHotsite"
   case liveChatEnabled = "chatEnabled"
   case liveChatLikesEnabled = "chatLikesEnabled"
-  case liveChatPolling = "liveChatPolling"
+  case liveChatPolling
+  case liveChatPollingError
   case liveChatLimit
   case liveChatSendDelay
   case liveChatModerators = "chatModerators"
 
   case liveYouTubeCounter = "liveAmountPeopleWatching"
   case liveAmountPeopleWatchingPolling
+
+  // Next Lives
+  case nextLivesReminderTimeInMinutes = "nextLivesReminderTime"
 
   // Google Services
   case youtubeKey
