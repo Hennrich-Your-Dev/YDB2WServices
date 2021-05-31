@@ -22,6 +22,6 @@ Pod::Spec.new do |spec|
 
   spec.dependency "Alamofire", "~> 4.0"
 
-  spec.dependency "YDB2WIntegration", "~> 1.1.0"
+  spec.dependency "YDB2WIntegration", "~> 1.4.0"
   spec.dependency "YDB2WModels", "~> 1.4.0"
 end
