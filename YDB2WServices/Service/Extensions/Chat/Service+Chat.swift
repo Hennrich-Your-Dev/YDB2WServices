@@ -85,7 +85,31 @@ public extension YDB2WService {
             }
 
           case .failure(let error):
-            onCompletion(.failure(YDServiceError(error: error)))
+            if let status = response.response?.statusCode,
+               status == 401,
+               let data = response.data,
+               let json = try? JSONSerialization.jsonObject(
+                with: data,
+                options: .allowFragments
+               ) as? [String: Any],
+               let message = json["message"] as? String,
+               message == "banned user" {
+
+              onCompletion(
+                .failure(
+                  YDServiceError.blockedUser
+                )
+              )
+              return
+            }
+            onCompletion(
+              .failure(
+                YDServiceError(
+                  error: error,
+                  status: response.response?.statusCode
+                )
+              )
+            )
         }
       }
     }

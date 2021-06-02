@@ -156,8 +156,8 @@
 		C1B9B2562641C5F300FF55C3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C130068F2659B4FE00867C0A /* Live */,
 				C121D9B82642DE93004C9836 /* Chat */,
+				C130068F2659B4FE00867C0A /* Live */,
 				C121D9B62642DE8D004C9836 /* Lasa Client */,
 				C1C38950264ECA91002A12C0 /* Spacey */,
 			);
