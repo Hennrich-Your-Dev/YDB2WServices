@@ -14,6 +14,7 @@ public class YDSpaceyComponentEditText: Decodable {
   public var maxCharacter: Int?
   public var title: String?
   public let componentType: YDSpaceyComponentsTypes.Types = .npsEditText
+  public var storedValue: String? = nil
 
   // MARK: CodingKeys
   enum CodingKeys: String, CodingKey {

@@ -9,8 +9,12 @@
 import Foundation
 
 public protocol YDIntegrationHelperTrackingDelegate {
-  func trackAdobeState(stateName: String, parameters: [String: Any]?)
   func trackAdobeAction(actionName: String, parameters: [String: Any]?)
+  func trackGAEvent(actionName: String, parameters: [String: Any]?)
+
+  func trackAdobeState(stateName: String, parameters: [String: Any]?)
+  func trackGAScreen(stateName: String, parameters: [String: Any]?)
+
   func trackFacebookEvent(eventName: String, parameters: [String: Any]?)
   func trackFirebaseEvent(eventName: String, parameters: [String: Any]?)
   func trackNewRelicEvent(eventName: String, parameters: [String: Any]?)

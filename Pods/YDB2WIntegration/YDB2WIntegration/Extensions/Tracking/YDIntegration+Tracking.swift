@@ -29,23 +29,37 @@ public extension YDIntegrationHelper {
 
     if type == .action {
       trackAdobeAction(actionName: name.rawValue, parameters: payload)
+      trackGAEvent(actionName: name.rawValue, parameters: payload)
+
       trackFacebookEvent(eventName: name.rawValue, parameters: payload)
       trackFirebaseEvent(eventName: name.rawValue, parameters: payload)
     } else if type == .state {
       trackAdobeState(stateName: name.rawValue, parameters: payload)
+      trackGAScreen(stateName: name.rawValue, parameters: payload)
     }
   }
 }
 
 public extension YDIntegrationHelper {
-  func trackAdobeState(stateName: String, parameters: [String: Any]?) {
-    trackingDelegate?.trackAdobeState(stateName: stateName, parameters: parameters)
-  }
-
+  // MARK: Actions
   func trackAdobeAction(actionName: String, parameters: [String: Any]?) {
     trackingDelegate?.trackAdobeAction(actionName: actionName, parameters: parameters)
   }
 
+  func trackGAEvent(actionName: String, parameters: [String: Any]?) {
+    trackingDelegate?.trackGAEvent(actionName: actionName, parameters: parameters)
+  }
+
+  // MARK: State
+  func trackAdobeState(stateName: String, parameters: [String: Any]?) {
+    trackingDelegate?.trackAdobeState(stateName: stateName, parameters: parameters)
+  }
+
+  func trackGAScreen(stateName: String, parameters: [String: Any]?) {
+    trackingDelegate?.trackGAScreen(stateName: stateName, parameters: parameters)
+  }
+
+  // MARK: Event
   func trackFacebookEvent(eventName: String, parameters: [String: Any]?) {
     trackingDelegate?.trackFacebookEvent(eventName: eventName, parameters: parameters)
   }

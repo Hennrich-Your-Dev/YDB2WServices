@@ -25,6 +25,11 @@ public enum TrackEvents: String {
   case addToCart = "ACOM:LiveCarousel:AddToCart"
   case productSelected = "ACOM:LiveCarousel:ProductSelected"
   case liveOpenChat = "ACOM-live-chataovivo"
+  case preLivePageView = "ACOM:Hotsite:aovivo"
+
+  // Next Lives
+  case nextLivesPageView = "ACOM:Hotsite:youtube-live:proximas-lives"
+  case nextLivesAddToCalendar = "ACOM:Hotsite:youtube-live:proximas-lives:adicionar-calendario"
 
   // Store Mode
   case storePageView = "ACOM:MODOLOJA-Home"
@@ -32,7 +37,7 @@ public enum TrackEvents: String {
   case storeOpenBooklet = "O2O-ModoLoja-EncarteDasLojas"
   case storeOnScan = "O2O-ModoLoja-Scan"
   case storeOpenMap = "O2O-Home-Mapa"
-  case sendNPS = "trackStuartEvent"
+  case sendNPS = "StoreModeNps"
 
   // Find a Store
   case findStoreView = "ACOM:StoreFinder:Mapa"
@@ -60,6 +65,9 @@ public enum TrackEvents: String {
       // Live
       case .pageView, .playVideo, .addToCart, .productSelected, .liveOpenChat:
         return [:]
+
+      case .preLivePageView, .nextLivesPageView, .nextLivesAddToCalendar:
+        return ["pagetype": "Hotsite"]
 
       // Store
       case .storePageView, .storeOpenBasket, .storeOpenBooklet, .storeOnScan, .storeOpenMap:
@@ -130,6 +138,23 @@ public enum TrackEvents: String {
 
       case .liveOpenChat:
         return [:]
+
+      case .preLivePageView:
+        return [:]
+
+      // Next Lives
+      case .nextLivesPageView:
+        return [:]
+
+      case .nextLivesAddToCalendar:
+        let liveName = body["liveName"] as? String ?? ""
+
+        return [
+          "category": "live",
+          "action": "agendamento",
+          "eventLabel": liveName,
+          "pagename": "ACOM:Hotsite:youtube-live:proximas-lives:adicionar-calendario"
+        ]
 
       // Store
       case .storePageView:

@@ -16,10 +16,11 @@ public enum YDSpaceyComponentsTypes: Decodable {
   case player(YDSpaceyComponentPlayer)
   case product(YDSpaceyComponentProduct)
   case productCarrousel(YDSpaceyComponentCarrouselProduct)
+  case termsOfUse(YDSpaceyComponentTermsOfUse)
   case title(YDSpaceyComponentTitle)
   case nps(YDSpaceyComponentNPS)
   case npsQuestion(YDSpaceyComponentNPSQuestion)
-  case npsEditText(YDSpaceyComponentEditText)
+  case npsEditText(YDSpaceyComponentNPSQuestion)
 
   case custom(YDSpaceyCustomComponentDelegate)
 
@@ -53,6 +54,9 @@ public enum YDSpaceyComponentsTypes: Decodable {
       case .productCarrousel:
         return .productCarrousel
 
+      case .termsOfUse:
+        return .termsOfUse
+
       case .title:
         return .title
 
@@ -80,6 +84,7 @@ public enum YDSpaceyComponentsTypes: Decodable {
     case player = "zion-video"
     case product = "zion-product"
     case productCarrousel = "live-carousel"
+    case termsOfUse = "zion-rich-text"
     case title = "zion-title"
     case nps = "nps-card"
     case npsQuestion = "question"
@@ -124,6 +129,11 @@ public enum YDSpaceyComponentsTypes: Decodable {
           try singleValueContainer.decode(YDSpaceyComponentCarrouselProduct.self)
         )
 
+      case .termsOfUse:
+        self = .termsOfUse(
+          try singleValueContainer.decode(YDSpaceyComponentTermsOfUse.self)
+        )
+
       case .title:
         self = .title(try singleValueContainer.decode(YDSpaceyComponentTitle.self))
 
@@ -134,7 +144,7 @@ public enum YDSpaceyComponentsTypes: Decodable {
         self = .npsQuestion(try singleValueContainer.decode(YDSpaceyComponentNPSQuestion.self))
 
       case .npsEditText:
-        self = .npsEditText(try singleValueContainer.decode(YDSpaceyComponentEditText.self))
+        self = .npsEditText(try singleValueContainer.decode(YDSpaceyComponentNPSQuestion.self))
 
       case .custom:
         throw NSError(domain: "", code: 1, userInfo: nil)
@@ -168,6 +178,9 @@ public enum YDSpaceyComponentsTypes: Decodable {
       case .productCarrousel(let carrousel):
         return carrousel
 
+      case .termsOfUse(let terms):
+        return terms
+
       case .title(let title):
         return title
 
@@ -186,8 +199,8 @@ public enum YDSpaceyComponentsTypes: Decodable {
   }
 }
 
+// To be able to use [].contains(type)
 extension YDSpaceyComponentsTypes: Equatable {
-  // To be able to use [].contains(type)
   public static func == (lhs: YDSpaceyComponentsTypes, rhs: YDSpaceyComponentsTypes) -> Bool {
     if case .banner = lhs,
        case .banner = rhs {
@@ -226,6 +239,11 @@ extension YDSpaceyComponentsTypes: Equatable {
 
     if case .productCarrousel = lhs,
        case .productCarrousel = rhs {
+      return true
+    }
+
+    if case .termsOfUse = lhs,
+       case .termsOfUse = rhs {
       return true
     }
 

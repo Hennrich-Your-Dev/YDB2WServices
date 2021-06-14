@@ -16,5 +16,12 @@ public protocol YDSpaceyComponentDelegate: Decodable {
 
 // MARK: Custom component
 public protocol YDSpaceyCustomComponentDelegate: YDSpaceyComponentDelegate {
-  func getCell() -> UICollectionViewCell
+  var knewType: YDSpaceyCustomComponentType { get }
+}
+
+public enum YDSpaceyCustomComponentType: String, Decodable {
+  case countDown
+  case button
+  case card
+  case unknow
 }

@@ -28,11 +28,14 @@ public enum YDConfigProperty: String {
   case insideLasaDistance = "distanceUserLasaStore"
 
   // Store Mode
+  case productsQueryVersion = "lasaB2WProductsQueryVersion"
+  case offlineAccountEnabled
+
+  // NPS
   case npsEnabled
   case npsFeedbackMessage
   case npsMinutesToPrune
-  case productsQueryVersion = "lasaB2WProductsQueryVersion"
-  case offlineAccountEnabled
+  case npsSpaceyId
 
   // Live
   case liveSpaceyOrder = "spaceyPositionIndex"
@@ -59,6 +62,7 @@ public enum YDConfigProperty: String {
   case liveAmountPeopleWatchingPolling
 
   // Next Lives
+  case nextLiveSpaceyId = "nextLiveHotsite"
   case nextLivesReminderTimeInMinutes = "nextLivesReminderTime"
 
   // Google Services

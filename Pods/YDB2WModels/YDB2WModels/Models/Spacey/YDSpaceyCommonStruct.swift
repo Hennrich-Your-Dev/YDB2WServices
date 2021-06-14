@@ -56,6 +56,16 @@ public class YDSpaceyCommonStruct: Decodable {
       return
     }
 
+    // Terms of Use
+    if let terms = try? container.decode(
+        YDSpaceyComponentTermsOfUse.self,
+        forKey: .component
+    ), terms.type == .termsOfUse {
+      component = terms
+      return
+    }
+
+    // Default
     if let common = try? container.decode(YDSpaceyCommonComponent.self, forKey: .component) {
       component = common
     } else {
