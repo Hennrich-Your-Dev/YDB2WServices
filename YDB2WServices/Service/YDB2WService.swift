@@ -108,7 +108,7 @@ extension YDB2WService: YDB2WServiceDelegate {
       "radius": radius
     ]
 
-    let url = "\(store)/store"
+    let url = "\(store)/store/geo-types"
 
     DispatchQueue.global().async { [weak self] in
       self?.service.request(
