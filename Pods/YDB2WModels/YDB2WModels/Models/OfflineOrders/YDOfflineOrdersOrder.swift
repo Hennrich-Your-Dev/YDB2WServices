@@ -7,8 +7,6 @@
 
 import Foundation
 
-import YDUtilities
-
 public typealias YDOfflineOrdersOrdersList = [YDOfflineOrdersOrder]
 
 public class YDOfflineOrdersOrder: Decodable {

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import YDUtilities
 
 public class YDSpaceyComponentTermsOfUse: YDSpaceyComponentDelegate {
   // MARK: Properties

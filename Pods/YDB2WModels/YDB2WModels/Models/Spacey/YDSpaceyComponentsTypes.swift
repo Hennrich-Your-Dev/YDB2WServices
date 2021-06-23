@@ -11,6 +11,9 @@ public enum YDSpaceyComponentsTypes: Decodable {
   case banner(YDSpaceyComponentBanner)
   case bannerCarrousel(YDSpaceyComponentCarrouselBanner)
   case grid(YDSpaceyComponentGrid)
+  case liveNPS(YDSpaceyCommonComponent)
+  case liveNPSCard(YDSpaceyComponentLiveNPSCard)
+  case liveNPSCardQuestion(YDSpaceyComponentLiveNPSCardQuestion)
   case nextLiveParent(YDSpaceyCommonComponent)
   case nextLive(YDSpaceyComponentNextLive)
   case player(YDSpaceyComponentPlayer)
@@ -19,8 +22,8 @@ public enum YDSpaceyComponentsTypes: Decodable {
   case termsOfUse(YDSpaceyComponentTermsOfUse)
   case title(YDSpaceyComponentTitle)
   case nps(YDSpaceyComponentNPS)
-  case npsQuestion(YDSpaceyComponentNPSQuestion)
   case npsEditText(YDSpaceyComponentNPSQuestion)
+  case npsQuestion(YDSpaceyComponentNPSQuestion)
 
   case custom(YDSpaceyCustomComponentDelegate)
 
@@ -38,6 +41,15 @@ public enum YDSpaceyComponentsTypes: Decodable {
 
       case .grid:
         return .grid
+
+      case .liveNPS:
+        return .liveNPS
+
+      case .liveNPSCard:
+        return .liveNPSCard
+
+      case .liveNPSCardQuestion:
+        return .liveNPSCardQuestion
 
       case .nextLiveParent:
         return .nextLiveParent
@@ -79,6 +91,9 @@ public enum YDSpaceyComponentsTypes: Decodable {
     case banner = "zion-image"
     case bannerCarrousel = "zion-image-carousel"
     case grid = "zion-grid"
+    case liveNPS = "live-nps"
+    case liveNPSCard = "live-nps-card"
+    case liveNPSCardQuestion = "live-nps-card-question"
     case nextLiveParent = "live-schedule"
     case nextLive = "live-schedule-item"
     case player = "zion-video"
@@ -87,8 +102,8 @@ public enum YDSpaceyComponentsTypes: Decodable {
     case termsOfUse = "zion-rich-text"
     case title = "zion-title"
     case nps = "nps-card"
-    case npsQuestion = "question"
     case npsEditText = "edit-text"
+    case npsQuestion = "question"
     case custom = "custom-component"
   }
 
@@ -109,6 +124,19 @@ public enum YDSpaceyComponentsTypes: Decodable {
 
       case .grid:
         self = .grid(try singleValueContainer.decode(YDSpaceyComponentGrid.self))
+
+      case .liveNPS:
+        self = .liveNPS(try singleValueContainer.decode(YDSpaceyCommonComponent.self))
+
+      case .liveNPSCard:
+        self = .liveNPSCard(
+          try singleValueContainer.decode(YDSpaceyComponentLiveNPSCard.self)
+        )
+
+      case .liveNPSCardQuestion:
+        self = .liveNPSCardQuestion(
+          try singleValueContainer.decode(YDSpaceyComponentLiveNPSCardQuestion.self)
+        )
 
       case .nextLiveParent:
         self = .nextLiveParent(
@@ -163,6 +191,15 @@ public enum YDSpaceyComponentsTypes: Decodable {
       case .grid(let grid):
         return grid
 
+      case .liveNPS(let liveNPS):
+        return liveNPS
+
+      case .liveNPSCard(let liveNPSCard):
+        return liveNPSCard
+
+      case .liveNPSCardQuestion(let liveNPSCardQuestion):
+        return liveNPSCardQuestion
+
       case .nextLiveParent(let nextLiveParent):
         return nextLiveParent
 
@@ -214,6 +251,21 @@ extension YDSpaceyComponentsTypes: Equatable {
 
     if case .grid = lhs,
        case .grid = rhs {
+      return true
+    }
+
+    if case .liveNPS = lhs,
+       case .liveNPS = rhs {
+      return true
+    }
+
+    if case .liveNPSCard = lhs,
+       case .liveNPSCard = rhs {
+      return true
+    }
+
+    if case .liveNPSCardQuestion = lhs,
+       case .liveNPSCardQuestion = rhs {
       return true
     }
 

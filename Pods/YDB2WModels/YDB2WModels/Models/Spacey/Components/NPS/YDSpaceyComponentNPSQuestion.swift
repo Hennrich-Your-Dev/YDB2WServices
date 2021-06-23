@@ -7,8 +7,6 @@
 
 import Foundation
 
-import YDUtilities
-
 public class YDSpaceyComponentNPSQuestion: YDSpaceyComponentDelegate {
   // MARK: Enum
   public enum AnswerTypeEnum: String, Decodable {

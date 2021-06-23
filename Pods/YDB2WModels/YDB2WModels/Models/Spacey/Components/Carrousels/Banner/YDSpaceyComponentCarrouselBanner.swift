@@ -7,8 +7,6 @@
 
 import UIKit
 
-import YDUtilities
-
 public class YDSpaceyComponentCarrouselBanner: YDSpaceyComponentDelegate {
   // MARK: Properties
   public var id: String?

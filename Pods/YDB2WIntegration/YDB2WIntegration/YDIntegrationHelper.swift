@@ -14,7 +14,6 @@ public class YDIntegrationHelper {
   // MARK: Properties
   public static let shared = YDIntegrationHelper()
   public var currentAddres: YDAddress?
-  public var currentStoreNPS: [YDMNPSListConfig]?
   public var currentUser: YDCurrentCustomer?
 
   // MARK: Delegates

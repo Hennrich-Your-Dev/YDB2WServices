@@ -7,8 +7,6 @@
 
 import Foundation
 
-import YDUtilities
-
 public class YDSpaceyComponentCarrouselProduct: YDSpaceyComponentDelegate {
   public var id: String?
   public var children: [YDSpaceyComponentsTypes]

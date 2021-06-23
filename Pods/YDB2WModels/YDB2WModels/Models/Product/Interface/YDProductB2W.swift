@@ -7,8 +7,6 @@
 
 import Foundation
 
-import YDUtilities
-
 public class YDProductB2W: Codable {
   private var results: [YDProductB2WResult]
   public var products: [YDProduct]?

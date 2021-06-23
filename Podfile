@@ -16,4 +16,5 @@ target 'YDB2WServices' do
 
   pod "YDB2WIntegration", "~> 1.3.0"
   pod "YDB2WModels", "~> 1.3.0"
+  pod "YDUtilities", "~> 1.3.0"
 end

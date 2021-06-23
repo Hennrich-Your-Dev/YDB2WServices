@@ -14,5 +14,4 @@ public protocol YDIntegrationHelperActionDelegate {
   func activateDiscount(offerId: String, completion: ((Bool) -> Void)?)
   func addProductToCart(parameters: [String: Any]?)
   func makeLogin(completion: ((YDCurrentCustomer?) -> Void)?)
-  func getNPSList(completion: (([YDMNPSListConfig]) -> Void)?)
 }

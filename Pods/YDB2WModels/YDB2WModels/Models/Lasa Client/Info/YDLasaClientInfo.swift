@@ -69,7 +69,7 @@ public class YDLasaClientInfo: Codable {
     case name = "nome_completo"
     case socialSecurity = "cpf"
     case gender = "sexo"
-    case relationship = "estado_civil"
+    case relationship = "estado_civil_desc"
     case birthday = "data_nascimento"
     case email
     case cellPhone = "telefone_celular"

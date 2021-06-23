@@ -23,5 +23,6 @@ public enum YDSpaceyCustomComponentType: String, Decodable {
   case countDown
   case button
   case card
+  case title
   case unknow
 }

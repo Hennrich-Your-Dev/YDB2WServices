@@ -7,8 +7,6 @@
 
 import UIKit
 
-import YDUtilities
-
 public class YDSpaceyComponentNPS: YDSpaceyComponentDelegate {
   // MARK: Properties
   public var id: String?

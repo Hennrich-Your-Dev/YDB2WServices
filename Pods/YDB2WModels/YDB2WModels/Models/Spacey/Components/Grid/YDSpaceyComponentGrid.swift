@@ -7,8 +7,6 @@
 
 import Foundation
 
-import YDUtilities
-
 public class YDSpaceyComponentGrid: YDSpaceyComponentDelegate {
   // MARK: Properties
   public var id: String?
