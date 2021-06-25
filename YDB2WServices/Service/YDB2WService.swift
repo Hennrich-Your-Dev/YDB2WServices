@@ -211,12 +211,13 @@ extension YDB2WService: YDB2WServiceDelegate {
     }
   }
 
-  public func getProducts(
-    ofIds ids: [String],
-    onCompletion completion: @escaping (Swift.Result<[YDProductFromIdInterface], YDServiceError>) -> Void
+  public func getProduct(
+    ofIds ids: (id: String, sellerId: String),
+    onCompletion completion: @escaping (Swift.Result<YDProductFromIdInterface, YDServiceError>) -> Void
   ) {
     let parameters = [
-      "productIds": ids.joined(separator: ",")
+      "productIds": ids.id,
+      "sellerId": ids.sellerId
     ]
 
     let url = "\(products)/product_cells_by_ids"
@@ -230,7 +231,11 @@ extension YDB2WService: YDB2WServiceDelegate {
       ) { (result: Swift.Result<[Throwable<YDProductFromIdInterface>], YDServiceError>) in
         switch result {
         case .success(let products):
-          completion(.success(products.compactMap { try? $0.result.get() }))
+          if let product = products.compactMap({ try? $0.result.get() }).first {
+            completion(.success(product))
+          } else {
+            completion(.failure(.notFound))
+          }
 
         case .failure(let error):
           completion(.failure(error))

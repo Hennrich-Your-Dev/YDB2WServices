@@ -33,8 +33,8 @@ public protocol YDB2WServiceDelegate:
     onCompletion completion: @escaping (Swift.Result<YDProductsRESQL, YDServiceError>) -> Void
   )
 
-  func getProducts(
-    ofIds ids: [String],
-    onCompletion completion: @escaping (Swift.Result<[YDProductFromIdInterface], YDServiceError>) -> Void
+  func getProduct(
+    ofIds ids: (id: String, sellerId: String),
+    onCompletion completion: @escaping (Swift.Result<YDProductFromIdInterface, YDServiceError>) -> Void
   )
 }
