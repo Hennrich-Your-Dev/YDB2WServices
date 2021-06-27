@@ -14,7 +14,7 @@ target 'YDB2WServices' do
   # Pods for YDB2WServices
   pod "Alamofire", "~> 4.0"
 
-  pod "YDB2WIntegration", "~> 1.3.0"
-  pod "YDB2WModels", "~> 1.3.0"
-  pod "YDUtilities", "~> 1.3.0"
+  pod "YDB2WIntegration", "~> 1.4.0"
+  pod "YDB2WModels", "~> 1.4.0"
+  pod "YDUtilities", "~> 1.4.0"
 end
