@@ -21,6 +21,7 @@ public protocol YDB2WServiceLasaClientDelegate {
 
   func getLasaClientLogin(
     user: YDCurrentCustomer,
+    socialSecurity: String?,
     onCompletion completion: @escaping (Swift.Result<YDLasaClientLogin, YDServiceError>) -> Void
   )
 
@@ -97,6 +98,7 @@ public extension YDB2WService {
 
   func getLasaClientLogin(
     user: YDCurrentCustomer,
+    socialSecurity: String?,
     onCompletion completion: @escaping (Swift.Result<YDLasaClientLogin, YDServiceError>) -> Void
   ) {
     let headers: [String: String] = [
@@ -104,10 +106,14 @@ public extension YDB2WService {
       "Ocp-Apim-Subscription-Key": "953582bd88f84bdb9b3ad66d04eaf728"
     ]
 
-    let parameters: [String: Any] = [
+    var parameters: [String: Any] = [
       "id_cliente": user.id,
       "access_code_cliente": user.accessToken
     ]
+
+    if let socialSecurity = socialSecurity {
+      parameters["cpf"] = socialSecurity
+    }
 
     let url = "\(lasaClient)/portalcliente/login"
 
