@@ -13,6 +13,8 @@ public class YDSpaceyComponentLiveNPSCard: Decodable {
   public var type: YDSpaceyComponentsTypes.Types = .liveNPSCardQuestion
   public var title: String?
 
+  public var storedValue: String?
+
   enum CodingKeys: String, CodingKey {
     case id = "_id"
     case children

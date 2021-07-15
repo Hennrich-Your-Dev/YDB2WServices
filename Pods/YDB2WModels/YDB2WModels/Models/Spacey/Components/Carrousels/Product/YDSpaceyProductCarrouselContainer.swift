@@ -10,14 +10,14 @@ import UIKit
 public struct YDSpaceyProductCarrouselContainer {
   public var id: Int
   public var items: [YDSpaceyProduct]
-  public var ids: [[String]]
+  public var ids: [[ (id: String, sellerId: String) ]]
   public var pageNumber: Int
   public var currentRectList: CGFloat?
 
   public init(
     id: Int,
     items: [YDSpaceyProduct],
-    ids: [[String]],
+    ids: [[ (id: String, sellerId: String) ]],
     pageNumber: Int,
     currentRectList: CGFloat?
   ) {

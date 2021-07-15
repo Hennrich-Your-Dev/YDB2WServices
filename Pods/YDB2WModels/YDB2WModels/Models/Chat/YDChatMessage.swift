@@ -29,12 +29,12 @@ public class YDChatMessage: Codable {
   // MARK: Properties
   public var id: String?
   public var message: String
-  public let date: String
+  public var date: String?
   public let resource: YDChatMessageResource?
   public let sender: YDChatMessageSender
 
   public var hourAndMinutes: String {
-
+    let date = self.date ?? Date().iso8601String
     let dateFormatterGet = ISO8601DateFormatter()
     dateFormatterGet.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
 
@@ -55,7 +55,7 @@ public class YDChatMessage: Codable {
   // MARK: Init
   public init(
     message: String,
-    date: String,
+    date: String?,
     videoId: String,
     sender: YDChatMessageSender
   ) {
@@ -86,14 +86,9 @@ public class YDChatMessage: Codable {
       avatar: nil
     )
 
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-
-    let date = formatter.string(from: Date())
-
     return YDChatMessage(
       message: message,
-      date: date,
+      date: nil,
       videoId: videoId,
       sender: sender
     )

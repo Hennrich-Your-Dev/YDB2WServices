@@ -11,7 +11,7 @@ public enum YDSpaceyComponentsTypes: Decodable {
   case banner(YDSpaceyComponentBanner)
   case bannerCarrousel(YDSpaceyComponentCarrouselBanner)
   case grid(YDSpaceyComponentGrid)
-  case liveNPS(YDSpaceyCommonComponent)
+  case liveNPS(YDSpaceyComponentLiveNPS)
   case liveNPSCard(YDSpaceyComponentLiveNPSCard)
   case liveNPSCardQuestion(YDSpaceyComponentLiveNPSCardQuestion)
   case nextLiveParent(YDSpaceyCommonComponent)
@@ -126,7 +126,7 @@ public enum YDSpaceyComponentsTypes: Decodable {
         self = .grid(try singleValueContainer.decode(YDSpaceyComponentGrid.self))
 
       case .liveNPS:
-        self = .liveNPS(try singleValueContainer.decode(YDSpaceyCommonComponent.self))
+        self = .liveNPS(try singleValueContainer.decode(YDSpaceyComponentLiveNPS.self))
 
       case .liveNPSCard:
         self = .liveNPSCard(

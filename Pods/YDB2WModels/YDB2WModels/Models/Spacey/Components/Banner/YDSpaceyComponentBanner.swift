@@ -19,6 +19,8 @@ public class YDSpaceyComponentBanner: Decodable {
   public let deepLink: String?
   public let componentType: YDSpaceyComponentsTypes.Types = .banner
 
+  public var currentImageHeight: CGFloat?
+
   // Computed variables
   public var bannerImage: String? {
     var image: String? = nil

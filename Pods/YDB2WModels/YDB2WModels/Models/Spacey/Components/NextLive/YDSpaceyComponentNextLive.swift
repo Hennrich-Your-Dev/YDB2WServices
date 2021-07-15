@@ -68,7 +68,7 @@ public class YDSpaceyComponentNextLive: Decodable {
     case photo = "liveImageUrl"
     case initialDate = "liveStartTime"
     case finalDate = "liveEndTime"
-    case name = "title"
+    case name = "liveTitle"
     case description = "liveDescription"
   }
 

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C110D37626A0A07000D5E140 /* Service+Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = C110D37526A0A07000D5E140 /* Service+Products.swift */; };
+		C110D37926A0A92B00D5E140 /* Service+Stores.swift in Sources */ = {isa = PBXBuildFile; fileRef = C110D37826A0A92B00D5E140 /* Service+Stores.swift */; };
+		C110D37C26A0ADAF00D5E140 /* Service+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = C110D37B26A0ADAF00D5E140 /* Service+Address.swift */; };
+		C110D37F26A0AF5200D5E140 /* Service+Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C110D37E26A0AF5200D5E140 /* Service+Invoice.swift */; };
 		C121D9BB2642DE9F004C9836 /* Service+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C121D9BA2642DE9F004C9836 /* Service+Chat.swift */; };
 		C13006912659B51100867C0A /* Service+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13006902659B51100867C0A /* Service+Live.swift */; };
 		C171466A25FA219C002AA296 /* YDB2WServices.h in Headers */ = {isa = PBXBuildFile; fileRef = C171466825FA219C002AA296 /* YDB2WServices.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,6 +30,10 @@
 		60746BE56E6035F149DB9959 /* Pods-YDB2WServices.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YDB2WServices.debug.xcconfig"; path = "Target Support Files/Pods-YDB2WServices/Pods-YDB2WServices.debug.xcconfig"; sourceTree = "<group>"; };
 		BA2C8321BDCBA8FEB1846D08 /* Pods-YDB2WServices.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YDB2WServices.release.xcconfig"; path = "Target Support Files/Pods-YDB2WServices/Pods-YDB2WServices.release.xcconfig"; sourceTree = "<group>"; };
 		BD22DFA406B59D69388399B7 /* Pods_YDB2WServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YDB2WServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C110D37526A0A07000D5E140 /* Service+Products.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Products.swift"; sourceTree = "<group>"; };
+		C110D37826A0A92B00D5E140 /* Service+Stores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Stores.swift"; sourceTree = "<group>"; };
+		C110D37B26A0ADAF00D5E140 /* Service+Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Address.swift"; sourceTree = "<group>"; };
+		C110D37E26A0AF5200D5E140 /* Service+Invoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Invoice.swift"; sourceTree = "<group>"; };
 		C121D9BA2642DE9F004C9836 /* Service+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Chat.swift"; sourceTree = "<group>"; };
 		C13006902659B51100867C0A /* Service+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Live.swift"; sourceTree = "<group>"; };
 		C171466525FA219C002AA296 /* YDB2WServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YDB2WServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +68,38 @@
 				BD22DFA406B59D69388399B7 /* Pods_YDB2WServices.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C110D37426A0A01F00D5E140 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C110D37526A0A07000D5E140 /* Service+Products.swift */,
+			);
+			path = Products;
+			sourceTree = "<group>";
+		};
+		C110D37726A0A91200D5E140 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				C110D37826A0A92B00D5E140 /* Service+Stores.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		C110D37A26A0AD7000D5E140 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				C110D37B26A0ADAF00D5E140 /* Service+Address.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		C110D37D26A0AF4300D5E140 /* Invoice */ = {
+			isa = PBXGroup;
+			children = (
+				C110D37E26A0AF5200D5E140 /* Service+Invoice.swift */,
+			);
+			path = Invoice;
 			sourceTree = "<group>";
 		};
 		C121D9B62642DE8D004C9836 /* Lasa Client */ = {
@@ -156,10 +196,14 @@
 		C1B9B2562641C5F300FF55C3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C110D37A26A0AD7000D5E140 /* Address */,
 				C121D9B82642DE93004C9836 /* Chat */,
+				C110D37D26A0AF4300D5E140 /* Invoice */,
 				C130068F2659B4FE00867C0A /* Live */,
 				C121D9B62642DE8D004C9836 /* Lasa Client */,
+				C110D37726A0A91200D5E140 /* Stores */,
 				C1C38950264ECA91002A12C0 /* Spacey */,
+				C110D37426A0A01F00D5E140 /* Products */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -292,11 +336,15 @@
 				C171468125FA245B002AA296 /* ServiceError.swift in Sources */,
 				C121D9BB2642DE9F004C9836 /* Service+Chat.swift in Sources */,
 				C171468225FA245B002AA296 /* QueryString.swift in Sources */,
+				C110D37926A0A92B00D5E140 /* Service+Stores.swift in Sources */,
 				C171467825FA23D3002AA296 /* Connectivity.swift in Sources */,
 				C171468E25FA261D002AA296 /* YDB2WService.swift in Sources */,
 				C171468025FA245B002AA296 /* ServiceClient.swift in Sources */,
+				C110D37626A0A07000D5E140 /* Service+Products.swift in Sources */,
 				C1C38952264ECAA5002A12C0 /* Service+Spacey.swift in Sources */,
+				C110D37C26A0ADAF00D5E140 /* Service+Address.swift in Sources */,
 				C1B9B2582641C62200FF55C3 /* Service+LasaClient.swift in Sources */,
+				C110D37F26A0AF5200D5E140 /* Service+Invoice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

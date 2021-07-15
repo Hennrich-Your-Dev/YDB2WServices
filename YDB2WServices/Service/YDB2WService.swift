@@ -7,15 +7,14 @@
 
 import Foundation
 import CoreLocation
-
 import Alamofire
-
 import YDB2WIntegration
 import YDB2WModels
 import YDUtilities
 
 public class YDB2WService {
   // MARK: Properties
+  private let helper = YDIntegrationHelper.shared
   let service: YDServiceClientDelegate
 
   let restQL: String
@@ -28,42 +27,44 @@ public class YDB2WService {
   let lasaClient: String
   let youTubeAPI: String
   let chatService: String
+  let invoiceService: String
 
   var youTubeKey = ""
+  var storeMaxRadius: Double = 3500
 
   // MARK: Init
   public init() {
-    guard let restQLApi = YDIntegrationHelper.shared
-            .getFeature(featureName: YDConfigKeys.restQL.rawValue)?.endpoint,
-
-          let restQLVersion = YDIntegrationHelper.shared
-            .getFeature(featureName: YDConfigKeys.store.rawValue)?
+    guard let restQLApi = helper.getFeature(featureName: YDConfigKeys.restQL.rawValue)?.endpoint,
+          let restQLVersion = helper.getFeature(featureName: YDConfigKeys.store.rawValue)?
             .extras?[YDConfigProperty.productsQueryVersion.rawValue] as? Int,
 
-          let userChatApi = YDIntegrationHelper.shared
+          let userChatApi = helper
             .getFeature(featureName: YDConfigKeys.chatService.rawValue)?.endpoint,
 
-          let storeApi = YDIntegrationHelper.shared
+          let storeApi = helper
             .getFeature(featureName: YDConfigKeys.storeService.rawValue)?.endpoint,
 
-          let productsApi = YDIntegrationHelper.shared
+          let productsApi = helper
             .getFeature(featureName: YDConfigKeys.productService.rawValue)?.endpoint,
 
-          let zipcodeApi = YDIntegrationHelper.shared
+          let zipcodeApi = helper
             .getFeature(featureName: YDConfigKeys.addressService.rawValue)?.endpoint,
 
-          let spaceyApi = YDIntegrationHelper.shared
+          let spaceyApi = helper
             .getFeature(featureName: YDConfigKeys.spaceyService.rawValue)?.endpoint,
 
-          let lasaApi = YDIntegrationHelper.shared
+          let lasaApi = helper
             .getFeature(featureName: YDConfigKeys.lasaClientService.rawValue)?.endpoint,
 
-          let googleServiceConfig = YDIntegrationHelper.shared
+          let googleServiceConfig = helper
             .getFeature(featureName: YDConfigKeys.googleService.rawValue),
           let googleServiceApi = googleServiceConfig.endpoint,
 
-          let chatService = YDIntegrationHelper.shared
-            .getFeature(featureName: YDConfigKeys.chatService.rawValue)?.endpoint
+          let chatService = helper.getFeature(featureName: YDConfigKeys.chatService.rawValue)?
+            .endpoint,
+
+          let invoiceService = helper.getFeature(featureName: YDConfigKeys.invoiceService.rawValue)?
+            .endpoint
     else {
       fatalError("Não foi possível resgatar todas APIs")
     }
@@ -73,174 +74,25 @@ public class YDB2WService {
     self.restQLVersion = restQLVersion
     self.userChat = userChatApi
     self.products = productsApi
-    self.store = storeApi
+    self.store = "\(storeApi)/store/geo-types"
     self.zipcode = zipcodeApi
     self.spacey = spaceyApi
     self.lasaClient = lasaApi
     self.youTubeAPI = "\(googleServiceApi)/youtube/v3/videos?part=statistics,liveStreamingDetails"
+    self.chatService = chatService
+    self.invoiceService = invoiceService
 
     if let youTubeKey = googleServiceConfig
     .extras?[YDConfigProperty.youtubeKey.rawValue] as? String {
       self.youTubeKey = youTubeKey
     }
 
-    self.chatService = chatService
-  }
-}
-
-extension YDB2WService: YDB2WServiceDelegate {
-  public func getNearstLasa(
-    with location: CLLocationCoordinate2D,
-    onCompletion completion: @escaping (Swift.Result<YDStores, YDServiceError>) -> Void
-  ) {
-    var radius: Double = 35000
-
-    if let radiusFromConfig = YDIntegrationHelper.shared
+    if let radiusFromConfig = helper
         .getFeature(featureName: YDConfigKeys.store.rawValue)?
         .extras?[YDConfigProperty.maxStoreRange.rawValue] as? Double {
-      radius = radiusFromConfig
-    }
-
-    let parameters: [String: Any] = [
-      "latitude": location.latitude,
-      "longitude": location.longitude,
-      "type": "PICK_UP_IN_STORE",
-      "radius": radius
-    ]
-
-    let url = "\(store)/store/geo-types"
-
-    DispatchQueue.global().async { [weak self] in
-      self?.service.request(
-        withUrl: url,
-        withMethod: .get,
-        andParameters: parameters
-      ) { (response: Swift.Result<YDStores, YDServiceError>) in
-        switch response {
-          case .success(let list):
-            list.stores.sort(by: { $0.distance ?? 10000 < $1.distance ?? 10000 })
-            completion(.success(list))
-
-          case .failure(let error):
-            completion(.failure(error))
-        }
-      }
-    }
-  }
-
-  public func getAddressFromLocation(
-    _ location: CLLocationCoordinate2D,
-    onCompletion completion: @escaping (Swift.Result<[YDAddress], YDServiceError>) -> Void
-  ) {
-
-    let parameters = [
-      "latitude":  location.latitude,
-      "longitude": location.longitude
-    ]
-
-    DispatchQueue.global().async { [weak self] in
-      guard let self = self else { return }
-
-      self.service.request(
-        withUrl: self.zipcode,
-        withMethod: .get,
-        andParameters: parameters
-      ) { (response: Swift.Result<[YDAddress], YDServiceError>) in
-        completion(response)
-      }
-    }
-  }
-
-  public func getProductsFromRESQL(
-    eans: [String],
-    storeId: String?,
-    onCompletion completion: @escaping (Swift.Result<YDProductsRESQL, YDServiceError>) -> Void
-  ) {
-    var parameters: [String: String] = [:]
-
-    if let storeId = storeId {
-      parameters["store"] = storeId
-    }
-
-    DispatchQueue.global().async { [weak self] in
-      guard let self = self else { return }
-
-      var url = "\(self.restQL)/run-query/app/lasa-and-b2w-product-by-ean/\(self.restQLVersion)?"
-
-      eans.forEach { url += "ean=\($0)&" }
-
-      self.service.requestWithFullResponse(
-        withUrl: String(url.dropLast()),
-        withMethod: .get,
-        withHeaders: nil,
-        andParameters: parameters
-      ) { (response: DataResponse<Data>?) in
-        guard let data = response?.data else {
-          completion(
-            .failure(
-              YDServiceError.init(withMessage: "Nenhum dado retornado")
-            )
-          )
-          return
-        }
-
-        do {
-          guard let json = try JSONSerialization.jsonObject(
-            with: data,
-            options: .allowFragments
-          ) as? [String: Any] else {
-            completion(
-              .failure(
-                YDServiceError.init(withMessage: "Nenhum dado retornado")
-              )
-            )
-            return
-          }
-
-          let restQL = YDProductsRESQL(withJson: json)
-          completion(.success(restQL))
-
-        } catch {
-          completion(
-            .failure(
-              YDServiceError.init(error: error)
-            )
-          )
-        }
-      }
-    }
-  }
-
-  public func getProduct(
-    ofIds ids: (id: String, sellerId: String),
-    onCompletion completion: @escaping (Swift.Result<YDProductFromIdInterface, YDServiceError>) -> Void
-  ) {
-    let parameters = [
-      "productIds": ids.id,
-      "sellerId": ids.sellerId
-    ]
-
-    let url = "\(products)/product_cells_by_ids"
-
-    DispatchQueue.global().async { [weak self] in
-      guard let self = self else { return }
-      self.service.requestWithoutCache(
-        withUrl: url,
-        withMethod: .get,
-        andParameters: parameters
-      ) { (result: Swift.Result<[Throwable<YDProductFromIdInterface>], YDServiceError>) in
-        switch result {
-        case .success(let products):
-          if let product = products.compactMap({ try? $0.result.get() }).first {
-            completion(.success(product))
-          } else {
-            completion(.failure(.notFound))
-          }
-
-        case .failure(let error):
-          completion(.failure(error))
-        }
-      }
+      self.storeMaxRadius = radiusFromConfig
     }
   }
 }
+
+extension YDB2WService: YDB2WServiceDelegate {}

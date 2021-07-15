@@ -10,10 +10,12 @@ import Foundation
 public struct YDCurrentCustomer: Codable {
   public var id: String
   public var email: String?
-  public let firstName: String?
-  public let fullName: String?
-  public let accessToken: String
-  public let clientLasaToken: String?
+  public var firstName: String?
+  public var fullName: String?
+  public var accessToken: String
+
+  public var clientLasaToken: String?
+  public var clientLasaStoreId: String?
 
   public init(
     id: String,
@@ -21,7 +23,8 @@ public struct YDCurrentCustomer: Codable {
     firstName: String? = nil,
     fullName: String? = nil,
     accessToken: String,
-    clientLasaToken: String? = nil
+    clientLasaToken: String? = nil,
+    clientLasaStoreId: String? = nil
   ) {
     self.id = id
     self.email = email
@@ -29,5 +32,6 @@ public struct YDCurrentCustomer: Codable {
     self.fullName = fullName
     self.accessToken = accessToken
     self.clientLasaToken = clientLasaToken
+    self.clientLasaStoreId = clientLasaStoreId
   }
 }

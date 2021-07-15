@@ -11,14 +11,10 @@ public class YDSpaceyBannerConfig {
   // Properties
   public let image: String
   public let bannerId: String
-  public var currentRect: CGRect?
-  public var imageComponent: UIImage?
 
   // Init
   public init(image: String, bannerId: String) {
     self.image = image
     self.bannerId = bannerId
-    self.currentRect = nil
-    self.imageComponent = nil
   }
 }
