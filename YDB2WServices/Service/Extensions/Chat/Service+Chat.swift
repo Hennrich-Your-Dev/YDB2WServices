@@ -42,6 +42,16 @@ public protocol YDB2WServiceChatDelegate {
     ofLive liveId: String,
     onCompletion: @escaping(Swift.Result<Void, YDServiceError>) -> Void
   )
+
+  func highlightMessage(
+    ofId messageId: String,
+    onCompletion: @escaping(Swift.Result<Void, YDServiceError>) -> Void
+  )
+
+  func removeHighlightMessage(
+    ofId messageId: String,
+    onCompletion: @escaping(Swift.Result<Void, YDServiceError>) -> Void
+  )
 }
 
 public extension YDB2WService {
@@ -215,6 +225,7 @@ public extension YDB2WService {
     }
   }
 
+  // MARK: Get deleted messages
   func getDeletedMessages(
     withChatId chatId: String,
     onCompletion: @escaping (Swift.Result<YDChatDeletedMessages, YDServiceError>) -> Void
@@ -243,6 +254,7 @@ public extension YDB2WService {
     }
   }
 
+  // MARK: Ban user
   func banUserFromChat(
     _ userId: String,
     ofLive liveId: String,
@@ -266,6 +278,72 @@ public extension YDB2WService {
         withMethod: .post,
         withHeaders: nil,
         andParameters: parameters
+      ) { response in
+        guard let result = response?.result
+        else {
+          onCompletion(.failure(YDServiceError.badRequest))
+          return
+        }
+
+        //
+        switch result {
+          case .success:
+            onCompletion(.success(()))
+
+          case .failure(let error):
+            onCompletion(.failure(YDServiceError.init(error: error)))
+        }
+      }
+    }
+  }
+
+  // MARK: Highlight message
+  func highlightMessage(
+    ofId messageId: String,
+    onCompletion: @escaping(Swift.Result<Void, YDServiceError>) -> Void
+  ) {
+    let url = "\(chatService)/message/\(messageId)/fixed"
+
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+      self.service.requestWithFullResponse(
+        withUrl: url,
+        withMethod: .post,
+        withHeaders: nil,
+        andParameters: nil
+      ) { response in
+        guard let result = response?.result
+        else {
+          onCompletion(.failure(YDServiceError.badRequest))
+          return
+        }
+
+        //
+        switch result {
+          case .success:
+            onCompletion(.success(()))
+
+          case .failure(let error):
+            onCompletion(.failure(YDServiceError.init(error: error)))
+        }
+      }
+    }
+  }
+
+  // MARK: Remove higlighted message
+  func removeHighlightMessage(
+    ofId messageId: String,
+    onCompletion: @escaping(Swift.Result<Void, YDServiceError>) -> Void
+  ) {
+    let url = "\(chatService)/message/\(messageId)/fixed"
+
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+      self.service.requestWithFullResponse(
+        withUrl: url,
+        withMethod: .delete,
+        withHeaders: nil,
+        andParameters: nil
       ) { response in
         guard let result = response?.result
         else {
