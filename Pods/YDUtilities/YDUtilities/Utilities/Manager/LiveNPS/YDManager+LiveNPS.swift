@@ -30,9 +30,10 @@ public class YDManagerLiveNPS: Codable {
 public extension YDManager {
   class LivesNPS {
     // MARK: Properties
-    public  static let shared = YDManager.LivesNPS()
+    public static let shared = YDManager.LivesNPS()
     private let defaults = UserDefaults.standard
     private var livesNPS: [YDManagerLiveNPS] = []
+    public var liveIdEnabled = true
 
     // MARK: Init
     private init() {
@@ -51,7 +52,16 @@ public extension YDManager {
 
     // MARK: Public
     public func add(_ nps: YDManagerLiveNPS) {
-      guard livesNPS.firstIndex(where: { $0.spaceyId == nps.spaceyId && $0.id == nps.id }) == nil
+      if liveIdEnabled {
+        guard livesNPS.firstIndex(where: { $0.spaceyId == nps.spaceyId && $0.id == nps.id }) == nil
+        else { return }
+
+        livesNPS.append(nps)
+        save()
+        return
+      }
+
+      guard livesNPS.firstIndex(where: { $0.id == nps.id }) == nil
       else { return }
 
       livesNPS.append(nps)
@@ -59,11 +69,15 @@ public extension YDManager {
     }
 
     public func get(id: String?, spaceyId: String?) -> YDManagerLiveNPS? {
-      return livesNPS.first(
-        where: {
-          $0.spaceyId == spaceyId && $0.id == id
-        }
-      )
+      if liveIdEnabled {
+        return livesNPS.first(
+          where: {
+            $0.spaceyId == spaceyId && $0.id == id
+          }
+        )
+      }
+
+      return livesNPS.first(where: { $0.id == id })
     }
   }
 }

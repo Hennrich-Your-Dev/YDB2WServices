@@ -17,10 +17,11 @@ public class YDQuiz: Codable {
   public var id: String?
   public var title: String?
   public var choices: [YDQuizChoice]
+  public var answer: String?
 
   // MARK: Computed variables
   public var type: YDQuizType = .choices
-  public var storedValue: Any?
+  public var storedValue: String?
 
   // MARK: CodingKeys
   enum CodingKeys: String, CodingKey {
@@ -34,11 +35,13 @@ public class YDQuiz: Codable {
     id: String?,
     title: String?,
     choices: [YDQuizChoice],
+    answer: String?,
     type: YDQuizType = .choices
   ) {
     self.id = id
     self.title = title
     self.choices = choices
+    self.answer = answer
     self.type = type
   }
 }

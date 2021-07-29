@@ -8,7 +8,7 @@
 import UIKit
 
 public extension String {
-  static func loremIpsum(ofLength length: Int = 445) -> String {
+  static func lorem(ofLength length: Int = 445) -> String {
     guard length > 0 else { return "" }
 
     // https://www.lipsum.com/
@@ -51,6 +51,27 @@ public extension String {
     formatter.usesGroupingSeparator = true
     formatter.locale = Locale(identifier: "pt_BR")
     return formatter.number(from: self)?.doubleValue
+  }
+
+  func format(with mask: String, maskOperator: Character) -> String {
+    let numbers = self.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+    var result = ""
+    var index = numbers.startIndex // numbers iterator
+
+    // iterate over the mask characters until the iterator of numbers ends
+    for ch in mask where index < numbers.endIndex {
+      if ch == maskOperator {
+        // mask requires a number in this place, so take the next one
+        result.append(numbers[index])
+
+        // move numbers iterator to the next index
+        index = numbers.index(after: index)
+
+      } else {
+        result.append(ch) // just append a mask character
+      }
+    }
+    return result
   }
 }
 

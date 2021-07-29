@@ -103,7 +103,7 @@ public extension YDSpaceyComponentNextLive {
       initialDate: startTime ?? "27/04/2021 15:00",
       finalDate: endTime ?? "27/04/2021 16:00",
       name: "Nome da Live",
-      description: .loremIpsum()
+      description: .lorem()
     )
   }
 }

@@ -5,7 +5,7 @@
 //  Created by Douglas Hennrich on 14/04/21.
 //
 
-import Foundation
+import UIKit
 
 public class YDSpaceyComponentBanner: Decodable {
   // Properties

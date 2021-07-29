@@ -14,14 +14,20 @@ public class YDChatMessagesListInterface: Codable {
 }
 
 public class YDChatMessagesList: Codable {
+  // MARK: Properties
   public var messages: [YDChatMessage]
 
+  public var fixedMessage: YDChatMessage?
+
+  // MARK: Init
   public init() {
     messages = []
+    fixedMessage = nil
   }
 
-  public init(messages: [YDChatMessage]) {
+  public init(messages: [YDChatMessage], fixedMessage: YDChatMessage? = nil) {
     self.messages = messages
+    self.fixedMessage = fixedMessage
   }
 }
 
@@ -118,5 +124,12 @@ public class YDChatMessageSender: Codable {
     self.id = id
     self.name = name
     self.avatar = avatar
+  }
+}
+
+// MARK: Equatable
+extension YDChatMessage: Equatable {
+  public static func == (lhs: YDChatMessage, rhs: YDChatMessage) -> Bool {
+    return lhs.id == rhs.id
   }
 }

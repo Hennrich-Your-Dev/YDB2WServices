@@ -9,6 +9,7 @@ import Foundation
 
 import Alamofire
 import YDB2WModels
+import YDExtensions
 
 // MARK: Delegate
 public protocol YDB2WServiceLasaClientDelegate {
@@ -39,6 +40,11 @@ public protocol YDB2WServiceLasaClientDelegate {
   func getLasaClientHistoric(
     with user: YDLasaClientLogin,
     onCompletion completion: @escaping (Swift.Result<[YDLasaClientHistoricData], YDServiceError>) -> Void
+  )
+  
+  func getLasaClientQuizzes(
+    userToken token: String,
+    onCompletion completion: @escaping (Swift.Result<[YDB2WModels.YDQuiz], YDServiceError>) -> Void
   )
 }
 
@@ -271,6 +277,60 @@ public extension YDB2WService {
             completion(.failure(error))
         }
       }
+    }
+  }
+  
+  func getLasaClientQuizzes(
+    userToken token: String,
+    onCompletion completion: @escaping (Swift.Result<[YDB2WModels.YDQuiz], YDServiceError>) -> Void
+  ) {
+    let headers: [String: String] = [
+      "Authorization": "Bearer \(token)"
+    ]
+
+    let url = "\(lasaClient)/portalcliente/cliente/relatorio-historico/lista"
+
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+      
+      var quizzes: [YDB2WModels.YDQuiz] = []
+      
+      for n in 1...5 {
+        let rightId = UUID().uuidString
+        
+        let quiz = YDB2WModels.YDQuiz(
+          id: "\(n)",
+          title: "Pergunta n\(n)?",
+          choices: [
+            YDQuizChoice(id: UUID().uuidString, title: "Escolha fake \(n)"),
+            YDQuizChoice(id: rightId, title: "Escolha fake \(n)"),
+            YDQuizChoice(id: UUID().uuidString, title: "Escolha fake \(n)"),
+            YDQuizChoice(id: UUID().uuidString, title: .lorem())
+          ],
+          answer: rightId,
+          type: .choices
+        )
+        quizzes.append(quiz)
+      }
+      
+      completion(.success(quizzes))
+//      self.service.request(
+//        withUrl: url,
+//        withMethod: .get,
+//        withHeaders: headers,
+//        andParameters: nil
+//      ) { (response: Swift.Result<[YDB2WModels.YDQuiz], YDServiceError>) in
+//        switch response {
+//          case .success(let interface):
+//            let quizzes = interface.perguntas.map {
+//              YDB2WModels.YDQuiz(id: $0.id, title: $0.title, choices: $0.escolhas)
+//            }
+//            completion(.success(quizzes))
+//
+//          case .failure(let error):
+//            completion(.failure(error))
+//        }
+//      }
     }
   }
 }

@@ -7,13 +7,15 @@
 
 import Foundation
 
-public enum UIStateEnum {
+public enum YDUIStateEnum {
   case normal
   case loading
   case error
   case empty
 }
 
-public protocol UIStateDelegate {
-  func changeUIState(with type: UIStateEnum)
+public protocol YDUIStateDelegate {
+  var stateView: YDUIStateEnum { get set }
+
+  func changeUIState(with type: YDUIStateEnum)
 }
