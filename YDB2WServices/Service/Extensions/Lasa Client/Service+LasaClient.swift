@@ -295,7 +295,7 @@ public extension YDB2WService {
       
       var quizzes: [YDB2WModels.YDQuiz] = []
       
-      for n in 1...5 {
+      for n in 1...16 {
         let rightId = UUID().uuidString
         
         let quiz = YDB2WModels.YDQuiz(
