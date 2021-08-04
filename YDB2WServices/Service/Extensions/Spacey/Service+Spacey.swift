@@ -48,6 +48,36 @@ public extension YDB2WService {
       }
     }
   }
+  
+  func getSpacey(
+    spaceyId: String,
+    customApi: String? = nil,
+    onCompletion completion: @escaping (Swift.Result<DataResponse<Data>?, YDServiceError>) -> Void
+  ) {
+    var url = "\(spacey)/spacey-api/publications/app/americanas/hotsite/\(spaceyId)"
+
+    if let customApi = customApi {
+      url = "\(customApi)/\(spaceyId)"
+    }
+
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+
+      self.service.requestWithFullResponse(
+        withUrl: url,
+        withMethod: .get,
+        withHeaders: nil,
+        andParameters: nil
+      ) { response in
+        guard let response = response else {
+          completion(.failure(YDServiceError.badRequest))
+          return
+        }
+        
+        completion(.success(response))
+      }
+    }
+  }
 
   func getNextLives(
     spaceyId: String,

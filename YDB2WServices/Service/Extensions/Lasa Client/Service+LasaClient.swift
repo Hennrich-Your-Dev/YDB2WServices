@@ -290,9 +290,7 @@ public extension YDB2WService {
 
     let url = "\(lasaClient)/portalcliente/cliente/relatorio-historico/lista"
 
-    DispatchQueue.global().async { [weak self] in
-      guard let self = self else { return }
-      
+    DispatchQueue.global().async {
       var quizzes: [YDB2WModels.YDQuiz] = []
       
       for n in 1...16 {
