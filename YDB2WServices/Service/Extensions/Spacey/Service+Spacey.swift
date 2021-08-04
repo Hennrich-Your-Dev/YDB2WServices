@@ -17,6 +17,12 @@ public protocol YDB2WServiceSpaceyDelegate {
     customApi: String?,
     onCompletion completion: @escaping (Swift.Result<YDSpacey, YDServiceError>) -> Void
   )
+  
+  func getSpacey(
+    spaceyId: String,
+    customApi: String?,
+    onCompletion completion: @escaping (Swift.Result<DataResponse<Data>?, YDServiceError>) -> Void
+  )
 
   func getNextLives(
     spaceyId: String,
