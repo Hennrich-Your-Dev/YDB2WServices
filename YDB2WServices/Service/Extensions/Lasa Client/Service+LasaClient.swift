@@ -11,6 +11,12 @@ import Alamofire
 import YDB2WModels
 import YDExtensions
 
+// MARK: Enum
+enum LasaClientOCP: String {
+  case prod = "953582bd88f84bdb9b3ad66d04eaf728"
+  case dev = "6c09af97535c40abbb59c95d57c1cce3"
+}
+
 // MARK: Delegate
 public protocol YDB2WServiceLasaClientDelegate {
   func offlineOrdersGetOrders(
@@ -46,6 +52,12 @@ public protocol YDB2WServiceLasaClientDelegate {
     userToken token: String,
     onCompletion completion: @escaping (Swift.Result<[YDB2WModels.YDQuiz], YDServiceError>) -> Void
   )
+  
+  func updateLasaClientEmail(
+    of user: YDCurrentCustomer,
+    isDebug: Bool,
+    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
+  )
 }
 
 // MARK: Conform
@@ -59,7 +71,7 @@ public extension YDB2WService {
     let url = "\(lasaClient)/portalcliente/cliente/cupons/lista"
     let headers = [
       "Authorization": "Bearer \(token)",
-      "Ocp-Apim-Subscription-Key": "953582bd88f84bdb9b3ad66d04eaf728"
+      "Ocp-Apim-Subscription-Key": LasaClientOCP.prod.rawValue
     ]
     let parameters = [
       "page_number": page,
@@ -247,7 +259,7 @@ public extension YDB2WService {
 
     let headers: [String: String] = [
       "Cache-Control": "0",
-      "Ocp-Apim-Subscription-Key": "953582bd88f84bdb9b3ad66d04eaf728",
+      "Ocp-Apim-Subscription-Key": LasaClientOCP.prod.rawValue,
       "Authorization": "Bearer \(token)"
     ]
 
@@ -329,6 +341,72 @@ public extension YDB2WService {
 //            completion(.failure(error))
 //        }
 //      }
+    }
+  }
+  
+  func updateLasaClientEmail(
+    of user: YDCurrentCustomer,
+    isDebug: Bool,
+    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
+  ) {
+    guard let token = user.clientLasaToken,
+          let email = user.email
+    else {
+      completion(
+        .failure(
+          YDServiceError(withMessage: "Erro desconhecido")
+        )
+      )
+      return
+    }
+    
+    let baseAPI = isDebug ? DEBUG_lasaClient : lasaClient
+    let url = "\(baseAPI)/client/email"
+    
+    let key = isDebug ? LasaClientOCP.dev.rawValue : LasaClientOCP.prod.rawValue
+    
+    let headers: [String: String] = [
+      "Ocp-Apim-Subscription-Key": key,
+      "Authorization": "Bearer \(token)"
+    ]
+    
+    let parameters: [String: String] = [
+      "id_cliente": user.id,
+      "access_code_cliente": user.accessToken,
+      "email": email,
+      "origem": "ACOM-StoreMode-OfflineAccount - APP"
+    ]
+
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+
+      self.service.requestWithFullResponse(
+        withUrl: url,
+        withMethod: .put,
+        withHeaders: headers,
+        andParameters: parameters
+      ) { (response: DataResponse<Data>?) in
+        guard let response = response
+        else {
+          completion(.failure(YDServiceError.badRequest))
+          return
+        }
+
+        switch response.result {
+          case .success:
+            completion(.success(()))
+          
+          case .failure(let error):
+            completion(
+              .failure(
+                YDServiceError(
+                  error: error,
+                  status: response.response?.statusCode
+                )
+              )
+            )
+        }
+      }
     }
   }
 }
