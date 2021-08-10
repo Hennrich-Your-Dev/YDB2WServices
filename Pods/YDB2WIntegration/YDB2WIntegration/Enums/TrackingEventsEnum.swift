@@ -20,13 +20,15 @@ public enum TrackEvents: String {
   case productDetails = "ACOM:LASA-Scan:Produto:Detalhes"
 
   // Live
-  case pageView = "ACOM:Hotsite:youtube-live"
+  case pageView = "ACOM:hotsite:youtube-live"
   case playVideo = "ACOM:Video:Playing"
   case addToCart = "ACOM:LiveCarousel:AddToCart"
   case productSelected = "ACOM:LiveCarousel:ProductSelected"
   case liveOpenChat = "ACOM-live-chataovivo"
   case liveNPS = "LiveNps"
   case sendLike = "MobileApps:LiveLikes"
+  
+  case hotsiteLive = "ACOM:hotsite:aovivo"
 
   // Pre Live
   case preLivePageView = "ACOM:Hotsite:aovivo"
@@ -71,8 +73,11 @@ public enum TrackEvents: String {
         return ["tipoPagina": "LASA-Scan"]
 
       // Live
-      case .pageView, .playVideo, .addToCart, .productSelected, .liveOpenChat, .liveNPS, .sendLike:
+      case .playVideo, .addToCart, .productSelected, .liveOpenChat, .liveNPS, .sendLike:
         return [:]
+        
+      case .pageView, .hotsiteLive:
+        return ["pagetype": "Hotsite"]
 
       case .preLivePageView, .nextLivesPageView, .nextLivesAddToCalendar:
         return ["pagetype": "Hotsite"]
@@ -150,6 +155,9 @@ public enum TrackEvents: String {
           "sku": sku,
           "sellerId": sellerId
         ]
+        
+      case .hotsiteLive:
+        return [:]
 
       case .liveOpenChat:
         return [:]
@@ -183,8 +191,7 @@ public enum TrackEvents: String {
         return [
           "category": "live",
           "action": "agendamento",
-          "eventLabel": liveName,
-          "pagename": "ACOM:Hotsite:youtube-live:proximas-lives:adicionar-calendario"
+          "eventLabel": liveName
         ]
 
       // Store
@@ -237,6 +244,7 @@ public enum TrackEvents: String {
       // Offline Orders
       case .offlineOrders:
         return [:]
+        
     }
   }
 }

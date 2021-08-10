@@ -48,8 +48,13 @@ public protocol YDB2WServiceLasaClientDelegate {
     onCompletion completion: @escaping (Swift.Result<[YDLasaClientHistoricData], YDServiceError>) -> Void
   )
   
+  func neowayAuthorizationToken(
+    onCompletion completion: @escaping (Swift.Result<String, YDServiceError>) -> Void
+  )
+  
   func getLasaClientQuizzes(
-    userToken token: String,
+    neowayToken token: String,
+    userSocialSecurity socialSecurity: String,
     onCompletion completion: @escaping (Swift.Result<[YDB2WModels.YDQuiz], YDServiceError>) -> Void
   )
   
@@ -292,55 +297,89 @@ public extension YDB2WService {
     }
   }
   
+  func neowayAuthorizationToken(
+    onCompletion completion: @escaping (Swift.Result<String, YDServiceError>) -> Void
+  ) {
+    let url = "\(neoway)/auth/token"
+    let parameters = [
+      "application": "b2w-random-questions",
+      "application_secret": neowaySecret
+    ]
+    
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+      
+      self.service.requestWithFullResponse(
+        withUrl: url,
+        withMethod: .post,
+        withHeaders: nil,
+        andParameters: parameters
+      ) { response in
+        guard let response = response else {
+          completion(.failure(.notFound))
+          return
+        }
+        
+        switch response.result {
+          case .success(let data):
+            do {
+              guard let json = try JSONSerialization.jsonObject(
+                with: data,
+                options: .allowFragments
+              ) as? [String: Any],
+              let token = json["token"] as? String
+              else {
+                completion(.failure(.init(withMessage: "Token inexistente")))
+                return
+              }
+              
+              completion(.success(token))
+            
+            } catch {
+              completion(.failure(.init(error: error)))
+            }
+          
+          case .failure(let error):
+            completion(.failure(.init(error: error)))
+        }
+      }
+    }
+  }
+  
   func getLasaClientQuizzes(
-    userToken token: String,
+    neowayToken token: String,
+    userSocialSecurity socialSecurity: String,
     onCompletion completion: @escaping (Swift.Result<[YDB2WModels.YDQuiz], YDServiceError>) -> Void
   ) {
     let headers: [String: String] = [
       "Authorization": "Bearer \(token)"
     ]
 
-    let url = "\(lasaClient)/portalcliente/cliente/relatorio-historico/lista"
+    let url = "\(neoway)/services/sd/random-questions/\(socialSecurity)"
 
     DispatchQueue.global().async {
-      var quizzes: [YDB2WModels.YDQuiz] = []
-      
-      for n in 1...16 {
-        let rightId = UUID().uuidString
-        
-        let quiz = YDB2WModels.YDQuiz(
-          id: "\(n)",
-          title: "Pergunta n\(n)?",
-          choices: [
-            YDQuizChoice(id: UUID().uuidString, title: "Escolha fake \(n)"),
-            YDQuizChoice(id: rightId, title: "Escolha fake \(n)"),
-            YDQuizChoice(id: UUID().uuidString, title: "Escolha fake \(n)"),
-            YDQuizChoice(id: UUID().uuidString, title: .lorem())
-          ],
-          answer: rightId,
-          type: .choices
-        )
-        quizzes.append(quiz)
+      self.service.request(
+        withUrl: url,
+        withMethod: .get,
+        withHeaders: headers,
+        andParameters: nil
+      ) { (response: Swift.Result<YDQuizzesInterface, YDServiceError>) in
+        switch response {
+          case .success(let interface):
+            let quizzes = interface.quizzes.map {
+              YDB2WModels.YDQuiz(
+                title: $0.question,
+                choices: $0.choices.map { YDQuizChoice(title: $0.value) },
+                answer: $0.choices.first { $0.correct }?.value ?? ""
+              )
+            }
+            
+            completion(.success(quizzes))
+
+          case .failure(let error):
+            completion(.failure(error))
+        }
       }
-      
-      completion(.success(quizzes))
-//      self.service.request(
-//        withUrl: url,
-//        withMethod: .get,
-//        withHeaders: headers,
-//        andParameters: nil
-//      ) { (response: Swift.Result<[YDB2WModels.YDQuiz], YDServiceError>) in
-//        switch response {
-//          case .success(let interface):
-//            let quizzes = interface.perguntas.map {
-//              YDB2WModels.YDQuiz(id: $0.id, title: $0.title, choices: $0.escolhas)
-//            }
-//            completion(.success(quizzes))
-//
-//          case .failure(let error):
-//            completion(.failure(error))
-//        }
-//      }
     }
   }
   

@@ -21,6 +21,7 @@ public enum YDConfigKeys: String {
   case lasaClientService = "lasaCustomerPortal"
   case invoiceService = "offlineOrdersNoteService"
   case googleService = "youtubeStatisticsApi"
+  case neowayService = "neowayService"
 }
 
 public enum YDConfigProperty: String {
@@ -68,8 +69,12 @@ public enum YDConfigProperty: String {
 
   case liveNPSEnabled
   case liveNPSLiveIdEnabled
+  
+  case afterLiveEnabled
+  case afterLiveHotsite
 
   // Next Lives
+  case nextLiveEnabled
   case nextLiveSpaceyId = "nextLiveHotsite"
   case nextLivesReminderTimeInMinutes = "nextLivesReminderTime"
 
@@ -81,4 +86,7 @@ public enum YDConfigProperty: String {
 
   // Offline Orders
   case offlineOrdersNoteEnabled = "enableOfflineOrdersNote"
+  
+  // Miscellaneous
+  case secret
 }
