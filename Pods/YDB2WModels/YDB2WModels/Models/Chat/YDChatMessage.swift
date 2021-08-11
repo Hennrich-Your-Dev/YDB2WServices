@@ -38,7 +38,10 @@ public class YDChatMessage: Codable {
   public var date: String?
   public let resource: YDChatMessageResource?
   public let sender: YDChatMessageSender
+  public var repliedMessage: YDChatMessage?
+  public var repliedMessageId: String?
 
+  // MARK: Computed variables
   public var hourAndMinutes: String {
     let date = self.date ?? Date().iso8601String
     let dateFormatterGet = ISO8601DateFormatter()
@@ -76,6 +79,7 @@ public class YDChatMessage: Codable {
     case id
     case message = "text"
     case date = "created_at"
+    case repliedMessage
     case resource
     case sender
   }

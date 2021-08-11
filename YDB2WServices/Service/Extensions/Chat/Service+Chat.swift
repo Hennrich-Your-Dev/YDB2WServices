@@ -16,6 +16,13 @@ public protocol YDB2WServiceChatDelegate {
     accessToken: String,
     onCompletion: @escaping (Swift.Result<String, YDServiceError>) -> Void
   )
+  
+  func sendReplyMessage(
+    _ message: YDChatMessage,
+    replyingToId: String,
+    accessToken: String,
+    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
+  )
 
   func getMessages(
     withChatId chatId: String,
@@ -55,7 +62,6 @@ public protocol YDB2WServiceChatDelegate {
 }
 
 public extension YDB2WService {
-  // MARK: Send Message
   func sendMessage(
     _ message: YDChatMessage,
     accessToken: String,
@@ -125,7 +131,6 @@ public extension YDB2WService {
     }
   }
 
-  // MARK: Get Messages
   func getMessages(
     withChatId chatId: String,
     accessToken: String,
@@ -166,7 +171,6 @@ public extension YDB2WService {
     }
   }
 
-  // MARK: Send Like
   func sendLike(
     userId: String,
     onCompletion: @escaping (Swift.Result<Bool, YDServiceError>) -> Void
@@ -192,7 +196,6 @@ public extension YDB2WService {
     }
   }
 
-  // MARK: Delete message
   func deleteMessage(
     messageId: String,
     onCompletion: @escaping(Swift.Result<Void, YDServiceError>) -> Void
@@ -225,7 +228,6 @@ public extension YDB2WService {
     }
   }
 
-  // MARK: Get deleted messages
   func getDeletedMessages(
     withChatId chatId: String,
     onCompletion: @escaping (Swift.Result<YDChatDeletedMessages, YDServiceError>) -> Void
@@ -254,7 +256,6 @@ public extension YDB2WService {
     }
   }
 
-  // MARK: Ban user
   func banUserFromChat(
     _ userId: String,
     ofLive liveId: String,
@@ -297,7 +298,6 @@ public extension YDB2WService {
     }
   }
 
-  // MARK: Highlight message
   func highlightMessage(
     ofId messageId: String,
     onCompletion: @escaping(Swift.Result<Void, YDServiceError>) -> Void
@@ -330,7 +330,6 @@ public extension YDB2WService {
     }
   }
 
-  // MARK: Remove higlighted message
   func removeHighlightMessage(
     ofId messageId: String,
     onCompletion: @escaping(Swift.Result<Void, YDServiceError>) -> Void
@@ -358,6 +357,50 @@ public extension YDB2WService {
 
           case .failure(let error):
             onCompletion(.failure(YDServiceError.init(error: error)))
+        }
+      }
+    }
+  }
+  
+  func sendReplyMessage(
+    _ message: YDChatMessage,
+    replyingToId: String,
+    accessToken: String,
+    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
+  ) {
+    message.repliedMessageId = replyingToId
+    
+    guard let json = try? message.asDictionary()
+    else {
+      completion(.failure(.badRequest))
+      return
+    }
+
+    let header: [String: String] = [
+      "Access-Token": accessToken,
+      "Content-Type": "application/json"
+    ]
+
+    let url = "\(chatService)/message?async=false"
+
+    DispatchQueue.global().async { [weak self] in
+      guard let self = self else { return }
+      self.service.requestWithFullResponse(
+        withUrl: url,
+        withMethod: .post,
+        withHeaders: header,
+        andParameters: json
+      ) { response in
+        guard let response = response else {
+          completion(.failure(.internalServerError))
+          return
+        }
+        switch response.result {
+          case .success:
+            completion(.success(()))
+
+          case .failure(let error):
+            completion(.failure(.init(error: error)))
         }
       }
     }
