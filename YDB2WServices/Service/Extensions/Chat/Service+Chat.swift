@@ -14,14 +14,14 @@ public protocol YDB2WServiceChatDelegate {
   func sendMessage(
     _ message: YDChatMessage,
     accessToken: String,
-    onCompletion: @escaping (Swift.Result<String, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<String, YDServiceError>) -> Void
   )
   
   func sendReplyMessage(
     _ message: YDChatMessage,
     replyingToId: String,
     accessToken: String,
-    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<String, YDServiceError>) -> Void
   )
 
   func getMessages(
@@ -65,11 +65,11 @@ public extension YDB2WService {
   func sendMessage(
     _ message: YDChatMessage,
     accessToken: String,
-    onCompletion: @escaping (Swift.Result<String, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<String, YDServiceError>) -> Void
   ) {
     guard let json = try? message.asDictionary()
     else {
-      onCompletion(.failure(YDServiceError.badRequest))
+      completion(.failure(YDServiceError.badRequest))
       return
     }
 
@@ -89,43 +89,33 @@ public extension YDB2WService {
         andParameters: json
       ) { response in
         guard let response = response else {
-          onCompletion(.failure(YDServiceError.internalServerError))
+          completion(.failure(YDServiceError.internalServerError))
           return
         }
         switch response.result {
           case .success:
-            if let id = response.response?.allHeaderFields["Location"] as? String {
-              onCompletion(.success(id))
+            if let id = response.response?.value(forHTTPHeaderField: "location") {
+              completion(.success(id))
             } else {
-              onCompletion(.failure(YDServiceError.internalServerError))
+              completion(.failure(YDServiceError.internalServerError))
             }
 
           case .failure(let error):
-            if let status = response.response?.statusCode,
-               status == 401,
-               let data = response.data,
-               let json = try? JSONSerialization.jsonObject(
-                with: data,
-                options: .allowFragments
-               ) as? [String: Any],
-               let message = json["message"] as? String,
-               message == "banned user" {
-
-              onCompletion(
-                .failure(
-                  YDServiceError.blockedUser
-                )
-              )
+            guard let status = response.response?.statusCode,
+                  status == 401,
+                  let data = response.data,
+                  let json = try? JSONSerialization.jsonObject(
+                    with: data,
+                    options: .allowFragments
+                  ) as? [String: Any],
+                  let message = json["message"] as? String,
+                  message == "banned user"
+            else {
+              completion(.failure(.init(error: error, status: response.response?.statusCode)))
               return
             }
-            onCompletion(
-              .failure(
-                YDServiceError(
-                  error: error,
-                  status: response.response?.statusCode
-                )
-              )
-            )
+            
+            completion(.failure(.blockedUser))
         }
       }
     }
@@ -366,7 +356,7 @@ public extension YDB2WService {
     _ message: YDChatMessage,
     replyingToId: String,
     accessToken: String,
-    onCompletion completion: @escaping (Swift.Result<Void, YDServiceError>) -> Void
+    onCompletion completion: @escaping (Swift.Result<String, YDServiceError>) -> Void
   ) {
     message.repliedMessageId = replyingToId
     
@@ -397,10 +387,28 @@ public extension YDB2WService {
         }
         switch response.result {
           case .success:
-            completion(.success(()))
+            if let id = response.response?.value(forHTTPHeaderField: "location") {
+              completion(.success(id))
+            } else {
+              completion(.failure(.internalServerError))
+            }
 
           case .failure(let error):
-            completion(.failure(.init(error: error)))
+            guard let status = response.response?.statusCode,
+                  status == 401,
+                  let data = response.data,
+                  let json = try? JSONSerialization.jsonObject(
+                    with: data,
+                    options: .allowFragments
+                  ) as? [String: Any],
+                  let message = json["message"] as? String,
+                  message == "banned user"
+            else {
+              completion(.failure(.init(error: error, status: response.response?.statusCode)))
+              return
+            }
+            
+            completion(.failure(.blockedUser))
         }
       }
     }
