@@ -94,7 +94,7 @@ public extension YDB2WService {
         }
         switch response.result {
           case .success:
-            if let id = response.response?.value(forHTTPHeaderField: "location") {
+            if let id = response.response?.allHeaderFields["Location"] as? String {
               completion(.success(id))
             } else {
               completion(.failure(YDServiceError.internalServerError))
@@ -387,7 +387,7 @@ public extension YDB2WService {
         }
         switch response.result {
           case .success:
-            if let id = response.response?.value(forHTTPHeaderField: "location") {
+            if let id = response.response?.allHeaderFields["Location"] as? String {
               completion(.success(id))
             } else {
               completion(.failure(.internalServerError))
